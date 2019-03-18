@@ -3,12 +3,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const rateMyProf = require('./routes/api/rateMyProf');
+const admCourse = require('./routes/api/admCourse');
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use('/api/rmp', rateMyProf);
+app.use('/api/courses', admCourse);
 
 const port = process.env.PORT || 5000;
 
