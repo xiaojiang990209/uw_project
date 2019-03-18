@@ -1,0 +1,31 @@
+version: "2"
+
+services:
+    client:
+        build:
+            context: ./client/
+        restart: always
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./client:/usr/src/app/client
+            - /usr/src/app/client/node_modules
+        links: 
+            - server
+        networks:
+            - uw_network
+    server:
+        build:
+            context: ./
+        restart: always
+        ports:
+            - "5000:5000"
+        volumes:
+            - ./:/usr/src/app/server
+            - /usr/src/app/server/node_modules
+        networks:
+            - uw_network
+networks:
+    uw_network:
+        driver: bridge
+
