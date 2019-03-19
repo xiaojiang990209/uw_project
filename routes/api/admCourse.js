@@ -14,10 +14,8 @@ router.get('/', (req, res) => {
     let level = req.query.level;
     let session = req.query.session;
     let subject = req.query.subject;
-    console.log(getForm(level, session, subject));
     request.post({url: COURSES_URL, body: getFormBody(level, session, subject)}, (err, httpRes, body) => {
         if (!err && httpRes.statusCode === 200) {
-            console.log(body);
             res.status(200).end(body);
         } else {
             res.status(404).end('Error: Cannot access uw_api right now');
