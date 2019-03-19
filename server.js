@@ -7,8 +7,8 @@ const admCourse = require('./routes/api/admCourse');
 
 const app = express();
 
+app.set('json spaces', 2);
 app.use(bodyParser.json());
-
 app.use('/api/rmp', rateMyProf);
 app.use('/api/courses', admCourse);
 
