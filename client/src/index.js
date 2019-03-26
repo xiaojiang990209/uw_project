@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter, Route } from 'react-router-dom';
+
 import './index.css';
-import App from './components/App/App.js';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// All Components
+import App from './components/App/App';
+import Course from './components/Course/Course'
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(
+    <HashRouter>
+        <Route exact path='/' component={App} />
+        <Route path='/courses' component={Course} />
+    </HashRouter>,
+    document.getElementById('root')
+);
