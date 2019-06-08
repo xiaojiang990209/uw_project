@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-import Menu from '../Menu/Menu.js'
+import Menu from '../Menu/Menu'
 
-class App extends Component {
-  render() {
-    return (
-        <Menu />
-    );
-  }
-}
+
+const App = ({children}) =>
+  <div className='flex-container'>
+    <Menu />
+    <div id="main-content">
+      {children}
+    </div>
+  </div>
 
 export default App;

@@ -4,6 +4,8 @@
     padding: 20px 5px;
 }
 .menu {
+    position: fixed;
+    top: 0px;
     height: 100vh;
     width: 150px;
     background: #FFFFAA;

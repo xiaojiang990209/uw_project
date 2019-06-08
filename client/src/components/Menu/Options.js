@@ -1,9 +1,6 @@
 let options = [
-    "Courses",
-    "Quest",
-    "Option C",
-    "Option D",
-    "Option E"
+    { name: 'Courses', url: '/courses' },
+    { name: 'Quest', url: '/quest' },
 ];
 
 export default options;
