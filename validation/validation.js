@@ -1,0 +1,71 @@
+const Validator = require('validator');
+const isEmpty = require('is-empty');
+
+const validateRegisterInput = (data) => {
+    let errors = {};
+    
+    // Convert empty fields to empty strings first
+    if (isEmpty(data.name)) data.name = "";
+    if (isEmpty(data.email)) data.email = "";
+    if (isEmpty(data.password)) data.password = "";
+    if (isEmpty(data.password2)) data.password2 = "";
+
+    if (Validator.isEmpty(data.name)) { 
+        errors.name = "Name field is required";
+    }
+
+    if (Validator.isEmpty(data.email)) {
+        errors.email = "Email field is required";
+    } else if (!Validator.isEmail(data.email)) {
+        errors.email = "Email is invalid";
+    }
+
+    if (Validator.isEmpty(data.password)) {
+        errors.password = "Password field is required";
+    }
+
+    if (Validator.isEmpty(data.password2)) {
+        errors.password2 = "Confirm password is required";
+    }
+
+    if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+        errors.password = "Password must be between 6 and 30 characters";
+    }
+
+    if (!Validator.equals(data.password, data.password2)) {
+        errors.password2 = "Passwords must match";
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    };
+}
+
+const validateLoginInput = (data) => {
+    let errors = {};
+
+    if (isEmpty(data.email)) data.email = "";
+    if (isEmpty(data.password)) data.password = "";
+
+    if (Validator.isEmpty(data.email)) {
+        errors.email = "Email field is required";
+    } else if (!Validator.isEmail(data.email)) {
+        errors.email = "Email is invalid";
+    }
+
+    if (Validator.isEmpty(data.password)) {
+        errors.password = "Password field is required";
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    };
+    
+}
+
+module.exports = {
+    validateRegisterInput,
+    validateLoginInput
+}

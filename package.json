@@ -7,15 +7,24 @@
     "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server.js && npm start ./client"
+    "client": "npm start --prefix client",
+    "server": "nodemon server.js",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
     "concurrently": "^4.1.0",
     "express": "^4.16.4",
-    "request": "^2.88.0"
+    "is-empty": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.13",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "request": "^2.88.0",
+    "validator": "^11.0.0"
   }
 }
