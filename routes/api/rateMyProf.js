@@ -8,8 +8,8 @@ const router = express.Router();
 // Assuming data comes from undergrad calendar website
 // Name: Last, First
 getQueryUrl = (name) => {
-    const [last, first] = name.split(',');
-    const queryUrl = `${RMP_URL}${first.split(' ')[0]}+${last}`;
+    const [first, last] = name.split(' ');
+    const queryUrl = `${RMP_URL}${first}+${last}`;
     return queryUrl;
 }
 
@@ -31,11 +31,11 @@ transformResponse = response => {
 // @desc   Get info related to prof :name from University of Waterloo
 // @access Public
 router.get('/:name', (req, res) => {
-    name = req.params.name
+    let name = req.params.name
+    console.log(getQueryUrl(name));
     request.get(getQueryUrl(name), (err, _, body) => {
         if (!err) {
             body = JSON.parse(body);
-
             if (body.response.numFound > 0) {
                 // Return prof rating and a url that leads to the page of the prof
                 res.json(transformResponse(body.response.docs[0]));

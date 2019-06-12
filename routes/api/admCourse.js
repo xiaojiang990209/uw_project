@@ -3,14 +3,19 @@ const uwapi = require('uwaterloo-api');
 const router = express.Router();
 
 const uwClient = new uwapi({
-    API_KEY: process.env.API_KEY
+    API_KEY: 'a2d799d2edb7f034884b5c940924563f'
 });
 
 // Helper function to transform class info into desired format
 // @param: x => individual data object returned from Open Data Api
 getClassInfo = x => {
     const { date, location, instructors } = x.classes[0];
-    const instructor = instructors[0];
+    let [last, first] = ['', '']
+    if (instructors[0] !== undefined) {
+        [last, first] = instructors[0].split(",");
+        first = first.split(" ")[0];
+    }
+    const formattedLocation = location.building === null ? '' : `${location.building} ${location.room}`;
     return {
         name: `${x.subject} ${x.catalog_number}`,
         title: x.title,
@@ -21,16 +26,45 @@ getClassInfo = x => {
         start: date.start_time,
         end: date.end_time,
         days: date.weekdays,
-        location: `${location.building} ${location.room}`,
-        instructor
+        location: formattedLocation,
+        instructor: `${first} ${last}`
+    };
+}
+
+getClassSectionInfo = val => {
+    return {
+        class_number: val.class_number,
+        section: val.section,
+        capacity: val.capacity,
+        total: val.total,
+        start: val.start,
+        end: val.end,
+        days: val.days,
+        location: val.location,
+        instructor: val.instructor
     };
 }
 
 
 getCourses = data => {
-    return data.data
+    data = data.data
         .filter(x => new Date(x['last_updated']).getMonth() == new Date().getMonth())
-        .map(x => getClassInfo(x))
+        .map(x => getClassInfo(x));
+    let courses = []
+    let course = {}
+    data.forEach(val => {
+        if (val.name === course.name) {
+            course.sections.push(getClassSectionInfo(val));
+        } else {
+            courses.push(course);
+            course = {
+                name: val.name,
+                title: val.title,
+                sections: [getClassSectionInfo(val)]
+            };
+        }
+    });
+    return courses.filter(x => x.sections)
 }
 
 router.get('/', (req, res) => {
@@ -40,7 +74,7 @@ router.get('/', (req, res) => {
         if (!err) {
             res.status(200).json(getCourses(data));
         } else {
-            res.status(404).end(err);
+            res.status(404).end("");
         }
     });
 });

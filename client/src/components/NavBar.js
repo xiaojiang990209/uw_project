@@ -14,7 +14,7 @@ class NavBar extends Component {
                         </Link>
                         <ul style={{paddingRight: '250px'}} className="right hide-on-med-and-down">
                             <li><Link to='/matchable'>Matchable</Link></li>
-                            <li><Link to='/courses'>Courses</Link></li>
+                            <li><Link to='/course'>Courses</Link></li>
                         </ul>
                     </div>
                 </nav>
