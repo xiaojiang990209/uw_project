@@ -3,7 +3,7 @@ const uwapi = require('uwaterloo-api');
 const router = express.Router();
 
 const uwClient = new uwapi({
-    API_KEY: 'a2d799d2edb7f034884b5c940924563f'
+    API_KEY: ''
 });
 
 // Helper function to transform class info into desired format
