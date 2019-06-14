@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 descriptions: {
                     ...state.descriptions,
-                    [action.payload.name]: action.payload.description
+                    [action.payload.course]: action.payload.description
                 }
             };
 

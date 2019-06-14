@@ -53,7 +53,7 @@ class Course extends Component {
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <form noValidate onSubmit={this.onSubmit}>
-                            <div className="input-field col s12">
+                            <div className="input-field col m12 l6">
                                 <select id="subject" onChange={this.onChange}>
                                     <option value="" disabled selected>Choose your subject</option>
                                     <option value="CS">CS</option>
@@ -61,7 +61,7 @@ class Course extends Component {
                                     <option value="AFM">AFM</option>
                                 </select>
                             </div>
-                            <div className="input-field col s12">
+                            <div className="input-field col m12 l6">
                                 <select id="term" onChange={this.onChange}>
                                     <option value="" disabled selected>Choose your term</option>
                                     <option value="1195">1195</option>

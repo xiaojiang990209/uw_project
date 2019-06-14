@@ -42,14 +42,16 @@ class CourseDetail extends Component {
     courseInfoSection() {
         let infoSection;
         let info = this.props.courseDescriptions[this.props.course.name];
-        console.log(`info = ${info}`);
         if (info !== undefined && info !== null) {
             infoSection = (
-                <div className="col s12">
-                <p><b>Description</b>: {info.description}</p>
-                <p><b>Prerequisites</b>: {info.prerequisites}</p>
-                <p><b>Antirequisites</b>: {info.antirequisites}</p>
-                </div>
+                <>
+                <p style={{fontSize: "large"}}>Description</p>
+                <p>{info.description}</p><hr/>
+                <p style={{fontSize: "large"}}>Prerequisites</p>
+                <p>{info.prerequisites || "None"}</p><hr/>
+                <p style={{fontSize: "large"}}>Antirequisites</p>
+                <p>{info.antirequisites || "None"}</p><hr/>
+                </>
             );
         }
         return infoSection;
@@ -69,7 +71,8 @@ class CourseDetail extends Component {
                 });
                 // Fetch course descriptions
                 if (!(course.name in this.props.courseDescriptions)) {
-                    //this.props.getCourseDescription(course.name);
+                    console.log('Getting course descriptions');
+                    this.props.getCourseDescription(course.name);
                 }
             }
             
@@ -89,6 +92,7 @@ class CourseDetail extends Component {
             });
         }
         let table = (
+            <>
             <table>
                 <thead>
                     <tr>
@@ -104,6 +108,7 @@ class CourseDetail extends Component {
                     {sections}
                 </tbody>
             </table>
+            </>
         )
         return (
         <div>
