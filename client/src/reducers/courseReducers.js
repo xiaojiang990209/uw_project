@@ -1,20 +1,32 @@
 import {
-    SET_PROF_RATING
+    SET_PROF_RATING,
+    SET_COURSE_DESCRIPTION
 } from '../actions/types';
 
 const initialState = {
-    ratingsMap: {}
+    ratingsMap: {},
+    descriptions: {}
 };
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case SET_PROF_RATING:
-            let newState = {
+            return {
                 ...state,
-                ratingsMap: {...state.ratingsMap, 
+                ratingsMap: {
+                    ...state.ratingsMap,
                     [action.payload.name]: action.payload.rating
-            }};
-            return newState;
+                }
+            };
+        case SET_COURSE_DESCRIPTION:
+            return {
+                ...state,
+                descriptions: {
+                    ...state.descriptions,
+                    [action.payload.name]: action.payload.description
+                }
+            };
+
         default:
             return state;
     }

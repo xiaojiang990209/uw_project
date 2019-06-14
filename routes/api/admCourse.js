@@ -67,12 +67,24 @@ getCourses = data => {
     return courses.filter(x => x.sections)
 }
 
-router.get('/', (req, res) => {
-    let term = req.query.term;
-    let subject = req.query.subject;
+router.get('/schedule/:term/:subject', (req, res) => {
+    let term = req.params.term;
+    let subject = req.params.subject;
     uwClient.get(`/terms/${term}/${subject}/schedule.json`, (err, data) => {
         if (!err) {
             res.status(200).json(getCourses(data));
+        } else {
+            res.status(404).end("");
+        }
+    });
+});
+
+router.get('/description/:name', (req, res) => {
+    let [ subject, catalog_number ] = req.params.name.split(" ");
+    uwClient.get(`/courses/${subject}/${catalog_number}.json`, (err, data) => {
+        console.log(data);
+        if (!err) {
+            res.status(200).json(data.data);
         } else {
             res.status(404).end("");
         }

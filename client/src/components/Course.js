@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCourse } from '../actions/courseActions'
+import { getCourseSchedule } from '../actions/courseActions'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import CourseDetail from './CourseDetail';
@@ -28,7 +28,7 @@ class Course extends Component {
     onSubmit = e => {
         e.preventDefault();
         console.log(this.state);
-        this.props.getCourse(this.state.term, this.state.subject)
+        this.props.getCourseSchedule(this.state.term, this.state.subject)
             .then(res => this.setState({courses: res.data}))
             .catch(err => console.log(err));
         this.setState({showCourseComponent: true});
@@ -93,12 +93,12 @@ class Course extends Component {
 }
 
 Course.propTypes = {
-    getCourse: PropTypes.func.isRequired,
+    getCourseSchedule: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {return {}};
 
 export default connect(
     mapStateToProps,
-    { getCourse }
+    { getCourseSchedule }
 )(Course);

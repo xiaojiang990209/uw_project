@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getProfRating } from '../actions/courseActions';
+import { getProfRating, getCourseDescription } from '../actions/courseActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import M from 'materialize-css';
@@ -18,13 +18,14 @@ class CourseDetail extends Component {
     }
 
     onClick = e => {
-        this.setState({showDetail: !this.state.showDetail});
+        let showDetail = !this.state.showDetail;
         const instance = M.Modal.getInstance(document.getElementById(this.props.modalName));
-        if (this.state.showDetail) {
+        if (showDetail) {
             instance.open();
         } else {
             instance.close();
         }
+        this.setState({showDetail});
     }
 
     profRatingRow = (instructor) => {
@@ -38,17 +39,38 @@ class CourseDetail extends Component {
         return ratingRow;
     }
 
+    courseInfoSection() {
+        let infoSection;
+        let info = this.props.courseDescriptions[this.props.course.name];
+        console.log(`info = ${info}`);
+        if (info !== undefined && info !== null) {
+            infoSection = (
+                <div className="col s12">
+                <p><b>Description</b>: {info.description}</p>
+                <p><b>Prerequisites</b>: {info.prerequisites}</p>
+                <p><b>Antirequisites</b>: {info.antirequisites}</p>
+                </div>
+            );
+        }
+        return infoSection;
+    }
+
     createCourse = (course) => {
         let sections = []
         if (course.sections) {
             // Prefetch distinct instructor data
             let distinctInstructors = [...new Set(course.sections.filter(x => x.instructor).map(x => x.instructor))];
             if (this.state.showDetail) {
+                // Fetch instructor information
                 distinctInstructors.forEach(x => {
                     if (!(x in this.props.ratingsMap)) {
                         this.props.getProfRating(x);
                     }
                 });
+                // Fetch course descriptions
+                if (!(course.name in this.props.courseDescriptions)) {
+                    //this.props.getCourseDescription(course.name);
+                }
             }
             
             sections = course.sections.map((value,index) => {
@@ -94,6 +116,7 @@ class CourseDetail extends Component {
                 <div className="modal-content">
                     <div className="card-content white-text">
                         <span className="card-title">{course.name}: {course.title}</span><br/>
+                        {this.courseInfoSection()}
                         {table}
                     </div>
                 </div>
@@ -110,14 +133,17 @@ class CourseDetail extends Component {
 
 CourseDetail.propTypes = {
     getProfRating: PropTypes.func.isRequired,
-    ratingsMap: PropTypes.object.isRequired
+    getCourseDescription: PropTypes.func.isRequired,
+    ratingsMap: PropTypes.object.isRequired,
+    courseDescriptions: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    ratingsMap: state.course.ratingsMap
+    ratingsMap: state.course.ratingsMap,
+    courseDescriptions: state.course.descriptions
 });
 
 export default connect(
     mapStateToProps,
-    { getProfRating }
+    { getProfRating, getCourseDescription }
 )(CourseDetail);
