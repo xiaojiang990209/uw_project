@@ -7,17 +7,21 @@ export const getCourseSchedule = (term, subject) => dispatch => {
 }
 
 export const getCourseDescription = course => dispatch => {
+    // Set the corresponding course to null first before actually 
+    // fetching it so that axios requests don't cram the network
+    dispatch(setCourseDescription(course, null));
     return axios
         .get(`/api/courses/description/${course}`)
         .then(res => dispatch(setCourseDescription(course, res.data)))
-        .catch(err => dispatch(setCourseDescription(course, null)));
+        .catch(err => console.log(err));
 }
 
 export const getProfRating = name => dispatch => {
+    dispatch(setProfRating(name, null));
     return axios  
         .get(`api/rmp/${name}`)
         .then(res => dispatch(setProfRating(name, res.data)))
-        .catch(err => dispatch(setProfRating(name, null)));
+        .catch(err => console.log(err));
 }
 
 const setProfRating = (name, rating) => {
@@ -30,6 +34,6 @@ const setProfRating = (name, rating) => {
 const setCourseDescription = (course, description) => {
     return {
         type: SET_COURSE_DESCRIPTION,
-        payload: {course, description }
+        payload: { course, description }
     };
 }
