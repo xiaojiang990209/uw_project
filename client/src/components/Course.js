@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import CourseDetail from './CourseDetail';
 import M from 'materialize-css';
+import { courseCodes, semesters } from '../utils/courseCodes';
 
 class Course extends Component {
     constructor() {
@@ -48,24 +49,28 @@ class Course extends Component {
         if (this.state.showCourseComponent && this.state.courses) {
             courseDetailSection = this.generateCourseDetails(this.state.courses);
         }
+        const coruseOptions = courseCodes.map((value, idx) => (
+            <option key={idx} value={value}>{value}</option>
+        ));
+        const semesterOptions = semesters.map((value, idx) => (
+            <option key={idx} value={value}>{value}</option>
+        ))
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <form noValidate onSubmit={this.onSubmit}>
                             <div className="input-field col m12 l6">
-                                <select id="subject" onChange={this.onChange}>
-                                    <option value="" disabled selected>Choose your subject</option>
-                                    <option value="CS">CS</option>
-                                    <option value="MATH">MATH</option>
-                                    <option value="AFM">AFM</option>
+                                <select id="subject" onChange={this.onChange} size="10">
+                                    <option value="" disabled selected="">Choose your subject</option>
+                                    {coruseOptions}
                                 </select>
                             </div>
                             <div className="input-field col m12 l6">
                                 <select id="term" onChange={this.onChange}>
                                     <option value="" disabled selected>Choose your term</option>
-                                    <option value="1195">1195</option>
-                                    <option value="1191">1191</option>
+                                    {semesterOptions}
                                 </select>
                             </div>
                             <div className="col s12" style={{paddingLeft: '11.25px'}}>

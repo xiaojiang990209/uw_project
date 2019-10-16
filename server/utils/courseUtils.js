@@ -46,7 +46,6 @@ transformScheduleResponse = data => {
     let courses = []
     let course = {}
     data
-        .filter(isUpdatedRecently)
         .map(getClassInfo)
         .forEach(val => {
             if (val.name === course.name) {

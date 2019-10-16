@@ -5,7 +5,7 @@ const { transformScheduleResponse, transformDescriptionResponse, isNullOrEmpty }
 scheduleHandler = (req, res) => {
     const {term, subject} = req.params;
     uwClient.get(`/terms/${term}/${subject}/schedule.json`, (err, resp) => {
-        if (!err && resp.status === 200 && !isNullOrEmpty(resp.data)) {
+        if (!err && resp.meta.status === 200 && !isNullOrEmpty(resp.data)) {
             res.status(200).json(transformScheduleResponse(resp.data));
         } else {
             res.status(404).end(err);
@@ -16,7 +16,7 @@ scheduleHandler = (req, res) => {
 descriptionHandler = (req, res) => {
     const {subject, catalog_number} = req.params;
     uwClient.get(`/courses/${subject}/${catalog_number}.json`, (err, resp) => {
-        if (!err && resp.status === 200 && !isNullOrEmpty(resp.data)) {
+        if (!err && resp.meta.status === 200 && !isNullOrEmpty(resp.data)) {
             res.status(200).json(transformDescriptionResponse(resp.data));
         } else {
             res.status(404).end(err);
