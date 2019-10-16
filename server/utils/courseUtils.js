@@ -26,19 +26,17 @@ getClassInfo = data => {
     };
 }
 
-getClassSectionInfo = data => {
-    return {
+getClassSectionInfo = data => ({
         class_number: data.class_number,
         section: data.section,
-        capacity: data.capacity,
-        total: data.total,
+        capacity: data.enrollment_capacity,
+        total: data.enrollment_total,
         start: data.start,
         end: data.end,
         days: data.days,
         location: data.location,
         instructor: data.instructor
-    };
-}
+});
 
 isUpdatedRecently = data => new Date(data[LAST_UPDATED]).getMonth() == new Date().getMonth();
 
