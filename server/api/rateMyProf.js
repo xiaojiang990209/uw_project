@@ -1,12 +1,12 @@
 const request = require('request');
-const { transformRatingResponse } = require('../utils');
+const { transformRatingResponse, isNullOrEmpty } = require('../utils');
 
 profInfoHandler = (req, res) => {
-    let name = req.params.name
+    const name = req.params.name
     request.get(getQueryUrl(name), (err, _, body) => {
         if (!err) {
             body = JSON.parse(body);
-            if (body.response.numFound > 0) {
+            if (!isNullOrEmpty(body.response.docs)) {
                 // Return prof rating and a url that leads to the page of the prof
                 res.json(transformRatingResponse(body.response.docs[0]));
             } else {

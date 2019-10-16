@@ -6,7 +6,7 @@ const { profInfoHandler } = require('./rateMyProf');
 const users = require('./users');
 
 router.get('/schedule/:term/:subject', scheduleHandler);
-router.get('/schedule/description/:name', descriptionHandler);
+router.get('/schedule/detail/:subject/:catalog_number', descriptionHandler);
 router.get('/rating/:name', profInfoHandler);
 router.use('/users', users);
 
