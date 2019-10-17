@@ -1,7 +1,7 @@
 const Validator = require('validator');
 const isEmpty = require('is-empty');
 
-const validateRegisterInput = (data) => {
+const validateRegisterInput = data => {
     let errors = {};
     
     // Convert empty fields to empty strings first
@@ -42,7 +42,7 @@ const validateRegisterInput = (data) => {
     };
 }
 
-const validateLoginInput = (data) => {
+const validateLoginInput = data => {
     let errors = {};
 
     if (isEmpty(data.email)) data.email = "";
@@ -65,7 +65,26 @@ const validateLoginInput = (data) => {
     
 }
 
+const createUser = (name, email, password) => new User({
+    name,
+    email,
+    password
+});
+
+const createJwtPayload = user => ({
+    id: user.id,
+    name: user.name
+});
+
+const createAuthResponse = token => ({
+    success: true,
+    token: `Bearer ${token}`
+});
+
 module.exports = {
     validateRegisterInput,
-    validateLoginInput
+    validateLoginInput,
+    createUser,
+    createJwtPayload,
+    createAuthResponse
 }
