@@ -21,5 +21,6 @@ transformRatingResponse = data => {
 }
 
 module.exports = {
+    getQueryUrl,
     transformRatingResponse
 }

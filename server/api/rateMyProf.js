@@ -1,5 +1,5 @@
 const request = require('request');
-const { transformRatingResponse, isNullOrEmpty } = require('../utils');
+const { getQueryUrl, transformRatingResponse, isNullOrEmpty } = require('../utils');
 
 profInfoHandler = (req, res) => {
     const name = req.params.name

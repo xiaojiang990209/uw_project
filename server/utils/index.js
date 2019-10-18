@@ -1,10 +1,9 @@
-const { transformScheduleResponse, transformDescriptionResponse } = require('./courseUtils');
-const { transformRatingResponse } = require('./rateMyProfUtils');
+const courseUtils = require('./courseUtils');
+const rateMyProfUtils = require('./rateMyProfUtils');
 const globalUtils = require('./globalUtils');
 
 module.exports = {
-    transformScheduleResponse,
-    transformDescriptionResponse,
-    transformRatingResponse,
+    ...courseUtils,
+    ...rateMyProfUtils,
     ...globalUtils
 }

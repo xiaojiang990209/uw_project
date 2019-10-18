@@ -3,7 +3,6 @@ const router = express.Router();
 
 const { scheduleHandler, descriptionHandler } = require('./course');
 const { profInfoHandler } = require('./rateMyProf');
-const { registerHandler } = require('./register');
 const { loginHandler, registerHandler } = require('./user');
 
 router.get('/schedule/:term/:subject', scheduleHandler);

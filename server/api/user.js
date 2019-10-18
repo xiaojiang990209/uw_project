@@ -60,5 +60,6 @@ const registerHandler = (req, res) => {
 }
 
 module.exports = {
-    loginHandler
+    loginHandler,
+    registerHandler
 }
