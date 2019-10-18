@@ -1,5 +1,10 @@
 const request = require('request');
-const { getQueryUrl, transformRatingResponse, isNullOrEmpty } = require('../utils');
+const {
+    getQueryUrl,
+    transformRatingResponse,
+    isNullOrEmpty
+} = require('../utils');
+const HTTP_STATUS = require('../utils/statusCodes');
 
 profInfoHandler = (req, res) => {
     const name = req.params.name
@@ -10,10 +15,10 @@ profInfoHandler = (req, res) => {
                 // Return prof rating and a url that leads to the page of the prof
                 res.json(transformRatingResponse(body.response.docs[0]));
             } else {
-                res.status(404).end(`Error: could not find professor ${name}`)
+                res.status(HTTP_STATUS.NOT_FOUND).end(`Error: could not find professor ${name}`)
             }
         } else {
-            res.status(404).end("Error: could not retrieve information");
+            res.status(HTTP_STATUS.NOT_FOUND).end("Error: could not retrieve information");
         }
     });
 }
