@@ -8,7 +8,7 @@ const { loginHandler, registerHandler } = require('./user');
 router.get('/schedule/:term/:subject', scheduleHandler);
 router.get('/schedule/detail/:subject/:catalog_number', descriptionHandler);
 router.get('/rating/:name', profInfoHandler);
-router.post('/register', registerHandler);
-router.post('/login', loginHandler);
+router.post('/users/register', registerHandler);
+router.post('/users/login', loginHandler);
 
 module.exports = router;

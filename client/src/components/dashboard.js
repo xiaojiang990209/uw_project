@@ -17,7 +17,9 @@ class Dashboard extends Component {
           <div className="col s12 center-align">
             <h4>
               <b>Hey there,</b> {user.name.split(' ')[0]}
-              <p className="flow-text grey-text text-darken-1">You're logged into a fullstack MERN app</p>
+              <p className="flow-text grey-text text-darken-1">
+                You're logged into a fullstack MERN app
+              </p>
             </h4>
             <button
               style={{
