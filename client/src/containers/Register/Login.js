@@ -60,7 +60,6 @@ class Login extends Component {
                 type="text"
                 required
                 placeholder="Email Address"
-                minLength="6"
               />
             </FormGroup>
             <FormGroup>
@@ -72,11 +71,11 @@ class Login extends Component {
                 onChange={this.handleFormChange}
                 required
                 placeholder="Password"
+                minLength="6"
               />
             </FormGroup>
             <div className="row">
               <div className="col-8 auth__link">
-                {' '}
                 <Link to="/register">Don't have an account ?</Link>
               </div>
               <div className="col-4">

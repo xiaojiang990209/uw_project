@@ -75,7 +75,6 @@ class Register extends Component {
                 value={email}
                 required
                 placeholder="Email Address"
-                minLength="6"
               />
             </FormGroup>
             <FormGroup>
@@ -87,6 +86,7 @@ class Register extends Component {
                 onChange={this.handleFormChange}
                 required
                 placeholder="Password"
+                minLength="6"
               />
             </FormGroup>
             <FormGroup>
