@@ -13,7 +13,7 @@ import Register from "./containers/Register/Register";
 import Login from "./containers/Register/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/dashboard";
-import Course from "./components/Course";
+import Course from "./containers/Course/Course";
 import theme from "./theme";
 
 class App extends Component {
