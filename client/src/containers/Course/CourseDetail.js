@@ -1,18 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getProfRating, getCourseDescription } from '../../actions/courseActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
-import styled from 'styled-components';
-
-const TextWrapper = styled.div`
-  font-size: 14px;
-`;
-
-const BoldTitle = styled.p`
-  font-weight: bold;
-  margin: 2px 0px;
-`;
+import { getProfRating, getCourseDescription } from '../../actions/courseActions';
+import { TextWrapper, BoldTitle } from './components';
 
 function CourseDetail(props) {
   const [showDetail, setShowDetail] = useState(false);

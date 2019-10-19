@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { getCourseSchedule } from '../../actions/courseActions'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Container, Row, Col, Button } from 'reactstrap';
-import { courseCodes, semesters } from '../../utils/courseCodes';
-import styled from 'styled-components';
 import CourseDetail from './CourseDetail';
+import { courseCodes, semesters } from '../../utils/courseCodes';
+import { getCourseSchedule } from '../../actions/courseActions'
+import { Wrapper } from './components';
 
 const subjects = courseCodes.map(x => ({value: x, label: x}));
 const terms = semesters.map(x => ({value: x, label: x}));
@@ -14,11 +14,6 @@ const terms = semesters.map(x => ({value: x, label: x}));
 const styles = {
   control: styles => ({ ...styles, backgroundColor: 'white', margin: '1em auto' }),
 }
-
-const Wrapper = styled.div`
-  min-height: 100%;
-  margin-top: 48px;
-`;
 
 function Course(props) {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -62,7 +57,7 @@ function Course(props) {
         </Row>
         <Row>
           <Col md={{ size: 4, offset: 5}}>
-            <Button outline color='primary' style={{borderRadius: '20px'}} onClick={submitCourse}>Get Courses</Button>
+            <Button outline color='primary' onClick={submitCourse}>Get Courses</Button>
           </Col>
         </Row>
       </Container>
