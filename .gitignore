@@ -1,5 +1,5 @@
-server/node_modules
 client/node_modules
-.vscode
 client/package-lock.json
-server/package-lock.json
+server
+.gitignore
+client/.idea
