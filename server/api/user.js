@@ -38,6 +38,7 @@ const loginHandler = (req, res) => {
 const registerHandler = (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
 
+    console.log(req.body);
     if (!isValid) {
         return res.status(HTTP_STATUS.BAD_REQUEST).json(errors);
     }
