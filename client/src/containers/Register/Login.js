@@ -86,12 +86,9 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    session: state.session,
-  };
-};
+const mapStateToProps = (state) => ({
+  session: state.session,
+});
 
 export default connect(
   mapStateToProps,

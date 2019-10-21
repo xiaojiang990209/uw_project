@@ -35,15 +35,7 @@ class Register extends Component {
   submitForm = (e) => {
     const { registerUser, history } = this.props;
     const { name, email, password, confirmPassword } = this.state;
-
     e.preventDefault();
-
-    console.log({
-      name,
-      email,
-      password,
-      confirmPassword,
-    });
     registerUser(
       {
         name,
