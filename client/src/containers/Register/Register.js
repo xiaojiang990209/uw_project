@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { registerUser } from '../../actions/authActions';
+import { registerUser } from '../../ducks/session';
 import { FormGroup, Input, Form, Button } from 'reactstrap';
 
 import RegisterContainer from './components/RegisterContainer';
@@ -16,12 +15,11 @@ class Register extends Component {
       email: '',
       password: '',
       confirmPassword: '',
-      errors: {},
     };
   }
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.session.isAuthenticated) {
       this.props.history.push('/dashboard');
     }
   }
@@ -35,16 +33,26 @@ class Register extends Component {
   handleFormChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   submitForm = (e) => {
-    e.preventDefault();
-    const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      confirmPassword: this.state.confirmPassword,
-    };
+    const { registerUser, history } = this.props;
+    const { name, email, password, confirmPassword } = this.state;
 
-    console.log(newUser);
-    this.props.registerUser(newUser, this.props.history);
+    e.preventDefault();
+
+    console.log({
+      name,
+      email,
+      password,
+      confirmPassword,
+    });
+    registerUser(
+      {
+        name,
+        email,
+        password,
+        confirmPassword,
+      },
+      history
+    );
   };
 
   render() {
@@ -118,8 +126,7 @@ class Register extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors,
+  session: state.session,
 });
 
 export default connect(

@@ -5,8 +5,8 @@ const THEME = {
   unit: {
     small: 4,
     medium: 16,
-    large: 64
-  }
+    large: 64,
+  },
 };
 
 export default THEME;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/authActions';
+import { loginUser } from '../../ducks/session';
 import { Form, Input, FormGroup, Button } from 'reactstrap';
 
 import RegisterContainer from './components/RegisterContainer';
@@ -13,22 +13,18 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      errors: {},
     };
   }
 
   componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
+    if (this.props.session.isAuthenticated) {
       this.props.history.push('/dashboard');
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
+    if (nextProps.session.isAuthenticated) {
       this.props.history.push('/dashboard');
-    }
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
     }
   }
 
@@ -36,11 +32,10 @@ class Login extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const userData = {
+    this.props.loginUser({
       email: this.state.email,
       password: this.state.password,
-    };
-    this.props.loginUser(userData);
+    });
   };
 
   render() {
@@ -91,10 +86,12 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors,
-});
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    session: state.session,
+  };
+};
 
 export default connect(
   mapStateToProps,

@@ -11,14 +11,14 @@ import { ThemeProvider } from "styled-components";
 import StoreProvider from "./contexts/StoreProvider";
 import Register from "./containers/Register/Register";
 import Login from "./containers/Register/Login";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./routes/PrivateRoute";
 import Dashboard from "./components/dashboard";
 import Course from "./containers/Course/Course";
 import theme from "./theme";
 
-class App extends Component {
-  //TODO: this will be added back
+import setAuthToken from './utils/setAuthToken';
 
+class App extends Component {
   // componentDidMount() {
   //   if (localStorage.jwtToken) {
   //     const token = localStorage.jwtToken;
