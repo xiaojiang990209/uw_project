@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { logoutUser } from '../actions/authActions';
+import { logoutUser } from '../ducks/session';
 
 class Dashboard extends Component {
   onLogoutClick = (e) => {
@@ -10,13 +9,13 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { user } = this.props.auth;
+    const { user } = this.props.session;
     return (
       <div style={{ height: '75vh' }} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">
             <h4>
-              <b>Hey there,</b> {user.name.split(' ')[0]}
+              <b>Hey there,</b> {user.split(' ')[0]}
               <p className="flow-text grey-text text-darken-1">
                 You're logged into a fullstack MERN app
               </p>
@@ -40,13 +39,8 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-};
-
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  session: state.session,
 });
 
 export default connect(

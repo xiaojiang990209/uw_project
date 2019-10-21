@@ -5,15 +5,15 @@ import Select from 'react-select';
 import { Container, Row, Col, Button } from 'reactstrap';
 import CourseDetail from './CourseDetail';
 import { courseCodes, semesters } from '../../utils/courseCodes';
-import { getCourseSchedule } from '../../actions/courseActions'
+import { getCourseSchedule } from '../../actions/courseActions';
 import { Wrapper } from './components';
 
-const subjects = courseCodes.map(x => ({value: x, label: x}));
-const terms = semesters.map(x => ({value: x, label: x}));
+const subjects = courseCodes.map((x) => ({ value: x, label: x }));
+const terms = semesters.map((x) => ({ value: x, label: x }));
 
 const styles = {
-  control: styles => ({ ...styles, backgroundColor: 'white', margin: '1em auto' }),
-}
+  control: (styles) => ({ ...styles, backgroundColor: 'white', margin: '1em auto' }),
+};
 
 function Course(props) {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -21,32 +21,35 @@ function Course(props) {
   const [showCourseComponent, setShowCourseComponent] = useState(false);
   const [courses, setCourses] = useState([]);
 
-  const submitCourse = e => {
-      e.preventDefault();
-      props.getCourseSchedule(selectedTerm.value, selectedSubject.value)
-          .then(res => { setCourses(res.data); setShowCourseComponent(true); })
-          .catch(err => console.log(err));
-  }
+  const submitCourse = (e) => {
+    e.preventDefault();
+    props
+      .getCourseSchedule(selectedTerm.value, selectedSubject.value)
+      .then((res) => {
+        setCourses(res.data);
+        setShowCourseComponent(true);
+      })
+      .catch((err) => console.log(err));
+  };
 
-  const generateCourseDetails = courses => courses.map((value, index) => (
-    <CourseDetail key={index} course={value} />
-  ));
+  const generateCourseDetails = (courses) =>
+    courses.map((value, index) => <CourseDetail key={index} course={value} />);
 
   return (
     <Wrapper>
       <Container>
         <Row>
-          <Col md={{ size: 4, offset: 4}}>
+          <Col md={{ size: 4, offset: 4 }}>
             <Select
               value={selectedSubject}
-                onChange={setSelectedSubject}
-                options={subjects}
-                styles={styles}
+              onChange={setSelectedSubject}
+              options={subjects}
+              styles={styles}
             />
           </Col>
         </Row>
         <Row>
-          <Col md={{ size: 4, offset: 4}}>
+          <Col md={{ size: 4, offset: 4 }}>
             <Select
               value={selectedTerm}
               onChange={setSelectedTerm}
@@ -56,8 +59,10 @@ function Course(props) {
           </Col>
         </Row>
         <Row>
-          <Col md={{ size: 4, offset: 5}}>
-            <Button outline color='primary' onClick={submitCourse}>Get Courses</Button>
+          <Col md={{ size: 4, offset: 5 }}>
+            <Button outline color="primary" onClick={submitCourse}>
+              Get Courses
+            </Button>
           </Col>
         </Row>
       </Container>

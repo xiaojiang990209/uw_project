@@ -11,61 +11,80 @@ function CourseDetail(props) {
   useEffect(() => setShowDetail(false), [props.course]);
 
   const fetchCourseDescription = (course) => {
-    let distinctInstructors = [...new Set(course.sections.filter(x => x.instructor).map(x => x.instructor))];
-    distinctInstructors.forEach(x => {
+    let distinctInstructors = [
+      ...new Set(course.sections.filter((x) => x.instructor).map((x) => x.instructor)),
+    ];
+    distinctInstructors.forEach((x) => {
       if (!(x in props.ratingsMap)) {
         props.getProfRating(x);
       }
-    })
+    });
     if (!(course.name in props.courseDescriptions)) {
       props.getCourseDescription(course.name);
     }
-  }
+  };
 
-  const renderCourseTitle = (course) => (<span>{course.name}: {course.title}</span>);
+  const renderCourseTitle = (course) => (
+    <span>
+      {course.name}: {course.title}
+    </span>
+  );
 
   const renderProfRating = (instructor) => {
-    let ratingRow = <td>{instructor}</td>
+    let ratingRow = <td>{instructor}</td>;
     let rating = props.ratingsMap[instructor];
     if (rating && rating.score) {
-        ratingRow = (
-            <td><a href={rating.url}>{instructor} ({rating.score})</a></td>
-        );
-    } 
+      ratingRow = (
+        <td>
+          <a href={rating.url}>
+            {instructor} ({rating.score})
+          </a>
+        </td>
+      );
+    }
     return ratingRow;
-}
+  };
 
   const renderCourseInfo = (course) => {
     let infoSection;
     let info = props.courseDescriptions[course.name];
     if (info !== undefined && info !== null) {
-        infoSection = (
-            <TextWrapper>
-              <BoldTitle>Description</BoldTitle>
-              <CardText>{info.description}</CardText>
-              <BoldTitle>Prerequisites</BoldTitle>
-              <CardText>{info.prerequisites || "None"}</CardText>
-              <BoldTitle>Antirequisites</BoldTitle>
-              <CardText>{info.antirequisites || "None"}</CardText>
-            </TextWrapper>
-        );
+      infoSection = (
+        <TextWrapper>
+          <BoldTitle>Description</BoldTitle>
+          <CardText>{info.description}</CardText>
+          <BoldTitle>Prerequisites</BoldTitle>
+          <CardText>{info.prerequisites || 'None'}</CardText>
+          <BoldTitle>Antirequisites</BoldTitle>
+          <CardText>{info.antirequisites || 'None'}</CardText>
+        </TextWrapper>
+      );
     }
     return infoSection;
-  }
+  };
 
   const renderCourseSections = (course) => {
-    const sections = course.sections.map((value,index) => {
-      const timeSlot = value.start === null ? <td>TBA</td> : <td>{value.start}-{value.end}, {value.days}</td>
+    const sections = course.sections.map((value, index) => {
+      const timeSlot =
+        value.start === null ? (
+          <td>TBA</td>
+        ) : (
+          <td>
+            {value.start}-{value.end}, {value.days}
+          </td>
+        );
       return (
-          <tr key={index}>
-              <td>{value.section}</td>
-              <td>{value.class_number}</td>
-              <td>{value.total} / {value.capacity}</td>
-              {timeSlot}
-              <td>{value.location}</td>
-              {renderProfRating(value.instructor)}
-          </tr>
-      )
+        <tr key={index}>
+          <td>{value.section}</td>
+          <td>{value.class_number}</td>
+          <td>
+            {value.total} / {value.capacity}
+          </td>
+          {timeSlot}
+          <td>{value.location}</td>
+          {renderProfRating(value.instructor)}
+        </tr>
+      );
     });
     return (
       <TextWrapper>
@@ -80,35 +99,38 @@ function CourseDetail(props) {
               <th>Instructor</th>
             </tr>
           </thead>
-          <tbody>
-            {sections}
-          </tbody>
+          <tbody>{sections}</tbody>
         </Table>
       </TextWrapper>
-    )
-  }
+    );
+  };
 
   const onDetailClicked = (e) => {
     e.preventDefault();
-    if (!showDetail) { fetchCourseDescription(props.course); }
+    if (!showDetail) {
+      fetchCourseDescription(props.course);
+    }
     setShowDetail(!showDetail);
-  }
+  };
 
   return (
-    <Row style={{marginTop: '5px'}}>
-      <Col md={{ size: 8, offset: 2}}>
-        <Button color="primary" size="md" onClick={onDetailClicked} block>{renderCourseTitle(props.course)}</Button>
+    <Row style={{ marginTop: '5px' }}>
+      <Col md={{ size: 8, offset: 2 }}>
+        <Button color="primary" size="md" onClick={onDetailClicked} block>
+          {renderCourseTitle(props.course)}
+        </Button>
         <Collapse isOpen={showDetail}>
           <Card outline color="primary">
             <CardBody>
-              {renderCourseInfo(props.course)}<br/>
+              {renderCourseInfo(props.course)}
+              <br />
               {renderCourseSections(props.course)}
             </CardBody>
           </Card>
         </Collapse>
       </Col>
     </Row>
-  )
+  );
 }
 
 CourseDetail.propTypes = {
