@@ -11,7 +11,7 @@ export const SET_COURSE_DESCRIPTION = 'SET_COURSE_DESCRIPTION';
 export const STATE_KEY = 'course';
 
 export const getCourseSchedule = (term, subject) => (dispatch) => {
-  return axios.get(`/schedule/${term}/${subject}`);
+  return axios.get(`/api/schedule/${term}/${subject}`);
 };
 
 export const getCourseDescription = (course) => (dispatch) => {
@@ -20,7 +20,7 @@ export const getCourseDescription = (course) => (dispatch) => {
   dispatch(setCourseDescription(course, null));
   const [subject, number] = course.split(' ');
   return axios
-    .get(`/schedule/detail/${subject}/${number}`)
+    .get(`/api/schedule/detail/${subject}/${number}`)
     .then((res) => dispatch(setCourseDescription(course, res.data)))
     .catch((err) => console.log(err));
 };
@@ -28,7 +28,7 @@ export const getCourseDescription = (course) => (dispatch) => {
 export const getProfRating = (name) => (dispatch) => {
   dispatch(setProfRating(name, null));
   return axios
-    .get(`/rating/${name}`)
+    .get(`/api/rating/${name}`)
     .then((res) => dispatch(setProfRating(name, res.data)))
     .catch((err) => console.log(err));
 };

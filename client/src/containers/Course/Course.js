@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { Container, Row, Col, Button } from 'reactstrap';
 import CourseDetail from './CourseDetail';
-import { courseCodes, semesters } from '../../utils/courseCodes';
-import { getCourseSchedule } from '../../actions/courseActions';
+import { courseCodes, semesters } from '../../utils/constants';
+import { getCourseSchedule } from '../../ducks/course';
 import { Wrapper } from './components';
 
 const subjects = courseCodes.map((x) => ({ value: x, label: x }));
@@ -70,10 +69,6 @@ function Course(props) {
     </Wrapper>
   );
 }
-
-Course.propTypes = {
-  getCourseSchedule: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = (state) => {
   return {};

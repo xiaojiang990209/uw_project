@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   min-height: 100%;
-  margin-top: ${({ theme }) => 3 * theme.unit.medium}px;
 `;
 
 export const TextWrapper = styled.div`
