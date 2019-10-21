@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
-import { getProfRating, getCourseDescription } from '../../actions/courseActions';
+import { getProfRating, getCourseDescription } from '../../ducks/course';
 import { TextWrapper, BoldTitle } from './components';
 
 function CourseDetail(props) {

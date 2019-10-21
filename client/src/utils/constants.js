@@ -169,3 +169,14 @@ export const courseCodes = [
 ];
 
 export const semesters = ['1195', '1199', '1201'];
+
+export const menu_options = [
+  {
+    route: '/',
+    name: 'Home'
+  },
+  {
+    route: '/course',
+    name: 'Course'
+  }
+]
