@@ -2,7 +2,7 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
-import client from '../client/index';
+import client from '../client';
 
 export const STATE_KEY = 'session';
 
