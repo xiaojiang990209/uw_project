@@ -13,6 +13,7 @@
     "history": "^4.10.1",
     "is-empty": "^1.2.0",
     "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-burger-menu": "^2.6.11",
@@ -43,7 +44,7 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://127.0.0.1:5000",
+  "proxy": "http://127.0.0.1:5000/api",
   "devDependencies": {
     "prettier": "1.17.0"
   }

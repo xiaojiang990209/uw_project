@@ -16,11 +16,11 @@ const loginHandler = (req, res) => {
     const { email, password } = req.body;
     User.findOne({ email })
       .then(user => {
-        if (!user) return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Email not found'});
+        if (!user) return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Please register to sign in'});
         bcrypt.compare(password, user.password)
           .then(match => {
             if (!match) {
-              return res.status(HTTP_STATUS.BAD_REQUEST).json({ passwordIncorrect: 'Password incorrect'});
+              return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Your password is incorrect'});
             }
             createAuthResponse(user)
               .then(auth => res.json(auth))
@@ -38,7 +38,7 @@ const registerHandler = (req, res) => {
     User.findOne({ email })
       .then(user => {
         if (user) {
-          return res.status(HTTP_STATUS.BAD_REQUEST).json({ email: 'Email already exists'});
+          return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: 'Email already exists'});
         }
         const newUser = createUser(name, email, password);
         bcrypt.genSalt(10, (err, salt) => {

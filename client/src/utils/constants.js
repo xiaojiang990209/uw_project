@@ -173,10 +173,10 @@ export const semesters = ['1195', '1199', '1201'];
 export const menu_options = [
   {
     route: '/',
-    name: 'Home'
+    name: 'Home',
   },
   {
     route: '/course',
-    name: 'Course'
-  }
-]
+    name: 'Course',
+  },
+];

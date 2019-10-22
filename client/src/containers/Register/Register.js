@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../ducks/session';
-import { FormGroup, Input, Form, Button } from 'reactstrap';
+import { FormFeedback, FormGroup, Input, Form, Button } from 'reactstrap';
 
 import RegisterContainer from './components/RegisterContainer';
 import RegisterFormWrapper from './components/RegisterFormWrapper';
+import RegisterErrorContainer from './components/RegisterErrorContainer';
+import * as _ from 'lodash';
+
+let timeout;
 
 class Register extends Component {
   constructor() {
@@ -15,6 +19,7 @@ class Register extends Component {
       email: '',
       password: '',
       confirmPassword: '',
+      registerError: null,
     };
   }
 
@@ -24,10 +29,18 @@ class Register extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.registerError !== this.state.registerError) {
+      timeout = setTimeout(() => {
+        this.setState({
+          registerError: false,
+        });
+      }, 5000);
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(timeout);
   }
 
   handleFormChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -36,6 +49,14 @@ class Register extends Component {
     const { registerUser, history } = this.props;
     const { name, email, password, confirmPassword } = this.state;
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      this.setState({
+        registerError: 'Please confirm the passwords are the same',
+      });
+      return;
+    }
+
     registerUser(
       {
         name,
@@ -44,11 +65,16 @@ class Register extends Component {
         confirmPassword,
       },
       history
-    );
+    ).catch((err) => {
+      const errText = JSON.stringify(_.get(err, ['response', 'data', 'error']));
+      this.setState({
+        registerError: errText,
+      });
+    });
   };
 
   render() {
-    const { name, email, password, confirmPassword } = this.state;
+    const { name, email, password, confirmPassword, registerError } = this.state;
     return (
       <RegisterContainer theme={this.props.theme}>
         <h3>UW Project</h3>
@@ -94,8 +120,8 @@ class Register extends Component {
                 className="form-input"
                 name="confirmPassword"
                 type="password"
-                onChange={this.handleFormChange}
                 value={confirmPassword}
+                onChange={this.handleFormChange}
                 required
                 placeholder="Confirm Your Password"
               />
@@ -112,6 +138,11 @@ class Register extends Component {
             </div>
           </Form>
         </RegisterFormWrapper>
+        {registerError && (
+          <RegisterErrorContainer>
+            <div>img {registerError}</div>
+          </RegisterErrorContainer>
+        )}
       </RegisterContainer>
     );
   }
