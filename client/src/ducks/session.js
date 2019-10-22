@@ -2,6 +2,8 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
+import client from '../client/index';
+
 export const STATE_KEY = 'session';
 
 const initialState = {
@@ -14,33 +16,28 @@ const initialState = {
 
 export const USER_LOADING = 'USER_LOADING';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
-export const GET_ERRORS = 'GET_ERRORS';
 
-export const registerUser = (userData, history) => (dispatch) => {
-  axios
-    .post('/api/users/register', userData)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      dispatch({ type: GET_ERRORS, payload: err.response.data });
-    });
+const authorizeUser = (dispatch, res) => {
+  const { token } = res.data;
+  localStorage.setItem('jwtToken', token);
+  setAuthToken(token);
+
+  const { name } = jwt_decode(token);
+  dispatch(setCurrentUser(name));
 };
 
-export const loginUser = (userData) => (dispatch) => {
-  axios
-    .post('/api/users/login', userData)
-    .then((res) => {
-      const { token } = res.data;
-      localStorage.setItem('jwtToken', token);
-      setAuthToken(token);
-      const { name } = jwt_decode(token);
-      dispatch(setCurrentUser(name));
-    })
-    .catch((err) => {
-      console.log(err);
-      // dispatch({ type: GET_ERRORS, payload: err.response.data });
-    });
+export const registerUser = (userRegisterInfo, history) => (dispatch) => {
+  return client.session.register(userRegisterInfo).then((res) => {
+    authorizeUser(dispatch, res);
+    history.push('/dashboard');
+  });
+};
+
+export const loginUser = (userLoginInfo, history) => (dispatch) => {
+  return client.session.login(userLoginInfo).then((res) => {
+    authorizeUser(dispatch, res);
+    history.push('/dashboard');
+  });
 };
 
 export const setCurrentUser = (decoded) => {
@@ -59,9 +56,10 @@ export const setUserLoading = () => {
 export const logoutUser = () => (dispatch) => {
   localStorage.clear();
   setAuthToken(false);
-  dispatch(setCurrentUser({}));
+  dispatch(setCurrentUser());
 };
 
+//Reducer
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_USER:
@@ -79,7 +77,5 @@ const authReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-//Selectors
 
 export default authReducer;

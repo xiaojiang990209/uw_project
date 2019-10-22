@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from '../../ducks/session';
 import { Form, Input, FormGroup, Button } from 'reactstrap';
-
+import * as _ from 'lodash';
 import RegisterContainer from './components/RegisterContainer';
 import RegisterFormWrapper from './components/RegisterFormWrapper';
+import RegisterErrorContainer from './components/RegisterErrorContainer';
+
+let timeout;
 
 class Login extends Component {
   constructor() {
@@ -13,6 +16,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      loginError: null,
     };
   }
 
@@ -22,24 +26,42 @@ class Login extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.session.isAuthenticated) {
-      this.props.history.push('/dashboard');
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.loginError !== this.state.loginError) {
+      timeout = setTimeout(() => {
+        this.setState({
+          loginError: false,
+        });
+      }, 5000);
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(timeout);
   }
 
   handleFormChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   onSubmit = (e) => {
+    const { email, password } = this.state;
+    const { loginUser, history } = this.props;
     e.preventDefault();
-    this.props.loginUser({
-      email: this.state.email,
-      password: this.state.password,
+    loginUser(
+      {
+        email,
+        password,
+      },
+      history
+    ).catch((err) => {
+      const errText = _.get(err, ['response', 'data', 'error']);
+      this.setState({
+        loginError: errText,
+      });
     });
   };
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, loginError } = this.state;
 
     return (
       <RegisterContainer theme={this.props.theme}>
@@ -52,7 +74,7 @@ class Login extends Component {
                 onChange={this.handleFormChange}
                 value={email}
                 name="email"
-                type="text"
+                type="email"
                 required
                 placeholder="Email Address"
               />
@@ -66,7 +88,6 @@ class Login extends Component {
                 onChange={this.handleFormChange}
                 required
                 placeholder="Password"
-                minLength="6"
               />
             </FormGroup>
             <div className="row">
@@ -81,6 +102,11 @@ class Login extends Component {
             </div>
           </Form>
         </RegisterFormWrapper>
+        {loginError && (
+          <RegisterErrorContainer>
+            <div>img {loginError}</div>
+          </RegisterErrorContainer>
+        )}
       </RegisterContainer>
     );
   }

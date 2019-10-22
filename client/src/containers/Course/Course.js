@@ -70,11 +70,7 @@ function Course(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {};
-};
-
 export default connect(
-  mapStateToProps,
+  null,
   { getCourseSchedule }
 )(Course);

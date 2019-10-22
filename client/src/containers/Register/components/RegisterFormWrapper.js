@@ -58,28 +58,6 @@ export const RegisterFormWrapper = styled.div`
     margin-bottom: 24px;
     text-align: left;
   }
-
-  .errorContainer {
-    color: #e91e63;
-    font-size: 13px;
-    line-height: 15px;
-    padding: 13px;
-    background: #ffffff;
-    box-shadow: 0px 1px 3px rgba(17, 49, 96, 0.08), 0px 0px 1px rgba(17, 49, 96, 0.08);
-    border-radius: 5px;
-    margin: 32px 0;
-    text-align: left;
-    img {
-      width: 16px;
-      height: 16px;
-    }
-    .col-1 {
-      padding: 0;
-    }
-    .col-11 {
-      padding: 0;
-    }
-  }
 `;
 
 export default RegisterFormWrapper;

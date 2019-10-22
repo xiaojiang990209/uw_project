@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { logoutUser } from '../ducks/session';
+import { logoutUser } from '../../ducks/session';
 
 class Dashboard extends Component {
   onLogoutClick = (e) => {
@@ -8,14 +8,18 @@ class Dashboard extends Component {
     this.props.logoutUser();
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.session.isAuthenticated) {
+      this.props.history.push('/login');
+    }
+  }
+
   render() {
-    const { user } = this.props.session;
     return (
       <div style={{ height: '75vh' }} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">
             <h4>
-              <b>Hey there,</b> {user.split(' ')[0]}
               <p className="flow-text grey-text text-darken-1">
                 You're logged into a fullstack MERN app
               </p>
