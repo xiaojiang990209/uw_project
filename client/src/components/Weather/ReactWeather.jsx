@@ -43,7 +43,7 @@ class ReactWeather extends React.Component {
         <div className="rw-box">
           <div className={`rw-main type-${forecast}`}>
             <div className="rw-box-left">
-              <h2>{data.location.name}</h2>
+              <h2>{data.location}</h2>
               <TodayForecast todayData={today} unit={unit} lang={lang} />
             </div>
             <div className="rw-box-right">

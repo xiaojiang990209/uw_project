@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../ducks/session';
 import Weather from '../../components/Weather';
+import styled from 'styled-components';
 
+const Wrapper = styled.div`
+  width: 600px;
+  margin: 0px auto;
+`;
 
 function Dashboard(props) {
-  return <Weather />;
+  return <Wrapper><Weather /></Wrapper>
 }
 
 // class Dashboard extends Component {

@@ -37,6 +37,7 @@ export default class OpenWeatherApi {
         description: today.weather[0] ? today.weather[0].main : null,
         icon: today.weather[0] ? today.weather[0].icon : null,
         temperature: {
+          current: today.main.temp.toFixed(0),
           min: today.main.temp_min.toFixed(0),
           max: today.main.temp_max.toFixed(0),
         },
