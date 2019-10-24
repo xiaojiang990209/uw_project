@@ -46,9 +46,9 @@ class ReactWeather extends React.Component {
               <h2>{data.location}</h2>
               <TodayForecast todayData={today} unit={unit} lang={lang} />
             </div>
-            <div className="rw-box-right">
+            {/* <div className="rw-box-right">
               <WeatherIcon name={todayIcon} />
-            </div>
+            </div> */}
           </div>
         </div>
       );

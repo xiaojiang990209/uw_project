@@ -16,16 +16,18 @@ const TodayForecast = (props) => {
   const langs = utils.getLangs(lang);
   return (
     <div className="rw-today">
-      <div className="date">{todayData.date}</div>
+      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+        <div className="date">{todayData.date}</div>
+        <div className="current">{todayData.temperature.current} {units.temp}</div>
+      </div>
       <div className="hr"></div>
-      <div className="current">{todayData.temperature.current} {units.temp}</div>
-      <div className="range">{todayData.temperature.max} / {todayData.temperature.min} {units.temp}</div>
       <div className="desc">
-        <i className={`wicon wi ${todayIcon}`}></i>
-        &nbsp;{todayData.description}
+        <i className={`wicon wi ${todayIcon}`} style={{fontSize: '100px'}}></i>
+        {/* &nbsp;{todayData.description} */}
       </div>
       <div className="hr"></div>
       <div className="info">
+        <div className="range">{todayData.temperature.max} / {todayData.temperature.min} {units.temp}</div>
         <div>{langs.Wind}: <b>{todayData.wind}</b> {units.speed}</div>
         <div>{langs.Humidity}: <b>{todayData.humidity}</b> %</div>
       </div>
