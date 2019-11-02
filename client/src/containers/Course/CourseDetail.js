@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
-import { getProfRating, getCourseDescription } from '../../ducks/course';
+import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
 import { TextWrapper, BoldTitle } from './components';
 
 function CourseDetail(props) {
@@ -14,11 +14,8 @@ function CourseDetail(props) {
     let distinctInstructors = [
       ...new Set(course.sections.filter((x) => x.instructor).map((x) => x.instructor)),
     ];
-    distinctInstructors.forEach((x) => {
-      if (!(x in props.ratingsMap)) {
-        props.getProfRating(x);
-      }
-    });
+    props.getBatchProfRating(distinctInstructors
+      .filter(instructor => !(instructor in props.ratingsMap)));
     if (!(course.name in props.courseDescriptions)) {
       props.getCourseDescription(course.name);
     }
@@ -134,7 +131,7 @@ function CourseDetail(props) {
 }
 
 CourseDetail.propTypes = {
-  getProfRating: PropTypes.func.isRequired,
+  getBatchProfRating: PropTypes.func.isRequired,
   getCourseDescription: PropTypes.func.isRequired,
   ratingsMap: PropTypes.object.isRequired,
   courseDescriptions: PropTypes.object.isRequired,
@@ -147,5 +144,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { getProfRating, getCourseDescription }
+  { getBatchProfRating, getCourseDescription }
 )(CourseDetail);
