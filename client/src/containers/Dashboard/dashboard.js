@@ -5,8 +5,8 @@ import Weather from '../../components/Weather';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: 600px;
-  margin: 0px auto;
+  width: 75%;
+  margin: 10px auto;
 `;
 
 function Dashboard(props) {

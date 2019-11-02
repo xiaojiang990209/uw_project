@@ -16,12 +16,12 @@ export default {
   getUnits(unit) {
     if (unit === 'metric') {
       return {
-        temp: 'C',
+        temp: '°C',
         speed: 'km/h',
       };
     } else if (unit === 'imperial') {
       return {
-        temp: 'F',
+        temp: '°F',
         speed: 'mph',
       };
     }
@@ -30,7 +30,7 @@ export default {
   formatDate(dte, lang) {
     if (dte && moment(dte).isValid()) {
       moment.locale(lang);
-      return moment.unix(dte).format('ddd D MMMM');
+      return moment.unix(dte).format('ddd DD MMMM');
     }
     return '';
   },

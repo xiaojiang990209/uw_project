@@ -41,16 +41,8 @@ class ReactWeather extends React.Component {
       const todayIcon = utils.getIcon(today.icon);
       return (
         <div className="rw-box">
-          <div className={`rw-main type-${forecast}`}>
-            <div className="rw-box-left">
-              <h2>{data.location}</h2>
-              <TodayForecast todayData={today} unit={unit} lang={lang} />
-            </div>
-            {/* <div className="rw-box-right">
-              <WeatherIcon name={todayIcon} />
-            </div> */}
-          </div>
-        </div>
+            <TodayForecast location={data.location} todayData={today} unit={unit} lang={lang} />
+       </div>
       );
     }
     return <div>Loading...</div>;
