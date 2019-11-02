@@ -13,20 +13,6 @@ export default {
     }
     return 'na';
   },
-  getUnits(unit) {
-    if (unit === 'metric') {
-      return {
-        temp: '°C',
-        speed: 'km/h',
-      };
-    } else if (unit === 'imperial') {
-      return {
-        temp: '°F',
-        speed: 'mph',
-      };
-    }
-    return { temp: '', speed: '' };
-  },
   formatDate(dte, lang) {
     if (dte && moment(dte).isValid()) {
       moment.locale(lang);

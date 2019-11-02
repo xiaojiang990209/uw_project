@@ -1,9 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import OpenWeatherApi from './utils/OpenWeatherApi';
-import utils from './utils/utils';
 import TodayForecast from './TodayForecast';
-import WeatherIcon from './WeatherIcon';
 import './scss/ReactWeather.scss';
 
 const propTypes = {
@@ -12,7 +10,6 @@ const propTypes = {
   lat: PropTypes.string,
   lon: PropTypes.string,
   city: PropTypes.string,
-  forecast: PropTypes.oneOf(['today', '5days']),
   apikey: PropTypes.string.isRequired,
   lang: PropTypes.string,
 };
@@ -33,12 +30,11 @@ class ReactWeather extends React.Component {
     };
   }
   render() {
-    const { unit, forecast, lang } = this.props;
+    const { unit, lang } = this.props;
     const data = this.state.data;
     if (data) {
       const days = data.days;
       const today = days[0];
-      const todayIcon = utils.getIcon(today.icon);
       return (
         <div className="rw-box">
             <TodayForecast location={data.location} todayData={today} unit={unit} lang={lang} />

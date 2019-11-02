@@ -12,7 +12,7 @@ const propTypes = {
 };
 
 const TodayForecast = (props) => {
-  const { location, todayData, unit, lang } = props;
+  const { location, todayData } = props;
   const todayIcon = utils.getIcon(todayData.icon);
   return (
    <div className="rw-main">
