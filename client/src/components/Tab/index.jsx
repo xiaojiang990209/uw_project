@@ -15,8 +15,12 @@ export function TabContainer(props) {
   const toggle = (selectedTab) => {
     if (selectedTab !== activeTab) setActiveTab(selectedTab);
   }
-  const titles = props.children.map(child => child.props.title);
-  
+  const titles = [];
+  React.Children.forEach(props.children, elem => {
+    titles.push(elem.props.title);
+  });
+  console.log(titles);
+
   return (
     <Wrapper>
       <TabHeader activeTab={activeTab} titles={titles} toggle={toggle}/>

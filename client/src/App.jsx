@@ -9,7 +9,7 @@ import StoreProvider from "./contexts/StoreProvider";
 import Register from "./containers/Register/Register";
 import Login from "./containers/Register/Login";
 import PrivateRoute from "./routes/PrivateRoute";
-import Dashboard from "./containers/Dashboard/dashboard";
+import Dashboard from "./containers/Dashboard";
 import Course from "./containers/Course/Course";
 import Navbar from "./containers/Navbar/Navbar";
 import theme from "./theme";

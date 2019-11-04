@@ -20,6 +20,7 @@
     "react": "^16.10.2",
     "react-burger-menu": "^2.6.11",
     "react-dom": "^16.10.2",
+    "react-list": "^0.8.13",
     "react-redux": "^7.1.0",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
