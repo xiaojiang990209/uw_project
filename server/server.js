@@ -33,7 +33,7 @@ app.use('/api', api);
 const port = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {
-    var Path = path.join(__dirname, '/client/build/index.html');
+    const Path = path.join(__dirname, '/client/build/index.html');
     res.sendFile(Path);
 });
 
