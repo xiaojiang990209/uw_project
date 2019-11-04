@@ -1,8 +1,8 @@
-const { LAST_UPDATED } = require('./constants');
+const { LAST_UPDATED, SEMESTERS } = require('./constants');
 
 // Helper function to transform class info into desired format
 // @param: data => individual data object returned from Open Data Api
-getClassInfo = data => {
+const getClassInfo = data => {
     const { date, location, instructors } = data.classes[0];
 
     let instructor;
@@ -26,7 +26,7 @@ getClassInfo = data => {
     };
 }
 
-getClassSectionInfo = data => ({
+const getClassSectionInfo = data => ({
         class_number: data.class_number,
         section: data.section,
         capacity: data.enrollment_capacity,
@@ -38,9 +38,9 @@ getClassSectionInfo = data => ({
         instructor: data.instructor
 });
 
-isUpdatedRecently = data => new Date(data[LAST_UPDATED]).getMonth() == new Date().getMonth();
+const isUpdatedRecently = data => new Date(data[LAST_UPDATED]).getMonth() == new Date().getMonth();
 
-transformScheduleResponse = data => {
+const transformScheduleResponse = data => {
     let courses = []
     let course = {}
     data
@@ -60,13 +60,54 @@ transformScheduleResponse = data => {
     return courses.filter(x => x.sections)
 }
 
+const paramToScheduleURL = (req) => `/terms/${req.params.term}/${req.params.subject}/schedule.json`;
+
 // --------------------------------------------------------------------------
 
-transformDescriptionResponse = data => data;
+const paramToDescriptionURL = (req) => `/courses/${req.params.subject}/${req.params.catalog_number}.json`;
+const transformDescriptionResponse = data => data;
+
+// --------------------------------------------------------------------------
+
+const paramToImportantDatesURL = (req) => {
+  const currentTerm = SEMESTERS[SEMESTERS.length - 1];
+  return `/terms/${currentTerm}/importantdates.json`;
+}
+const transformImportantDatesResponse = (data) => ({
+    title: data.title,
+    audience: data.audience,
+    start_date: data.start_date,
+    end_date: data.end_date,
+    link: data.link
+});
+
+// --------------------------------------------------------------------------
+
+const paramToInfoSessionURL = (req) => {
+  const currentTerm = SEMESTERS[SEMESTERS.length - 1];
+  return `/terms/${currentTerm}/infosessions.json`;
+}
+
+const transformInfoSessionResponse = (data) => ({
+  employer: data.employer,
+  date: data.date,
+  start_time: data.start_time,
+  end_time: data.end_time,
+  description: data.description,
+  website: data.website,
+  location: `${data.building.code} ${data.building.room}`,
+  link: data.link
+});
 
 // --------------------------------------------------------------------------
 
 module.exports = {
     transformScheduleResponse,
-    transformDescriptionResponse
+    paramToScheduleURL,
+    transformDescriptionResponse,
+    paramToDescriptionURL,
+    transformImportantDatesResponse,
+    paramToImportantDatesURL,
+    transformInfoSessionResponse,
+    paramToInfoSessionURL
 }
