@@ -9,7 +9,6 @@ export default class OpenWeatherApi {
     this.lang = lang;
   }
   getForecast(args) {
-    console.log("fetching is invoked");
     const endPointToday = `${this.baseApiUrl}/weather`;
     const params = Object.assign(
       {

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../ducks/session';
 import Weather from '../../components/Weather';
-import { TabContainer } from '../../components/Tab';
+import TabContainer from '../../components/Tab/TabContainer';
 import styled from 'styled-components';
 import { NewsTab } from './Tabs';
 

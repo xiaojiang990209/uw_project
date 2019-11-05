@@ -6,7 +6,7 @@ function Weather(props) {
   return (
     <ReactWeather
       forecast="today"
-      apikey={`${OPEN_WEATHER_API_KEY}`}
+      apiKey={`${OPEN_WEATHER_API_KEY}`}
       type="city"
       city="waterloo,ca"/>
   )
