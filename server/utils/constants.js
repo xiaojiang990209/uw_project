@@ -4,5 +4,6 @@ module.exports = {
     RATING_KEY: 'averageratingscore_rf',
     ID_KEY: 'pk_id',
     LAST_UPDATED: 'last_updated',
-    CITY_STATE_KEY: 'city_state_s'
+    CITY_STATE_KEY: 'city_state_s',
+    SEMESTERS: ['1195', '1199', '1201']
 };
