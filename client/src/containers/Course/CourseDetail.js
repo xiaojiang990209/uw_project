@@ -11,11 +11,13 @@ function CourseDetail(props) {
   useEffect(() => setShowDetail(false), [props.course]);
 
   const fetchCourseDescription = (course) => {
-    let distinctInstructors = [
+    const distinctInstructors = [
       ...new Set(course.sections.filter((x) => x.instructor).map((x) => x.instructor)),
     ];
-    props.getBatchProfRating(distinctInstructors
-      .filter(instructor => !(instructor in props.ratingsMap)));
+    const newInstructors = distinctInstructors
+      .filter(instructor => !(instructor in props.ratingsMap));
+    props.getBatchProfRating(newInstructors);
+
     if (!(course.name in props.courseDescriptions)) {
       props.getCourseDescription(course.name);
     }
@@ -131,10 +133,10 @@ function CourseDetail(props) {
 }
 
 CourseDetail.propTypes = {
-  getBatchProfRating: PropTypes.func.isRequired,
-  getCourseDescription: PropTypes.func.isRequired,
   ratingsMap: PropTypes.object.isRequired,
   courseDescriptions: PropTypes.object.isRequired,
+  getBatchProfRating: PropTypes.func,
+  getCourseDescription: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -142,7 +144,12 @@ const mapStateToProps = (state) => ({
   courseDescriptions: state.course.descriptions,
 });
 
+const mapDispatchToProps = ({
+  getBatchProfRating,
+  getCourseDescription
+});
+
 export default connect(
   mapStateToProps,
-  { getBatchProfRating, getCourseDescription }
+  mapDispatchToProps
 )(CourseDetail);
