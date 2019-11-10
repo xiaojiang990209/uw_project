@@ -1,4 +1,4 @@
-const { RMP_URL, RMP_PROF_URL, RATING_KEY, ID_KEY } = require('./constants')
+const { RMP_URL, RMP_PROF_URL, RATING_KEY, ID_KEY, CITY_STATE_KEY } = require('./constants')
 const { isNullOrEmpty, requestWrapper } = require('./globalUtils');
 
 // Helper function to get the query url for rmp
@@ -17,9 +17,11 @@ getProfUrl = id => { return `${RMP_PROF_URL}${id}`; }
 //   Transforms a standard response from rateMyProf to desired format
 //   that contains only prof rating and the url that leads to the prof's
 //   page in rateMyProf for more info
-transformRatingResponse = data => {
-  return { score: data[RATING_KEY], url: getProfUrl(data[ID_KEY]) };
+transformRatingResponse = (name, data) => {
+  return { name, score: data[RATING_KEY], url: getProfUrl(data[ID_KEY]) };
 }
+
+isValidProf = (data) => data[CITY_STATE_KEY] === 'Waterloo_ON';
 
 getNewNameFromSuggestions = (suggestions) => {
   if (isNullOrEmpty(suggestions)) return null;
@@ -28,25 +30,31 @@ getNewNameFromSuggestions = (suggestions) => {
   return lastSuggestion.suggestion[0];
 }
 
+tryFetchProfessor = (resolve, reject, error, name, url, limit) => {
+  if (limit <= 0) return reject(error);
+  requestWrapper('GET', url)
+    .then(body => JSON.parse(body))
+    .then(body => {
+      if (!isNullOrEmpty(body.response.docs)) {
+        const validProf = body.response.docs.find(isValidProf);
+        if (isValidProf) {
+          return resolve(transformRatingResponse(name, validProf));
+        }
+      }
+      const newName = getNewNameFromSuggestions(body.spellcheck.suggestions);
+      if (!newName) return reject(error);
+      tryFetchProfessor(resolve, reject, error, name, getQueryUrl(newName), limit - 1);
+    })
+    .catch(err => { return reject(error); });
+}
+
 fetchProfInfo = (name) => {
-  let RETRY_COUNT = 2;
+  const RETRY_COUNT = 2;
   const defaultError = {
     message: `Could not fetch professor ${name}`
   };
-  return new Promise(async (resolve, reject) => {
-    while (RETRY_COUNT != 0) {
-      try {
-        const body = JSON.parse(await requestWrapper('GET', getQueryUrl(name)));
-        if (!isNullOrEmpty(body.response.docs)) {
-          resolve(transformRatingResponse(body.response.docs[0]));
-        }
-        name = getNewNameFromSuggestions(body.spellcheck.suggestions);
-        if (!name) reject(defaultError);
-      } catch (err) {
-        reject(defaultError);
-      }
-      --RETRY_COUNT;
-    }
+  return new Promise((resolve, reject) => {
+    tryFetchProfessor(resolve, reject, defaultError, name, getQueryUrl(name), RETRY_COUNT);
   });
 }
 

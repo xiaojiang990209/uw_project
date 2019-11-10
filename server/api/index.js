@@ -19,6 +19,7 @@ router.get('/schedule/detail/:subject/:catalog_number', descriptionHandler);
 router.get('/importantdates', importantDatesHandler);
 router.get('/infosession', infoSessionHandler);
 router.get('/rating/:name', profInfoHandler);
+router.post('/rating', profInfoListHandler);
 router.get('/docs', swaggerUi.setup(swaggerDocument));
 router.post('/users/register', registerHandler);
 router.post('/users/login', loginHandler);

@@ -26,12 +26,20 @@ export const getCourseDescription = (course) => (dispatch) => {
 };
 
 export const getProfRating = (name) => (dispatch) => {
-  dispatch(setProfRating(name, null));
   return axios
     .get(`/api/rating/${name}`)
     .then((res) => dispatch(setProfRating(name, res.data)))
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.response));
 };
+
+export const getBatchProfRating = (names) => (dispatch) => {
+  return axios
+    .post(`/api/rating`, { names })
+    .then((res) => {
+      res.data.forEach(info => dispatch(setProfRating(info.name, info)));
+    })
+    .catch((err) => console.log(err.response));
+}
 
 const setProfRating = (name, rating) => {
   return {
