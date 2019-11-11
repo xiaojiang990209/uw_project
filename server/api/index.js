@@ -11,6 +11,7 @@ const {
 } = require('./uwApi');
 const { profInfoHandler } = require('./rateMyProf');
 const { loginHandler, registerHandler } = require('./user');
+const newsHandler = require('./news');
 
 router.use('/docs', swaggerUi.serve);
 
@@ -23,5 +24,6 @@ router.post('/rating', profInfoListHandler);
 router.get('/docs', swaggerUi.setup(swaggerDocument));
 router.post('/users/register', registerHandler);
 router.post('/users/login', loginHandler);
+router.get('/news', newsHandler)
 
 module.exports = router;
