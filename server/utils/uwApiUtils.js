@@ -85,7 +85,7 @@ const transformImportantDatesResponse = (data) => {
 // --------------------------------------------------------------------------
 
 const paramToInfoSessionURL = (req) => {
-  const currentterm = semesters[semesters.length - 1];
+  const currentterm = SEMESTERS[SEMESTERS.length - 1];
   return `/terms/${currentterm}/infosessions.json`;
 }
 
