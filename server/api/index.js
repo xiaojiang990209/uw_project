@@ -12,7 +12,7 @@ const {
 } = require('./uwApi');
 const { profInfoHandler } = require('./rateMyProf');
 const { loginHandler, registerHandler } = require('./user');
-const { updateTermHandler } = require('./admin');
+const { updateTermHandler, getTermHandler } = require('./term');
 
 router.use('/docs', swaggerUi.serve);
 
@@ -26,6 +26,7 @@ router.get('/docs', swaggerUi.setup(swaggerDocument));
 router.post('/users/register', registerHandler);
 router.post('/users/login', loginHandler);
 router.get('/news', newsHandler);
-router.post('/admin/update-term', updateTermHandler);
+router.put('/terms', updateTermHandler);
+router.get('/terms', getTermHandler);
 
 module.exports = router;

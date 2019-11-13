@@ -7,17 +7,15 @@ const { requestWrapper } = require('./globalUtils');
 const TERMS_PATH = '../data/terms.json';
 
 const updateTermJson = () => new Promise((resolve, reject) => {
-    console.log(UW_TERM_URL);
   requestWrapper('GET', UW_TERM_URL)
     .then(cheerio.load)
     .then(collectTermJson)
     .then(saveToFs)
     .then(resolve)
-    .catch(err => { console.log(err); reject(err); });
+    .catch(reject);
 })
 
 const collectTermJson = ($) => {
-  console.log('fine collect')
   const terms = [];
   const subjects = [];
   $('select[name=sess] option').each((i, val) => { terms.push($(val).text().trim()); });
@@ -26,10 +24,17 @@ const collectTermJson = ($) => {
 }
 
 const saveToFs = (json) => {
-  console.log('fine save')
   fs.writeFileSync(path.join(__dirname, TERMS_PATH), JSON.stringify(json));
 }
 
+const loadTermJson = () => new Promise((resolve, reject) => {
+  fs.readFile(path.join(__dirname, TERMS_PATH), 'utf-8', (err, data) => {
+    if (err) return reject(err);
+    resolve(JSON.parse(data));
+  });
+});
+
 module.exports = {
-    updateTermJson
+  updateTermJson,
+  loadTermJson
 }
