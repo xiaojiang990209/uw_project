@@ -1,7 +1,7 @@
 import React from 'react'
-import { fetchNews } from '../../ducks/news';
+import { fetchNews } from '../../../ducks/uw';
 import { ListGroupItem } from 'reactstrap';
-import BaseTab from './BaseTab';
+import BaseTab from '../hocs/BaseTab';
 
 const renderNews = (news, index, key) => (
   <ListGroupItem key={key}>
@@ -9,4 +9,4 @@ const renderNews = (news, index, key) => (
   </ListGroupItem>
 )
 
-export const NewsTab = BaseTab(fetchNews, renderNews);
+export default BaseTab(fetchNews, renderNews);

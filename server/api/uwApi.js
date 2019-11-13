@@ -9,6 +9,8 @@ const {
     paramToImportantDatesURL,
     transformInfoSessionResponse,
     paramToInfoSessionURL,
+    transformNewsResponse,
+    paramToNewsURL,
     isNullOrEmpty
 } = require('../utils');
 const HTTP_STATUS = require('../utils/statusCodes');
@@ -18,7 +20,7 @@ const baseUwGetHandler = (urlGetter, successTransformer) => (req, res) => {
     if (!err && resp.meta.status === HTTP_STATUS.OK && !isNullOrEmpty(resp.data)) {
       res.json(successTransformer(resp.data));
     } else {
-      res.status(HTTP_STATUS.NOT_FOUND).json(err);
+      res.status(HTTP_STATUS.NOT_FOUND).json({ err: true });
     }
   })
 }
@@ -27,10 +29,12 @@ const scheduleHandler = baseUwGetHandler(paramToScheduleURL, transformScheduleRe
 const descriptionHandler = baseUwGetHandler(paramToDescriptionURL, transformDescriptionResponse);
 const importantDatesHandler = baseUwGetHandler(paramToImportantDatesURL, transformImportantDatesResponse);
 const infoSessionHandler = baseUwGetHandler(paramToInfoSessionURL, transformInfoSessionResponse);
+const newsHandler = baseUwGetHandler(paramToNewsURL, transformNewsResponse);
 
 module.exports = {
     scheduleHandler,
     descriptionHandler,
     importantDatesHandler,
-    infoSessionHandler
+    infoSessionHandler,
+    newsHandler
 }
