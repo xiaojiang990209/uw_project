@@ -1,0 +1,3 @@
+updateCourseInfoHandler = (req, res) => {
+  
+}
