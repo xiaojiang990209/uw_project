@@ -7,5 +7,6 @@ module.exports = {
     ID_KEY: 'pk_id',
     LAST_UPDATED: 'last_updated',
     CITY_STATE_KEY: 'city_state_s',
+    UW_TERM_URL: 'http://www.adm.uwaterloo.ca/infocour/CIR/SA/under.html',
     ...terms
 };

@@ -1,7 +1,7 @@
 const Entities = require('html-entities').AllHtmlEntities;
 const entities = new Entities();
 
-const { LAST_UPDATED, SEMESTERS } = require('./constants');
+const { LAST_UPDATED, TERMS } = require('./constants');
 
 // Helper function to transform class info into desired format
 // @param: data => individual data object returned from Open Data Api
@@ -88,7 +88,7 @@ const transformImportantDatesResponse = (data) => {
 // --------------------------------------------------------------------------
 
 const paramToInfoSessionURL = (req) => {
-  const currentterm = SEMESTERS[SEMESTERS.length - 1];
+  const currentterm = TERMS[TERMS.length - 1];
   return `/terms/${currentterm}/infosessions.json`;
 }
 
