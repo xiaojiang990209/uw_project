@@ -7,11 +7,11 @@ const {
   scheduleHandler,
   descriptionHandler,
   importantDatesHandler,
-  infoSessionHandler
+  infoSessionHandler,
+  newsHandler
 } = require('./uwApi');
 const { profInfoHandler } = require('./rateMyProf');
 const { loginHandler, registerHandler } = require('./user');
-const newsHandler = require('./news');
 
 router.use('/docs', swaggerUi.serve);
 

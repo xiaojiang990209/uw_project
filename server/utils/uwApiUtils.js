@@ -1,3 +1,6 @@
+const Entities = require('html-entities').AllHtmlEntities;
+const entities = new Entities();
+
 const { LAST_UPDATED, SEMESTERS } = require('./constants');
 
 // Helper function to transform class info into desired format
@@ -92,12 +95,23 @@ const paramToInfoSessionURL = (req) => {
 const transformInfoSessionResponse = (data) => {
   return data.map((val) => ({
     employer: val.employer,
-    date: val.date,
+    date: val.date.trim(),
     start_time: val.start_time,
     end_time: val.end_time,
     description: val.description,
     website: val.website,
     location: `${val.building.code} ${val.building.room}`,
+    link: val.link
+  }));
+}
+
+// --------------------------------------------------------------------------
+
+const paramToNewsURL = (req) => "news.json";
+
+const transformNewsResponse = (data) => {
+  return data.map((val) => ({
+    title: entities.decode(val.title),
     link: val.link
   }));
 }
@@ -110,5 +124,7 @@ module.exports = {
     transformImportantDatesResponse,
     paramToImportantDatesURL,
     transformInfoSessionResponse,
-    paramToInfoSessionURL
+    paramToInfoSessionURL,
+    transformNewsResponse,
+    paramToNewsURL
 }
