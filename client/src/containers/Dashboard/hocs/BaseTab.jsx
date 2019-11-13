@@ -20,8 +20,7 @@ export default function BaseTab(dataFetcher, itemRenderer) {
         <div style={{overflow: 'auto', maxHeight: 400}}>
           <ReactList
             itemRenderer={(index, key) => { return itemRenderer(data, index, key); }}
-            length={data.length}
-            type='variable' />
+            length={data.length} />
         </div>
       );
     }
