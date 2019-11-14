@@ -12,3 +12,7 @@ export const BoldTitle = styled.p`
   font-weight: bold;
   margin: ${({ theme }) => 0.5 * theme.unit.small}px 0px;
 `;
+
+export const ButtonWrapper = styled.div`
+  margin: ${({ theme }) => 4 * theme.unit.small}px auto;
+`;

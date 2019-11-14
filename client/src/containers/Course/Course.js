@@ -5,13 +5,14 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import CourseDetail from './CourseDetail';
 import { courseCodes, semesters } from '../../utils/constants';
 import { getCourseSchedule } from '../../ducks/course';
-import { Wrapper } from './components';
+import { Wrapper, ButtonWrapper } from './components';
 
 const subjects = courseCodes.map((x) => ({ value: x, label: x }));
 const terms = semesters.map((x) => ({ value: x, label: x }));
 
+// TODO: See if we can move this elsewhere
 const styles = {
-  control: (styles) => ({ ...styles, backgroundColor: 'white', margin: '1em auto' }),
+  control: (styles) => ({ ...styles, backgroundColor: 'white', margin: '16px auto' }),
 };
 
 function Course(props) {
@@ -38,30 +39,30 @@ function Course(props) {
     <Wrapper>
       <Container>
         <Row>
-          <Col md={{ size: 4, offset: 4 }}>
+          <Col md={{ size: 4, offset: 1 }}>
             <Select
               value={selectedSubject}
               onChange={setSelectedSubject}
               options={subjects}
               styles={styles}
+              placeholder="Subject"
             />
           </Col>
-        </Row>
-        <Row>
-          <Col md={{ size: 4, offset: 4 }}>
+          <Col md={{ size: 4 }}>
             <Select
               value={selectedTerm}
               onChange={setSelectedTerm}
               options={terms}
               styles={styles}
+              placeholder="Term"
             />
           </Col>
-        </Row>
-        <Row>
-          <Col md={{ size: 4, offset: 5 }}>
-            <Button outline color="primary" onClick={submitCourse}>
-              Get Courses
-            </Button>
+          <Col md={{ size: 2 }}>
+            <ButtonWrapper>
+              <Button outline block color="primary" onClick={submitCourse}>
+                Get Courses
+              </Button>
+            </ButtonWrapper>
           </Col>
         </Row>
       </Container>
