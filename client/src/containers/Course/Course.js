@@ -21,14 +21,15 @@ function Course(props) {
   const initializeTerms = () => {
     props.getTerms()
       .then((data) => {
-        setSubjects(data.subjects.map((val) => ({ value: val, label: val })));
-        setTerms(data.terms.map((val) => ({ value: val, label: val})));
+        setSubjects(data.subjects.map((e) => ({ value: e, label: e })));
+        setTerms(data.terms.map((e) => ({ value: e.key, label: e.value})));
       })
       .catch((err) => console.log(err));
   }
 
   const submitCourse = (e) => {
     e.preventDefault();
+    if (!selectedTerm || !selectedSubject) return;
     props
       .getCourseSchedule(selectedTerm.value, selectedSubject.value)
       .then((res) => {

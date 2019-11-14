@@ -16,11 +16,25 @@ const updateTermJson = () => new Promise((resolve, reject) => {
 })
 
 const collectTermJson = ($) => {
-  const terms = [];
+  const termLegends = $('body > form')
+    .contents()
+    .filter((i, op) => op.type === 'text' && op.data.trim())
+    .map((i, op) => op.data.trim())[0];
+  const terms = parseSessionMap(termLegends);
+
   const subjects = [];
-  $('select[name=sess] option').each((i, val) => { terms.push($(val).text().trim()); });
-  $('select[name=subject] option').each((i, val) => { subjects.push($(val).text().trim()); });
+  $('select[name=subject] option').each((i, op) => { subjects.push($(op).text().trim()); });
+
   return { TERMS: terms, SUBJECTS: subjects }
+}
+
+const parseSessionMap = (termLegends) => {
+  const l = termLegends.indexOf('(');
+  const r = termLegends.indexOf(')');
+  sessionLegends = termLegends.substr(l+1, r-l-1);
+  return termLegends.split(',')
+    .map((term) => term.split('='))
+    .map(([key, value]) => ({ key: key.trim(), value: value.trim() }));
 }
 
 const saveToFs = (json) => {
