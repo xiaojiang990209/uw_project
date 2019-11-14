@@ -10,6 +10,7 @@ import { Wrapper, ButtonWrapper } from './components';
 const subjects = courseCodes.map((x) => ({ value: x, label: x }));
 const terms = semesters.map((x) => ({ value: x, label: x }));
 
+// TODO: See if we can move this elsewhere
 const styles = {
   control: (styles) => ({ ...styles, backgroundColor: 'white', margin: '16px auto' }),
 };
