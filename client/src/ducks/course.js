@@ -14,6 +14,8 @@ export const getCourseSchedule = (term, subject) => (dispatch) => {
   return axios.get(`/api/schedule/${term}/${subject}`);
 };
 
+export const getTerms = () => (dispatch) => axios.get('/api/terms').then((res) => res.data);
+
 export const getCourseDescription = (course) => (dispatch) => {
   // Set the corresponding course to null first before actually
   // fetching it so that axios requests don't cram the network

@@ -30,7 +30,8 @@ const saveToFs = (json) => {
 const loadTermJson = () => new Promise((resolve, reject) => {
   fs.readFile(path.join(__dirname, TERMS_PATH), 'utf-8', (err, data) => {
     if (err) return reject(err);
-    resolve(JSON.parse(data));
+    data = JSON.parse(data);
+    resolve({ terms: data.TERMS, subjects: data.SUBJECTS });
   });
 });
 

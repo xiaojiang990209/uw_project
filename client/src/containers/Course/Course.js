@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Container, Row, Col, Button } from 'reactstrap';
 import CourseDetail from './CourseDetail';
 import { courseCodes, semesters } from '../../utils/constants';
-import { getCourseSchedule } from '../../ducks/course';
+import { getCourseSchedule, getTerms } from '../../ducks/course';
 import { Wrapper, ButtonWrapper } from './components';
 
 const subjects = courseCodes.map((x) => ({ value: x, label: x }));
@@ -20,6 +20,19 @@ function Course(props) {
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [showCourseComponent, setShowCourseComponent] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [terms, setTerms] = useState([]);
+
+  useEffect(() => {
+    console.log('here');
+    props.getTerms()
+      .then((data) => {
+        console.log(data);
+        setSubjects(data.subjects.map((val) => ({ value: val, label: val })));
+        setTerms(data.terms.map((val) => ({ value: val, label: val})));
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const submitCourse = (e) => {
     e.preventDefault();
@@ -73,5 +86,5 @@ function Course(props) {
 
 export default connect(
   null,
-  { getCourseSchedule }
+  { getCourseSchedule, getTerms }
 )(Course);
