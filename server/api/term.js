@@ -10,7 +10,7 @@ const updateTermHandler = (req, res) => {
 const getTermHandler = (req, res) => {
   loadTermJson()
     .then((data) => res.json(data))
-    .then((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err }));
+    .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err }));
 }
 
 module.exports = {
