@@ -31,7 +31,7 @@ const collectTermJson = ($) => {
 const parseSessionMap = (termLegends) => {
   const l = termLegends.indexOf('(');
   const r = termLegends.indexOf(')');
-  sessionLegends = termLegends.substr(l+1, r-l-1);
+  termLegends = termLegends.substr(l+1, r-l-1);
   return termLegends.split(',')
     .map((term) => term.split('='))
     .map(([key, value]) => ({ key: key.trim(), value: value.trim() }));
