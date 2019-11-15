@@ -88,7 +88,7 @@ const transformImportantDatesResponse = (data) => {
 // --------------------------------------------------------------------------
 
 const paramToInfoSessionURL = (req) => {
-  const currentterm = TERMS[TERMS.length - 1];
+  const currentterm = TERMS[TERMS.length - 1]['key'];
   return `/terms/${currentterm}/infosessions.json`;
 }
 
