@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
-const api = require('./api')
+const api = require('./api');
 const db = require('./config/keys').MONGO_URI;
 
 const app = express();
