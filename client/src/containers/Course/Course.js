@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Container, Row, Col, Button } from 'reactstrap';
 import CourseDetail from './CourseDetail';
-import { courseCodes, semesters } from '../../utils/constants';
-import { getCourseSchedule } from '../../ducks/course';
+import { getCourseSchedule, getTerms } from '../../ducks/course';
 import { Wrapper, ButtonWrapper } from './components';
 
-const subjects = courseCodes.map((x) => ({ value: x, label: x }));
-const terms = semesters.map((x) => ({ value: x, label: x }));
-
-// TODO: See if we can move this elsewhere
 const styles = {
   control: (styles) => ({ ...styles, backgroundColor: 'white', margin: '16px auto' }),
 };
@@ -20,9 +15,21 @@ function Course(props) {
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [showCourseComponent, setShowCourseComponent] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [terms, setTerms] = useState([]);
+
+  const initializeTerms = () => {
+    props.getTerms()
+      .then((data) => {
+        setSubjects(data.subjects.map((e) => ({ value: e, label: e })));
+        setTerms(data.terms.map((e) => ({ value: e.key, label: e.value})));
+      })
+      .catch((err) => console.log(err));
+  }
 
   const submitCourse = (e) => {
     e.preventDefault();
+    if (!selectedTerm || !selectedSubject) return;
     props
       .getCourseSchedule(selectedTerm.value, selectedSubject.value)
       .then((res) => {
@@ -34,6 +41,8 @@ function Course(props) {
 
   const generateCourseDetails = (courses) =>
     courses.map((value, index) => <CourseDetail key={index} course={value} />);
+
+  useEffect(initializeTerms, [])
 
   return (
     <Wrapper>
@@ -71,7 +80,12 @@ function Course(props) {
   );
 }
 
+const mapDispatchToProps = ({
+  getCourseSchedule,
+  getTerms
+})
+
 export default connect(
   null,
-  { getCourseSchedule }
+  mapDispatchToProps
 )(Course);
