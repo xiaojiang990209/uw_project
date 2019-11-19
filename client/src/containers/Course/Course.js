@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button, Input } from 'reactstrap';
 import CourseDetail from './CourseDetail';
 import { getCourseSchedule, getTerms } from '../../ducks/course';
-import { Wrapper, ButtonWrapper } from './components';
+import { Wrapper, MarginWrapper } from './components';
 
 const styles = {
   control: (styles) => ({ ...styles, backgroundColor: 'white', margin: '16px auto' }),
@@ -15,6 +15,7 @@ function Course(props) {
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [showCourseComponent, setShowCourseComponent] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [terms, setTerms] = useState([]);
 
@@ -42,13 +43,21 @@ function Course(props) {
   const generateCourseDetails = (courses) =>
     courses.map((value, index) => <CourseDetail key={index} course={value} />);
 
-  useEffect(initializeTerms, [])
+  const onCourseCodeChanged = (e) => {
+    e.preventDefault();
+    const code = e.target.value;
+    const filtered = courses.filter((course) => course.name.includes(code));
+    setFilteredCourses(filtered);
+  }
+
+  useEffect(initializeTerms, []);
+  useEffect(() => setFilteredCourses(courses), [courses]);
 
   return (
     <Wrapper>
       <Container>
         <Row>
-          <Col md={{ size: 4, offset: 1 }}>
+          <Col md={{ size: 3, offset: 1 }}>
             <Select
               value={selectedSubject}
               onChange={setSelectedSubject}
@@ -57,7 +66,7 @@ function Course(props) {
               placeholder="Subject"
             />
           </Col>
-          <Col md={{ size: 4 }}>
+          <Col md={{ size: 3 }}>
             <Select
               value={selectedTerm}
               onChange={setSelectedTerm}
@@ -67,15 +76,20 @@ function Course(props) {
             />
           </Col>
           <Col md={{ size: 2 }}>
-            <ButtonWrapper>
+            <MarginWrapper>
+              <Input placeholder="Filter (e.g. 111)" onChange={onCourseCodeChanged}/>
+            </MarginWrapper>
+          </Col>
+          <Col md={{ size: 2 }}>
+            <MarginWrapper>
               <Button outline block color="primary" onClick={submitCourse}>
                 Get Courses
               </Button>
-            </ButtonWrapper>
+            </MarginWrapper>
           </Col>
         </Row>
       </Container>
-      {showCourseComponent && generateCourseDetails(courses)}
+      {showCourseComponent && generateCourseDetails(filteredCourses)}
     </Wrapper>
   );
 }

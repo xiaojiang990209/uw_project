@@ -13,6 +13,6 @@ export const BoldTitle = styled.p`
   margin: ${({ theme }) => 0.5 * theme.unit.small}px 0px;
 `;
 
-export const ButtonWrapper = styled.div`
+export const MarginWrapper = styled.div`
   margin: ${({ theme }) => 4 * theme.unit.small}px auto;
 `;
