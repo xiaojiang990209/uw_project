@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//TODO: we can add program, year
 const UserSchema = new Schema({
+    _id: {
+        type:  Schema.Types.ObjectId,
+    },
     name: {
         type: String,
         required: true
@@ -20,4 +24,4 @@ const UserSchema = new Schema({
     }
 });
 
-module.exports = User = mongoose.model('users', UserSchema);
+module.exports = User = mongoose.model('User', UserSchema);
