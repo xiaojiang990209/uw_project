@@ -7,4 +7,8 @@ export const menu_options = [
     route: '/course',
     name: 'Course',
   },
+  {
+    route: '/matchable',
+    name: 'Matchable'
+  }
 ];

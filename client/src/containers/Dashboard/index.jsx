@@ -9,7 +9,7 @@ import InfoSessionTab from './components/InfoSessionTab';
 
 const Wrapper = styled.div`
   width: 75%;
-  margin: 10px auto;
+  margin: ${({theme}) => theme.unit.large}px auto;
 `;
 
 function Dashboard(props) {
