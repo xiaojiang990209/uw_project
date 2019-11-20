@@ -16,17 +16,15 @@ function Course(props) {
   const [showCourseComponent, setShowCourseComponent] = useState(false);
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
-  const [subjects, setSubjects] = useState([]);
-  const [terms, setTerms] = useState([]);
+
+  const subjects = (props.subjects || []).map((e) => ({ value: e, label: e }));
+  const terms = (props.terms || []).map((e => ({ value: e.key, label: e.value})));
 
   const initializeTerms = () => {
-    props.getTerms()
-      .then((data) => {
-        setSubjects(data.subjects.map((e) => ({ value: e, label: e })));
-        setTerms(data.terms.map((e) => ({ value: e.key, label: e.value})));
-      })
-      .catch((err) => console.log(err));
-  }
+    if (!props.subjects || !props.terms) {
+      props.getTerms();
+    }
+  };
 
   const submitCourse = (e) => {
     e.preventDefault();
@@ -94,12 +92,17 @@ function Course(props) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  subjects: state.course.subjects,
+  terms: state.course.terms
+});
+
 const mapDispatchToProps = ({
   getCourseSchedule,
   getTerms
 })
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Course);
