@@ -17,7 +17,8 @@ import theme from "./theme";
 import { menu_options } from './utils/constants';
 
 const Container = styled.div`
-  margin-top: ${({theme}) => theme.unit.large}px
+  width: 75%;
+  margin: ${({theme}) => theme.unit.large}px auto;
 `;
 
 class App extends Component {
