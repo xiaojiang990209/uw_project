@@ -16,16 +16,16 @@ requestWrapper = (method, url, data={}) => {
       } else {
         reject(err);
       }
-    }
+    };
 
     switch(method) {
       case "GET": request.get(url, responseHandler); break;
       case "POST": request.post(url, data, responseHandler); break;
     }
   })
-}
+};
 
 module.exports = {
   isNullOrEmpty,
   requestWrapper
-}
+};

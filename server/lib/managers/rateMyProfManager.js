@@ -1,5 +1,5 @@
-const { fetchProfInfo } = require('../utils');
-const HTTP_STATUS = require('../utils/statusCodes');
+const { fetchProfInfo } = require('../../utils');
+const HTTP_STATUS = require('../../utils/statusCodes');
 
 profInfoHandler = (req, res) => {
   const name = req.params.name;

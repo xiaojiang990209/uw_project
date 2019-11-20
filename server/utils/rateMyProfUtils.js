@@ -19,7 +19,7 @@ getProfUrl = id => { return `${RMP_PROF_URL}${id}`; }
 //   page in rateMyProf for more info
 transformRatingResponse = (name, data) => {
   return { name, score: data[RATING_KEY], url: getProfUrl(data[ID_KEY]) };
-}
+};
 
 isValidProf = (data) => data[CITY_STATE_KEY] === 'Waterloo_ON';
 
@@ -28,7 +28,7 @@ getNewNameFromSuggestions = (suggestions) => {
   const lastSuggestion = suggestions.pop();
   if (isNullOrEmpty(lastSuggestion.suggestion)) return null;
   return lastSuggestion.suggestion[0];
-}
+};
 
 tryFetchProfessor = (resolve, reject, error, name, url, limit) => {
   if (limit <= 0) return reject(error);
@@ -46,7 +46,7 @@ tryFetchProfessor = (resolve, reject, error, name, url, limit) => {
       tryFetchProfessor(resolve, reject, error, name, getQueryUrl(newName), limit - 1);
     })
     .catch(err => { return reject(error); });
-}
+};
 
 fetchProfInfo = (name) => {
   const RETRY_COUNT = 2;
