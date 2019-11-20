@@ -1,4 +1,4 @@
-const mongoose = require(mongoose);
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //a study group
@@ -7,9 +7,13 @@ const MatchableGroupSchema = new Schema({
         type: String,
         required: true,
     },
-    date: {
+    startDate: {
         type: Date,
         required: true
+    },
+    endDate: {
+        type: Number,
+        required: true,
     },
     groupSize: {
         type: Number,
@@ -17,7 +21,8 @@ const MatchableGroupSchema = new Schema({
     },
     users: {
         type: [String],
-    }
+    },
+
 });
 
 module.exports = User = mongoose.model('matchableGroup', MatchableGroupSchema);
