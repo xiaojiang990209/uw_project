@@ -8,7 +8,7 @@ export const menu_options = [
     name: 'Course',
   },
   {
-    route: '/matchable',
+    route: '/matchable/join',
     name: 'Matchable'
   }
 ];
