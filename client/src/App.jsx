@@ -12,7 +12,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import Dashboard from "./containers/Dashboard";
 import Course from "./containers/Course/Course";
 import Navbar from "./containers/Navbar/Navbar";
-import Matchable from "./containers/Matchable/Matchable";
+import MatchableJoin from "./containers/Matchable/MatchableJoin";
 import theme from "./theme";
 import { menu_options } from './utils/constants';
 
@@ -33,7 +33,7 @@ class App extends Component {
               <Route exact path="/register" component={Register}/>
               <Route exact path="/login" component={Login}/>
               <PrivateRoute exact path="/course" component={Course}/>
-              <PrivateRoute exact path='/matchable' component={Matchable} />
+              <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard}/>
               </Switch>
