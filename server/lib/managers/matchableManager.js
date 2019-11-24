@@ -1,6 +1,7 @@
 const HTTP_STATUS = require('../../utils/statusCodes');
 const MatchableGroup = require('../models/MatchableGroup');
 const moment = require('moment');
+const _ = require('lodash');
 
 /**
  * {
@@ -10,18 +11,22 @@ const moment = require('moment');
  */
 const fetchGroupHandler = (req, res) => {
     const {maxMembers, courseID, date, hasTime} = req.body; //date has to be in Date format
+    const parsedDate = new Date(date);
     const today = new Date();
-    const isToday = date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
-    const dateMin = isToday ? today : (new Date()).setHours(0, 0,0,0);
-    const dateMax = moment(date).endOf('day').toDate();
+    const isToday = parsedDate.getDate() === today.getDate() && parsedDate.getMonth() === today.getMonth() && parsedDate.getFullYear() === today.getFullYear();
+    const dateMin = isToday ? today : moment(parsedDate).startOf('day');
+    const dateMax = moment(parsedDate).endOf('day');
 
     //TODO: limit the size of return
-    MatchableGroup.find({groupSize: { $lte: maxMembers}, courseID, date: {$gte: dateMin, $lte: dateMax }, isFull: false})
+    //TODO: return with full
+    MatchableGroup.find({groupSize: { $lte: maxMembers}, courseID, startDate: {$gte: dateMin}, endDate: {$lte: dateMax }, isFull: false})
         .then(groups => {
+            console.log(groups);
             let data = {};
             if(!groups) return res.status(HTTP_STATUS.NO_CONTENT);
-            data.exactMatch = hasTime ? groups.filter((group) => (group.startDate <= time && time <= group.endDate)) : [];
-            data.fuzzyMatch = groups.filter((group) => !res.exactMatch.includes(group));
+            data.exactMatch = hasTime ? groups.filter((group) => (group.startDate <= parsedDate && parsedDate <= group.endDate)) : [];
+            console.log("exact match",  data.exactMatch)
+            data.fuzzyMatch = groups.filter((group) => !data.exactMatch.includes(group));
             return res.json(data);
         }
     );
@@ -29,25 +34,31 @@ const fetchGroupHandler = (req, res) => {
 
 
 const registerGroupHandler = (req, res) => {
-    const { groupSize, courseID, startDate, duration } = req.body;
-    const endDate = startDate.setHours(startDate.getHours+duration.floor()).setMinutes(startDate.getMinutes() + 60*duration%1);
-    const newGroup = new MatchableGroup({groupSize, courseID, startDate, endDate, isFull: false});
+    const { groupSize, courseID, startDate, duration, userID } = req.body;
+    const parsedStartDate = new Date(startDate);
+    let endDate = moment(parsedStartDate).add( Math.floor(duration), "h").add((duration%1)*60, "m");
+    const newGroup = new MatchableGroup({groupSize, courseID, startDate: parsedStartDate, endDate, users: [userID], isFull: false});
     newGroup.save()
         .then(() => {
-            res.status(HTTP_STATUS.OK);
+            res.json({success: true});
         })
         .catch(err => console.log(err));
 };
 
-const updateGroupHandler = (req, res) => {
-    const {groupID, userID, isJoin} = req.body;
-    isJoin ?
-        MatchableGroup.Model.findOneAndUpdate({_id: groupID}, {'$push': { users: userID }}) :
-        MatchableGroup.Model.findOneAndUpdate({_id: groupID}, {'$pull': { users: userID }}, (err, group) => {
-            if(err) console.log(err);
-            // when the groups size is 0, delete this group
-            if(!group.users.length) MatchableGroup.findOneAndDelete({_id: group._id});
-    });
+const updateGroupHandler = async (req, res) => {
+    const {groupID, userID} = req.body;
+    const groupJoining =  await MatchableGroup.findById(groupID).exec();
+
+    groupJoining.users.find((id) => id.toString().localeCompare(userID) === 0) ?
+        _.remove(groupJoining.users, (id) => id.toString().localeCompare(userID) === 0) :
+        groupJoining.users.push(userID);
+
+    if(!groupJoining.users.length) await MatchableGroup.findByIdAndDelete(groupID).exec();
+    if(groupJoining.groupSize === groupJoining.users.length) groupJoining.isFull = true;
+
+    groupJoining.save().then(() => {
+        res.json({success: true});
+    }).catch(err => console.log(err));
 };
 
 module.exports = {

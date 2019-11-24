@@ -3,9 +3,6 @@ const Schema = mongoose.Schema;
 
 //TODO: we can add program, year
 const UserSchema = new Schema({
-    _id: {
-        type:  Schema.Types.ObjectId,
-    },
     name: {
         type: String,
         required: true

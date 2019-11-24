@@ -11,7 +11,7 @@ const MatchableGroupSchema = new Schema({
         required: true
     },
     endDate: {
-        type: Number,
+        type: Date,
         required: true,
     },
     groupSize: {

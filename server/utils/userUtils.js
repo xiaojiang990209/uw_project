@@ -68,7 +68,6 @@ const validateLoginInput = data => {
 };
 
 const createUser = (name, email, password) => new User({
-  _id: new mongoose.Types.ObjectId(),
   name,
   email,
   password,
