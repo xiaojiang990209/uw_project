@@ -14,3 +14,7 @@ export const fetchInfoSessions= () => {
   return axios.get('/api/infosession')
     .then(res => res.data);
 }
+
+export const fetchBookingDates = () => {
+  return axios.get('/api/library/dates').then(res => res.data);
+}
