@@ -1,6 +1,7 @@
 const THEME = {
   color: {
     background: '#FFFFE0',
+    primary: '#373a47'
   },
   unit: {
     small: 4,
