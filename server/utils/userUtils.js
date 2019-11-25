@@ -2,6 +2,7 @@ const Validator = require('validator');
 const isEmpty = require('is-empty');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
+const mongoose = require('mongoose');
 
 const validateRegisterInput = data => {
   let errors = {};
@@ -64,12 +65,12 @@ const validateLoginInput = data => {
     errors,
     isValid: isEmpty(errors)
   };
-}
+};
 
 const createUser = (name, email, password) => new User({
   name,
   email,
-  password
+  password,
 });
 
 const createJwtPayload = user => ({
@@ -85,7 +86,7 @@ const createAuthResponse = (user) => {
       resolve({ success: true, token: `Bearer ${token}`});
     })
   })
-}
+};
 
 module.exports = {
     validateRegisterInput,

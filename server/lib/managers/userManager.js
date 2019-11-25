@@ -60,4 +60,4 @@ const registerHandler = (req, res) => {
 module.exports = {
     loginHandler,
     registerHandler
-}
+};

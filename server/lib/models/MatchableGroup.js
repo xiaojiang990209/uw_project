@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//a study group
 const MatchableGroupSchema = new Schema({
     courseID: {
         type: String,
@@ -12,7 +11,7 @@ const MatchableGroupSchema = new Schema({
         required: true
     },
     endDate: {
-        type: Number,
+        type: Date,
         required: true,
     },
     groupSize: {
@@ -20,9 +19,11 @@ const MatchableGroupSchema = new Schema({
         required: true,
     },
     users: {
-        type: [String],
+        type:  [{ type: Schema.Types.ObjectId, ref: 'User' }],
     },
-
+    isFull : {
+        type: Boolean,
+    }
 });
 
-module.exports = User = mongoose.model('matchableGroup', MatchableGroupSchema);
+module.exports = MatchableGroup = mongoose.model('MatchableGroup', MatchableGroupSchema);
