@@ -56,8 +56,11 @@ function Course(props) {
   return (
     <Wrapper>
       <Container>
+        <br/><br/>
+        <h4>Looking for course information ?</h4>
+        <hr/>
         <Row>
-          <Col md={{ size: 3, offset: 1 }}>
+          <Col md={{ size: 4 }}>
             <Select
               value={selectedSubject}
               onChange={setSelectedSubject}
@@ -66,7 +69,7 @@ function Course(props) {
               placeholder="Subject"
             />
           </Col>
-          <Col md={{ size: 3 }}>
+          <Col md={{ size: 4 }}>
             <Select
               value={selectedTerm}
               onChange={setSelectedTerm}
@@ -82,7 +85,7 @@ function Course(props) {
           </Col>
           <Col md={{ size: 2 }}>
             <MarginWrapper>
-              <Button outline block color="primary" onClick={submitCourse}>
+              <Button outline block onClick={submitCourse}>
                 Get Courses
               </Button>
             </MarginWrapper>
