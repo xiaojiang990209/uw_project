@@ -34,5 +34,6 @@ router.post('/matchable/groups', validators.matchable.registerGroupValidator,  m
 router.post('/matchable/update-group', managers.matchable.updateGroupHandler);//join a new group
 router.get('/library/dates', managers.library.getDatesHandler);
 router.get('/library/buildings', managers.library.getBuildingHandler);
+router.get('/library/booking-table', managers.library.getBookingTableHandler);
 
 module.exports = router;

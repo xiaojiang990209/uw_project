@@ -13,6 +13,7 @@ import Dashboard from "./containers/Dashboard";
 import Course from "./containers/Course/Course";
 import Navbar from "./containers/Navbar/Navbar";
 import MatchableJoin from "./containers/Matchable/MatchableJoin";
+import MatchableCreate from "./containers/Matchable/MatchableCreate";
 import theme from "./theme";
 import { menu_options } from './utils/constants';
 
@@ -34,6 +35,7 @@ class App extends Component {
               <Route exact path="/login" component={Login}/>
               <PrivateRoute exact path="/course" component={Course}/>
               <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
+              <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard}/>
               </Switch>

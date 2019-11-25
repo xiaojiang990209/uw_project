@@ -18,6 +18,18 @@ const getBuildingJson = () => new Promise((resolve, reject) => {
     .catch(reject);
 })
 
+const getBookingTableHtml = () => new Promise((resolve, reject) => {
+  requestWrapper('GET', UW_LIB_BOOKING_URL)
+    .then(cheerio.load)
+    .then(collectBookingTable)
+    .then(resolve)
+    .then(reject);
+})
+
+const collectBookingTable = ($) => {
+  return $.html($('#day_main'));
+}
+
 const collectDates = ($) => {
   const dates = [];
   $('#dayChanger option').each((i, op) => dates.push($(op).text().trim()));
@@ -35,5 +47,6 @@ const collectBuildings = ($) => {
 
 module.exports = {
   getDatesJson,
-  getBuildingJson
+  getBuildingJson,
+  getBookingTableHtml
 }

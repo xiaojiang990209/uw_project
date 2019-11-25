@@ -3,19 +3,22 @@ import { connect } from 'react-redux';
 import { Button, Form, Label, Input, Col } from 'reactstrap';
 import Select from '../../components/Select';
 import { getTerms } from '../../ducks/course';
-import { fetchBookingDates } from '../../ducks/uw';
+import { fetchBookingDates, fetchBookingBuildings, fetchBookingTable } from '../../ducks/uw';
 import { matchGroup } from '../../ducks/matchable';
 import { FormWrapper, StyledFormGroup } from './component';
 
-function MatchableJoin(props) {
-  const [selectedSubject, setSelectedSubject] = useState(null);
+function MatchableCreate(props) {
+  const referral = props.location.state;
+  const [selectedSubject, setSelectedSubject] = useState(referral.selectedSubject);
+  const [selectedCourse, setSelectedCourse] = useState(referral.selectedCourse || "");
+  const [selectedDay, setSelectedDay] = useState(referral.selectedDay);
+  const [selectedHour, setSelectedHour] = useState(referral.selectedHour);
+  const [selectedAm, setSelectedAm] = useState(referral.selectedAm);
+  const [selectedGroupSize, setSelectedGroupSize] = useState(referral.selectedGroupSize);
+  const [selectedBuilding, setSelectedBuilding] = useState(null);
   const [dates, setDates] = useState([]);
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [selectedHour, setSelectedHour] = useState(null);
-  const [selectedAm, setSelectedAm] = useState(null);
-  const [selectedGroupSize, setSelectedGroupSize] = useState(null);
-  const [selectedCourse, setSelectedCourse] = useState("");
-
+  const [buildings, setBuildings] = useState([]);
+  const [bookingPage, setBookingPage] = useState(null);
   const [error, setError] = useState(null);
 
   const selectMapper = (e) => ({ value: e, label: e });
@@ -32,13 +35,27 @@ function MatchableJoin(props) {
       .then(data => setDates(data.dates.map(selectMapper)))
       .catch(err => console.log(err));
   }
+  const initializeBookingBuildings = () => {
+    fetchBookingBuildings()
+      .then(data => setBuildings(data.buildings))
+      .catch(err => console.log(err));
+  }
+  const initializeBookingTable = () => {
+    fetchBookingTable()
+      .then(data => setBookingPage(data))
+      .catch(err => console.log(err));
+  }
+
+  console.log(bookingPage);
 
   const hour = [...Array(13).keys()].slice(1).map(selectMapper);
   const am = ['AM', 'PM'].map(selectMapper);
   const groupSizes = [...Array(13).keys()].slice(2).map(selectMapper);
-
+  
   useEffect(initializeSubjects, []);
   useEffect(initializeBookingDates, []);
+  useEffect(initializeBookingBuildings, []);
+  useEffect(initializeBookingTable, []);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -49,31 +66,14 @@ function MatchableJoin(props) {
     }
     const courseID = `${selectedSubject.value} ${selectedCourse}`;
     matchGroup(selectedGroupSize.value, courseID, date, !!selectedHour && !!selectedAm)
-      .then(res => { if (!res.data.exactMatch.length && !res.data.fuzzyMatch.length) setError(true); })
-      .catch(err => setError(err));
+      // .then(res => console.log(res.status))
+      // .catch(err => setError(err));
   }
-
-  const redirectOnError = () => {
-    props.history.push('/matchable/create', {
-      selectedSubject,
-      selectedCourse,
-      selectedDay,
-      selectedHour,
-      selectedAm,
-      selectedGroupSize
-    });
-  };
-
-  const groupNotFoundErrorBlock = (
-    <Button color="danger" onClick={redirectOnError} outline block>
-        Oops didn't find you with any group! Would you like to start one instead?
-    </Button>
-  );
 
   return (
     <FormWrapper>
       <br/>
-      <h4>Looking for study buddies? Fill out the form below!</h4>
+      <h4>Fill out the infomation below and create your own study group!</h4>
       <hr/>
       <Form onSubmit={onFormSubmit}>
         <StyledFormGroup row>
@@ -109,9 +109,15 @@ function MatchableJoin(props) {
             <Select value={selectedAm} onChange={setSelectedAm} options={am} placeholder="AM" />
           </Col>
         </StyledFormGroup>
-        <Button block type="submit" color="success">Find!</Button>
-        { error && groupNotFoundErrorBlock }
+        <StyledFormGroup row>
+          <Label for="building" md={3}>Building</Label>
+          <Col>
+            <Select value={selectedBuilding} onChange={setSelectedBuilding} options={buildings} placeholder="Building" required />
+          </Col>
+        </StyledFormGroup>
+        <Button type="submit" color="success" block>Create!</Button>
       </Form>
+      <div dangerouslySetInnerHTML={{ __html: bookingPage }} />
     </FormWrapper>
   );
 }
@@ -127,5 +133,5 @@ const mapDispatchToProps = ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MatchableJoin);
+)(MatchableCreate);
 
