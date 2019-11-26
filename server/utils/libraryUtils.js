@@ -18,8 +18,8 @@ const getBuildingJson = () => new Promise((resolve, reject) => {
     .catch(reject);
 })
 
-const getBookingTableHtml = () => new Promise((resolve, reject) => {
-  requestWrapper('GET', UW_LIB_BOOKING_URL)
+const getRoomHtml = (day, area) => new Promise((resolve, reject) => {
+  requestWrapper('GET', `${UW_LIB_BOOKING_URL}?dayChanger=${day}&area=${area}`)
     .then(cheerio.load)
     .then(collectBookingTable)
     .then(resolve)
@@ -61,5 +61,5 @@ const collectBuildings = ($) => {
 module.exports = {
   getDatesJson,
   getBuildingJson,
-  getBookingTableHtml
+  getRoomHtml
 }

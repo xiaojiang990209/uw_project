@@ -1,4 +1,4 @@
-const { getDatesJson, getBuildingJson, getBookingTableHtml } = require('../../utils/libraryUtils');
+const { getDatesJson, getBuildingJson, getRoomHtml } = require('../../utils/libraryUtils');
 const HTTP_STATUS = require('../../utils/statusCodes');
 
 const getDatesHandler = (req, res) => {
@@ -13,8 +13,9 @@ const getBuildingHandler = (req, res) => {
     .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err: true }));
 }
 
-const getBookingTableHandler = (req, res) => {
-  getBookingTableHtml()
+const getRoomHandler = (req, res) => {
+  const { day, area } = req.query;
+  getRoomHtml(day, area)
     .then((data) => res.send(data))
     .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err: true }));
 }
@@ -22,5 +23,5 @@ const getBookingTableHandler = (req, res) => {
 module.exports = {
   getDatesHandler,
   getBuildingHandler,
-  getBookingTableHandler
+  getRoomHandler
 };

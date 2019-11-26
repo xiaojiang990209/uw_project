@@ -13,9 +13,8 @@ function MatchableCreate(props) {
   const [selectedSubject, setSelectedSubject] = useState(referral.selectedSubject);
   const [selectedCourse, setSelectedCourse] = useState(referral.selectedCourse || "");
   const [selectedDay, setSelectedDay] = useState(referral.selectedDay);
-  const [selectedHour, setSelectedHour] = useState(referral.selectedHour);
-  const [selectedAm, setSelectedAm] = useState(referral.selectedAm);
   const [selectedGroupSize, setSelectedGroupSize] = useState(referral.selectedGroupSize);
+  const [selectedDuration, setSelectedDuration] = useState(null);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
   const [dates, setDates] = useState([]);
   const [buildings, setBuildings] = useState([]);
@@ -42,32 +41,29 @@ function MatchableCreate(props) {
       .then(data => setBuildings(data.buildings))
       .catch(err => console.log(err));
   }
-  const initializeBookingTable = () => {
-    fetchBookingTable()
-      .then(data => setBookingPage(data))
-      .catch(err => console.log(err));
-  }
 
-  const hour = [...Array(13).keys()].slice(1).map(selectMapper);
-  const am = ['AM', 'PM'].map(selectMapper);
+  const durations = ['0.5 hours', '1 hour', '1.5 hours', '2 hours', '2.5 hours', '3 hours'].map(selectMapper);
   const groupSizes = [...Array(13).keys()].slice(2).map(selectMapper);
   
   useEffect(initializeSubjects, []);
   useEffect(initializeBookingDates, []);
   useEffect(initializeBookingBuildings, []);
-  useEffect(initializeBookingTable, []);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
     const date = new Date(selectedDay.value);
-    if (selectedHour && selectedAm) {
-      const hour = parseInt(selectedHour.value);
-      date.setHours(selectedAm.value === 'AM' ? hour : hour + 12);
-    }
     const courseID = `${selectedSubject.value} ${selectedCourse}`;
-    matchGroup(selectedGroupSize.value, courseID, date, !!selectedHour && !!selectedAm)
-      // .then(res => console.log(res.status))
-      // .catch(err => setError(err));
+  }
+
+  const displayRoomStatus = (e) => {
+    e.preventDefault();
+    if (!selectedDay || !selectedBuilding) {
+      return;
+    }
+    fetchBookingTable(selectedDay.value, selectedBuilding.value)
+      .then(data => setBookingPage(data))
+      .catch(err => console.log(err));
+    setShowModal(!showModal);
   }
 
   return (
@@ -101,12 +97,9 @@ function MatchableCreate(props) {
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
-          <Label for="time" md={3}>Time (Optional)</Label>
-          <Col md={3}>
-            <Select value={selectedHour} onChange={setSelectedHour} options={hour} placeholder="Hour" />
-          </Col>
-          <Col md={3}>
-            <Select value={selectedAm} onChange={setSelectedAm} options={am} placeholder="AM" />
+          <Label for="time" md={3}>Duration</Label>
+          <Col>
+            <Select value={selectedDuration} onChange={setSelectedDuration} options={durations} placeholder="Duration" required/>
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
@@ -115,7 +108,7 @@ function MatchableCreate(props) {
             <Select value={selectedBuilding} onChange={setSelectedBuilding} options={buildings} placeholder="Building" required />
           </Col>
         </StyledFormGroup>
-        <Button color="success" onClick={() => setShowModal(!showModal)} block>Book room on UW website!</Button>
+        <Button color="success" onClick={displayRoomStatus} block>Book room on UW website!</Button>
         <Button type="submit" color="success" block>Create!</Button>
       </Form>
       <StyledModal isOpen={showModal} toggle={() => setShowModal(!showModal)}>
