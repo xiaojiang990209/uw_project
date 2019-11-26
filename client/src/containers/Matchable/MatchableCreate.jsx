@@ -112,7 +112,9 @@ function MatchableCreate(props) {
         <Button type="submit" color="success" block>Create!</Button>
       </Form>
       <StyledModal isOpen={showModal} toggle={() => setShowModal(!showModal)}>
-        <ModalHeader toggle={() => setShowModal(!showModal)}>Booking Page</ModalHeader>
+        <ModalHeader toggle={() => setShowModal(!showModal)}>
+          <span className="text-primary">{selectedBuilding ? selectedBuilding.label : ""}, {selectedDay ? selectedDay.label : ""}</span>
+        </ModalHeader>
         <StyledModalBody>
           <div dangerouslySetInnerHTML={{ __html: bookingPage }} />
         </StyledModalBody>
