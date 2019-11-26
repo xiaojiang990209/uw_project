@@ -4,7 +4,7 @@ import { Button, Form, Label, Input, Col, ModalHeader } from 'reactstrap';
 import Select from '../../components/Select';
 import { getTerms } from '../../ducks/course';
 import { fetchBookingDates, fetchBookingBuildings, fetchBookingTable } from '../../ducks/uw';
-import { matchGroup } from '../../ducks/matchable';
+import { createGroup } from '../../ducks/matchable';
 import { StyledModal, StyledModalBody, FormWrapper, StyledFormGroup } from './component';
 import './css/modal.css';
 
@@ -14,6 +14,8 @@ function MatchableCreate(props) {
   const [selectedCourse, setSelectedCourse] = useState(referral.selectedCourse || "");
   const [selectedDay, setSelectedDay] = useState(referral.selectedDay);
   const [selectedGroupSize, setSelectedGroupSize] = useState(referral.selectedGroupSize);
+  const [selectedHour, setSelectedHour] = useState(referral.selectedHour);
+  const [selectedAm, setSelectedAm] = useState(referral.selectedAm);
   const [selectedDuration, setSelectedDuration] = useState(null);
   const [selectedBuilding, setSelectedBuilding] = useState(null);
   const [dates, setDates] = useState([]);
@@ -43,6 +45,8 @@ function MatchableCreate(props) {
   }
 
   const durations = ['0.5 hours', '1 hour', '1.5 hours', '2 hours', '2.5 hours', '3 hours'].map(selectMapper);
+  const hour = [...Array(13).keys()].slice(1).map(selectMapper);
+  const am = ['AM', 'PM'].map(selectMapper);
   const groupSizes = [...Array(13).keys()].slice(2).map(selectMapper);
   
   useEffect(initializeSubjects, []);
@@ -53,6 +57,13 @@ function MatchableCreate(props) {
     e.preventDefault();
     const date = new Date(selectedDay.value);
     const courseID = `${selectedSubject.value} ${selectedCourse}`;
+    const hour = parseInt(selectedHour.value);
+    date.setHours(selectedAm.value === 'AM' ? hour : hour + 12);
+    const duration = parseInt(selectedDuration.value);
+    const groupSize = parseInt(selectedGroupSize.value);
+    createGroup(date, courseID, groupSize, duration, '5dd5e650ed8370000859142a')
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
   }
 
   const displayRoomStatus = (e) => {
@@ -97,9 +108,18 @@ function MatchableCreate(props) {
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
-          <Label for="time" md={3}>Duration</Label>
+          <Label for="duration" md={3}>Duration</Label>
           <Col>
             <Select value={selectedDuration} onChange={setSelectedDuration} options={durations} placeholder="Duration" required/>
+          </Col>
+        </StyledFormGroup>
+        <StyledFormGroup row>
+          <Label for="time" md={3}>Time</Label>
+          <Col md={3}>
+            <Select value={selectedHour} onChange={setSelectedHour} options={hour} placeholder="Hour" required/>
+          </Col>
+          <Col md={3}>
+            <Select value={selectedAm} onChange={setSelectedAm} options={am} placeholder="AM" required/>
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>

@@ -3,7 +3,7 @@ import BaseSelect from 'react-select';
 
 const Select = (props) => {
   const [selectedRef, setSelectedRef] = useState(null);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(props.value || '');
   const { required, ...rest } = props;
 
   const noop = () => {}
