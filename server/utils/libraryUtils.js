@@ -38,6 +38,8 @@ const collectBookingTable = ($) => {
     const oldSrc = $(op).attr('src');
     const newSrc = `/images/${oldSrc}`;
     $(op).attr('src', newSrc);
+    $(op).attr('width', '14');
+    $(op).attr('height', '14');
   });
 
   return $.html($('#day_main'));

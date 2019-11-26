@@ -1,4 +1,4 @@
-.dwm_main {font-size: 13px;}
+.dwm_main {font-size: 14px;}
 .dwm_main a {display: block;height: 100%;}
 .dwm_main td {padding: 0;
    border-top:  1px solid #ffffff;
@@ -7,7 +7,6 @@
    border-right: 0}
 .dwm_main td:first-child {border-left: 0}
 .dwm_main th {
-    font-size: small;
     font-weight: normal;
     vertical-align: top;
     padding: 0 2px 0 2px;
