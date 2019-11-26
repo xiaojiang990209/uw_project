@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, Label, Input, Col } from 'reactstrap';
+import { Button, Form, Label, Input, Col, ModalHeader } from 'reactstrap';
 import Select from '../../components/Select';
 import { getTerms } from '../../ducks/course';
 import { fetchBookingDates, fetchBookingBuildings, fetchBookingTable } from '../../ducks/uw';
 import { matchGroup } from '../../ducks/matchable';
-import { FormWrapper, StyledFormGroup } from './component';
+import { StyledModal, StyledModalBody, FormWrapper, StyledFormGroup } from './component';
+import './css/modal.css';
 
 function MatchableCreate(props) {
   const referral = props.location.state;
@@ -19,6 +20,7 @@ function MatchableCreate(props) {
   const [dates, setDates] = useState([]);
   const [buildings, setBuildings] = useState([]);
   const [bookingPage, setBookingPage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
 
   const selectMapper = (e) => ({ value: e, label: e });
@@ -45,8 +47,6 @@ function MatchableCreate(props) {
       .then(data => setBookingPage(data))
       .catch(err => console.log(err));
   }
-
-  console.log(bookingPage);
 
   const hour = [...Array(13).keys()].slice(1).map(selectMapper);
   const am = ['AM', 'PM'].map(selectMapper);
@@ -115,9 +115,15 @@ function MatchableCreate(props) {
             <Select value={selectedBuilding} onChange={setSelectedBuilding} options={buildings} placeholder="Building" required />
           </Col>
         </StyledFormGroup>
+        <Button color="success" onClick={() => setShowModal(!showModal)} block>Book room on UW website!</Button>
         <Button type="submit" color="success" block>Create!</Button>
       </Form>
-      <div dangerouslySetInnerHTML={{ __html: bookingPage }} />
+      <StyledModal isOpen={showModal} toggle={() => setShowModal(!showModal)}>
+        <ModalHeader toggle={() => setShowModal(!showModal)}>Booking Page</ModalHeader>
+        <StyledModalBody>
+          <div dangerouslySetInnerHTML={{ __html: bookingPage }} />
+        </StyledModalBody>
+      </StyledModal>
     </FormWrapper>
   );
 }
@@ -134,4 +140,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MatchableCreate);
-
