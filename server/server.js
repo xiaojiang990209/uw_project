@@ -10,8 +10,8 @@ const db = require('./config/keys').MONGO_URI;
 const app = express();
 
 //Socket.io
-const http = require('http').createServer(app);
-const  io = require('socket.io')(http);
+const server = require('http').Server(app);
+const  io = require('socket.io')(server);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -46,6 +46,6 @@ io.on('connection', function(socket){
     console.log('a user connected');
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
