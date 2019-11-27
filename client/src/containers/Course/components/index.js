@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   min-height: 100%;
+  width: 85%;
+  margin: 0px auto;
 `;
 
 export const TextWrapper = styled.div`

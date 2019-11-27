@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Row, Col, Button, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
+import { Row, Col, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
 import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
 import { TextWrapper, BoldTitle } from './components';
+import Button from '../../components/Button';
 
 function CourseDetail(props) {
   const [showDetail, setShowDetail] = useState(false);
@@ -114,12 +115,12 @@ function CourseDetail(props) {
 
   return (
     <Row style={{ marginTop: '5px' }}>
-      <Col md={{ size: 8, offset: 2 }}>
-        <Button color="primary" size="md" onClick={onDetailClicked} block>
+      <Col md={{ size: 10, offset: 1 }}>
+        <Button size="md" onClick={onDetailClicked} block>
           {renderCourseTitle(props.course)}
         </Button>
         <Collapse isOpen={showDetail}>
-          <Card outline color="primary">
+          <Card outline >
             <CardBody>
               {renderCourseInfo(props.course)}
               <br />

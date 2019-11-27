@@ -2,7 +2,6 @@ import cuid from 'cuid';
 import _ from 'lodash';
 import React from 'react'
 import {
-  Button,
   Card,
   CardBody,
   CardTitle,
@@ -13,6 +12,7 @@ import {
 import styled from 'styled-components';
 import BaseTab from '../hocs/BaseTab';
 import { fetchInfoSessions } from '../../../ducks/uw';
+import Button from '../../../components/Button';
 
 const Bold = styled.span`
   font-weight: bold;

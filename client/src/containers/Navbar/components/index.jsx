@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  background: #373a47;
+  background: ${({theme}) => theme.color.primary};
   z-index: 1000;
   position: fixed;
   left: 0px;
