@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const MainContainer = styled.div`
   width: 75%;
   margin: ${({theme}) => theme.unit.large}px auto;
 `;

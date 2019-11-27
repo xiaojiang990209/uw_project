@@ -10,14 +10,14 @@ const RegisterContainer = styled.div`
   -webkit-justify-content: center;
   justify-content: center;
   justify-content: center;
-  height: 100%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  ${({ theme }) => theme.color};
+  background-color: ${({ theme }) => theme.color.primary};
+  height: 100vh;
 `;
 
 export default RegisterContainer;

@@ -15,7 +15,7 @@ import MatchableJoin from "../../containers/Matchable/MatchableJoin";
 import MatchableCreate from "../../containers/Matchable/MatchableCreate";
 import theme from "../../theme";
 import { menu_options } from '../../utils/constants';
-import { Container } from './components';
+import { MainContainer } from './components';
 
 class App extends Component {
   render() {
@@ -24,17 +24,17 @@ class App extends Component {
         <ThemeProvider theme={theme}>
           <Router>
             <Navbar options={menu_options}/>
-            <Container>
-              <Route exact path="/" component={Login}/>
-              <Route exact path="/register" component={Register}/>
-              <Route exact path="/login" component={Login}/>
+            <Route exact path="/register" component={Register}/>
+            <Route exact path="/login" component={Login}/>
+            <Route exact path="/" component={Login}/>
+            <MainContainer>
               <PrivateRoute exact path="/course" component={Course}/>
               <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard}/>
               </Switch>
-            </Container>
+            </MainContainer>
           </Router>
         </ThemeProvider>
       </StoreProvider>

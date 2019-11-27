@@ -65,7 +65,7 @@ class Login extends Component {
 
     return (
       <RegisterContainer theme={this.props.theme}>
-        <h3>UW Project</h3>
+        <h3 style={{ color: '#fff' }}>WAssisT</h3>
         <RegisterFormWrapper>
           <Form onSubmit={this.onSubmit}>
             <FormGroup>

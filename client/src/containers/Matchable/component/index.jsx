@@ -14,7 +14,7 @@ export const FormWrapper = styled.div`
 
 export const StyledModal = styled(Modal)`
   max-width: 60%;
-  min-width: 610px;
+  min-width: 650px;
 `
 
 export const StyledModalBody = styled(ModalBody)`
