@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import './index.css';
 
 // All Components
-import App from './App';
+import App from './containers/App/App';
 
 const history = createBrowserHistory();
 ReactDOM.render(<App history={history} />, document.getElementById('root'));

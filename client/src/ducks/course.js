@@ -3,10 +3,13 @@ import axios from 'axios';
 const initialState = {
   ratingsMap: {},
   descriptions: {},
+  subjects: [],
+  terms: []
 };
 
 export const SET_PROF_RATING = 'SET_PROF_RATING';
 export const SET_COURSE_DESCRIPTION = 'SET_COURSE_DESCRIPTION';
+export const SET_SUBJECTS_AND_TERMS = 'SET_SUBJECTS_AND_TERMS';
 
 export const STATE_KEY = 'course';
 
@@ -14,7 +17,10 @@ export const getCourseSchedule = (term, subject) => (dispatch) => {
   return axios.get(`/api/schedule/${term}/${subject}`);
 };
 
-export const getTerms = () => (dispatch) => axios.get('/api/terms').then((res) => res.data);
+export const getTerms = () => (dispatch) => axios.get('/api/terms')
+  .then((res) => res.data)
+  .then((data) => dispatch(setSubjectsAndTerms(data)))
+  .catch((err) => console.log(err));
 
 export const getCourseDescription = (course) => (dispatch) => {
   // Set the corresponding course to null first before actually
@@ -57,6 +63,11 @@ const setCourseDescription = (course, description) => {
   };
 };
 
+const setSubjectsAndTerms = (data) => ({
+  type: SET_SUBJECTS_AND_TERMS,
+  payload: data
+});
+
 const courseReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_PROF_RATING:
@@ -74,6 +85,12 @@ const courseReducer = (state = initialState, action) => {
           ...state.descriptions,
           [action.payload.course]: action.payload.description,
         },
+      };
+    case SET_SUBJECTS_AND_TERMS:
+      return {
+        ...state,
+        subjects: action.payload.subjects,
+        terms: action.payload.terms
       };
 
     default:

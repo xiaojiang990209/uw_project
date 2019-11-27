@@ -4,4 +4,5 @@ module.exports = {
     uwApi: require('./uwApiManager'),
     matchable: require('./matchableManager'),
     rateMyProf: require('./rateMyProfManager'),
+    library: require('./libraryManager'),
 };

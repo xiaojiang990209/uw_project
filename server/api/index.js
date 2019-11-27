@@ -32,5 +32,8 @@ router.get('/terms', getTermHandler);
 router.post('/matchable/current-groups', validators.matchable.currentGroupValidator,  managers.matchable.fetchGroupHandler);//fetching existing groups, post because we need body
 router.post('/matchable/groups', validators.matchable.registerGroupValidator,  managers.matchable.registerGroupHandler);//register a new group
 router.post('/matchable/update-group', managers.matchable.updateGroupHandler);//join a new group
+router.get('/library/dates', managers.library.getDatesHandler);
+router.get('/library/buildings', managers.library.getBuildingHandler);
+router.get('/library/rooms', managers.library.getRoomHandler);
 
 module.exports = router;
