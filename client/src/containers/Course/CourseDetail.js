@@ -7,9 +7,9 @@ import { TextWrapper, BoldTitle } from './components';
 import Button from '../../components/Button';
 
 function CourseDetail(props) {
-  const [showDetail, setShowDetail] = useState(false);
+  const [showDetail, setShowDetail] = useState(props.open);
 
-  useEffect(() => setShowDetail(false), [props.course]);
+  useEffect(() => setShowDetail(props.open), [props.course]);
 
   const fetchCourseDescription = (course) => {
     const distinctInstructors = [
@@ -107,11 +107,16 @@ function CourseDetail(props) {
 
   const onDetailClicked = (e) => {
     e.preventDefault();
+    if (props.open) return;
     if (!showDetail) {
       fetchCourseDescription(props.course);
     }
     setShowDetail(!showDetail);
   };
+
+  if (props.open) {
+    fetchCourseDescription(props.course);
+  }
 
   return (
     <Row style={{ marginTop: '5px' }}>

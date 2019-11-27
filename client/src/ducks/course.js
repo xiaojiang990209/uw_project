@@ -17,6 +17,10 @@ export const getCourseSchedule = (term, subject) => (dispatch) => {
   return axios.get(`/api/schedule/${term}/${subject}`);
 };
 
+export const getIndividualCourseSchedule = (term, subject, catalog_number) => {
+  return axios.get(`/api/schedule/${term}/${subject}/${catalog_number}`).then(res => res.data);
+}
+
 export const getTerms = () => (dispatch) => axios.get('/api/terms')
   .then((res) => res.data)
   .then((data) => dispatch(setSubjectsAndTerms(data)))

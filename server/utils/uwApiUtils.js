@@ -59,10 +59,17 @@ const transformScheduleResponse = data => {
         };
       }
     })
+  courses.push(course);
   return courses.filter(x => x.sections)
 }
 
-const paramToScheduleURL = (req) => `/terms/${req.params.term}/${req.params.subject}/schedule.json`;
+const paramToScheduleURL = (req) => {
+  const { term, subject, catalog_number } = req.params;
+  if (catalog_number) {
+    return `/terms/${term}/${subject}/${catalog_number}/schedule.json`;
+  }
+  return `/terms/${term}/${subject}/schedule.json`;
+}
 
 // --------------------------------------------------------------------------
 

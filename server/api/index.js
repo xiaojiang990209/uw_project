@@ -9,8 +9,10 @@ const validators = require('../lib/Validator');
 const { updateTermHandler, getTermHandler } = require('./term');
 router.use('/docs', swaggerUi.serve);
 
-router.get('/schedule/:term/:subject', managers.uwApi.scheduleHandler);
 router.get('/schedule/detail/:subject/:catalog_number', managers.uwApi.descriptionHandler);
+
+router.get('/schedule/:term/:subject', managers.uwApi.scheduleHandler);
+router.get('/schedule/:term/:subject/:catalog_number', managers.uwApi.scheduleHandler);
 
 router.get('/importantdates', managers.uwApi.importantDatesHandler);
 
