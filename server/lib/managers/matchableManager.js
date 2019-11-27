@@ -5,28 +5,39 @@ const _ = require('lodash');
 
 /**
  * {
- *   exactMatch : [MatchableGroup],
- *   fuzzyMatch: [MatchableGroup],
+ *   disabled:       [MatchableGroup], groups that current user is in or it is full
+ *   exactMatch :    [MatchableGroup],
+ *   fuzzyMatch:     [MatchableGroup],
  * }
  */
 const fetchGroupHandler = (req, res) => {
-    const {maxMembers, courseID, date, hasTime} = req.body; //date has to be in Date format
+    const {maxMembers, courseID, date, hasTime, userID} = req.body; //date has to be in Date format
     const parsedDate = new Date(date);
     const today = new Date();
     const isToday = parsedDate.getDate() === today.getDate() && parsedDate.getMonth() === today.getMonth() && parsedDate.getFullYear() === today.getFullYear();
     const dateMin = isToday ? today : moment(parsedDate).startOf('day');
     const dateMax = moment(parsedDate).endOf('day');
 
-    //TODO: limit the size of return
-    //TODO: return with full
-    MatchableGroup.find({groupSize: { $lte: maxMembers}, courseID, startDate: {$gte: dateMin}, endDate: {$lte: dateMax }, isFull: false})
+
+    MatchableGroup.find({groupSize: { $lte: maxMembers}, courseID, startDate: {$gte: dateMin}, endDate: {$lte: dateMax }})
         .then(groups => {
-            console.log(groups);
             let data = {};
-            if(!groups) return res.status(HTTP_STATUS.NO_CONTENT);
-            data.exactMatch = hasTime ? groups.filter((group) => (group.startDate <= parsedDate && parsedDate <= group.endDate)) : [];
-            console.log("exact match",  data.exactMatch)
-            data.fuzzyMatch = groups.filter((group) => !data.exactMatch.includes(group));
+            if(!groups.length) return res.status(HTTP_STATUS.NO_CONTENT);
+
+            const fullGroups = groups.filter((group) => group.isFull);
+            const unFullGroups =  groups.filter((group) => !group.isFull);
+
+            const userGroups = groups.filter((group) => group.users[userID]).forEach((group) => {group.hasUser = true}); //groups that you are in for this date, ALL
+            const exactMatchFull = fullGroups.filter((group) => group.startDate <= parsedDate && parsedDate <= group.endDate) && !userGroups.includes(userGroups);//groups exact match and full, ALL
+            data.disabled = userGroups.concat(exactMatchFull);
+
+            //all the group exact match unfull and you are not in, ALL
+            data.exactMatch = hasTime ? unFullGroups.filter((group) => (group.startDate <= parsedDate && parsedDate <= group.endDate && !data.userGroups.includes(group))) : [];
+
+            //TODO: limit the size of return
+            //all the group fuzzy match unfull and you are not in, 10
+            data.fuzzyMatch = unFullGroups.filter((group) => !data.exactMatch.includes(group) && !data.userGroups.includes(group));
+
             return res.json(data);
         }
     );
@@ -34,10 +45,10 @@ const fetchGroupHandler = (req, res) => {
 
 
 const registerGroupHandler = (req, res) => {
-    const { groupSize, courseID, startDate, duration, userID } = req.body;
+    const { groupSize, courseID, startDate, duration, userID, location } = req.body;
     const parsedStartDate = new Date(startDate);
     let endDate = moment(parsedStartDate).add( Math.floor(duration), "h").add((duration%1)*60, "m");
-    const newGroup = new MatchableGroup({groupSize, courseID, startDate: parsedStartDate, endDate, users: [userID], isFull: false});
+    const newGroup = new MatchableGroup({groupSize, courseID, startDate: parsedStartDate, endDate, users: [userID], isFull: false, location});
     newGroup.save()
         .then(() => {
             res.json({success: true});
