@@ -27,7 +27,7 @@ const fetchGroupHandler = (req, res) => {
             const fullGroups = groups.filter((group) => group.isFull);
             const unFullGroups =  groups.filter((group) => !group.isFull);
 
-            const userGroups = groups.filter((group) => group.users[userID]).forEach((group) => {group.hasUer = true}); //groups that you are in for this date, ALL
+            const userGroups = groups.filter((group) => group.users[userID]).forEach((group) => {group.hasUser = true}); //groups that you are in for this date, ALL
             const exactMatchFull = fullGroups.filter((group) => group.startDate <= parsedDate && parsedDate <= group.endDate) && !userGroups.includes(userGroups);//groups exact match and full, ALL
             data.disabled = userGroups.concat(exactMatchFull);
 
