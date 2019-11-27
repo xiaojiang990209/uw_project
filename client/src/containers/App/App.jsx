@@ -1,26 +1,21 @@
 import "./App.css";
-import "./index.css";
 
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 
-import StoreProvider from "./contexts/StoreProvider";
-import Register from "./containers/Register/Register";
-import Login from "./containers/Register/Login";
-import PrivateRoute from "./routes/PrivateRoute";
-import Dashboard from "./containers/Dashboard";
-import Course from "./containers/Course/Course";
-import Navbar from "./containers/Navbar/Navbar";
-import MatchableJoin from "./containers/Matchable/MatchableJoin";
-import MatchableCreate from "./containers/Matchable/MatchableCreate";
-import theme from "./theme";
-import { menu_options } from './utils/constants';
-
-const Container = styled.div`
-  width: 75%;
-  margin: ${({theme}) => theme.unit.large}px auto;
-`;
+import StoreProvider from "../../contexts/StoreProvider";
+import Register from "../../containers/Register/Register";
+import Login from "../../containers/Register/Login";
+import PrivateRoute from "../../routes/PrivateRoute";
+import Dashboard from "../../containers/Dashboard";
+import Course from "../../containers/Course/Course";
+import Navbar from "../../containers/Navbar/Navbar";
+import MatchableJoin from "../../containers/Matchable/MatchableJoin";
+import MatchableCreate from "../../containers/Matchable/MatchableCreate";
+import theme from "../../theme";
+import { menu_options } from '../../utils/constants';
+import { Container } from './components';
 
 class App extends Component {
   render() {
