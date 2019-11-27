@@ -21,6 +21,10 @@ const MatchableGroupSchema = new Schema({
     users: {
         type:  [{ type: Schema.Types.ObjectId, ref: 'User' }],
     },
+    location: {
+        type: String,
+        required: false
+    },
     isFull : {
         type: Boolean,
     }

@@ -1,5 +1,5 @@
-const { updateTermJson, loadTermJson } = require('../utils/termUtils');
-const HTTP_STATUS = require('../utils/statusCodes');
+const { updateTermJson, loadTermJson } = require('../../utils/termUtils');
+const HTTP_STATUS = require('../../utils/statusCodes');
 
 const updateTermHandler = (req, res) => {
   updateTermJson()

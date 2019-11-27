@@ -5,8 +5,8 @@ const router = express.Router();
 
 const managers = require('../lib/managers');
 const validators = require('../lib/Validator');
+const middleware = require('../lib/middleware');
 
-const { updateTermHandler, getTermHandler } = require('./term');
 router.use('/docs', swaggerUi.serve);
 
 router.get('/schedule/:term/:subject', managers.uwApi.scheduleHandler);
@@ -26,12 +26,13 @@ router.post('/users/login', managers.user.loginHandler);
 
 router.get('/news', managers.news);
 
-router.put('/terms', updateTermHandler);
-router.get('/terms', getTermHandler);
+router.put('/terms',  managers.terms.updateTermHandler);
+router.get('/terms', managers.terms.getTermHandler);
 
-router.post('/matchable/current-groups', validators.matchable.currentGroupValidator,  managers.matchable.fetchGroupHandler);//fetching existing groups, post because we need body
-router.post('/matchable/groups', validators.matchable.registerGroupValidator,  managers.matchable.registerGroupHandler);//register a new group
-router.post('/matchable/update-group', managers.matchable.updateGroupHandler);//join a new group
+router.post('/matchable/current-groups', middleware.ensureLoggedIn, validators.matchable.currentGroupValidator,  managers.matchable.fetchGroupHandler);//fetching existing groups, post because we need body
+router.post('/matchable/groups', middleware.ensureLoggedIn, middleware.ensureLoggedIn, validators.matchable.registerGroupValidator,  managers.matchable.registerGroupHandler);//register a new group
+router.post('/matchable/update-group', middleware.ensureLoggedIn, managers.matchable.updateGroupHandler);//join a new group
+
 router.get('/library/dates', managers.library.getDatesHandler);
 router.get('/library/buildings', managers.library.getBuildingHandler);
 router.get('/library/rooms', managers.library.getRoomHandler);

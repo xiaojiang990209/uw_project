@@ -10,6 +10,7 @@ const currentGroupValidator = (req, res, next) => {
     if (isEmpty(data.courseID))   errors.courseID = "Course id is required";
     if (isEmpty(data.date))  errors.date = "Date of the study is required";
     if (isEmpty(data.hasTime)) errors.hasTime = "hasTime is required";
+    if (isEmpty(data.userID)) errors.userID = "User id is required";
 
    if(!_.isEqual(errors, {}))  return res.status(HTTP_STATUS.BAD_REQUEST).json(errors);
    next();
