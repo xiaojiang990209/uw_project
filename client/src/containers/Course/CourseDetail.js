@@ -3,16 +3,24 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Col, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
 import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
+import { updateFavouriteCourses } from '../../ducks/session';
 import { TextWrapper, BoldTitle, SolidHeart, HollowHeart } from './components';
 import Button from '../../components/Button';
 
 function CourseDetail(props) {
   const [showDetail, setShowDetail] = useState(props.open);
-
+  const [favourite, setFavourite] = useState(
+    props.favouriteCourses.filter(e => e.course === props.course.name && e.term === props.course.term).length > 0);
+  
   useEffect(() => setShowDetail(props.open), [props.course]);
+  useEffect(() => {
+    return () => {
+      
+    }
+  })
 
   const fetchCourseDescription = (course) => {
-    const distinctInstructors = [
+  const distinctInstructors = [
       ...new Set(course.sections.filter((x) => x.instructor).map((x) => x.instructor)),
     ];
     const newInstructors = distinctInstructors
@@ -114,6 +122,12 @@ function CourseDetail(props) {
     setShowDetail(!showDetail);
   };
 
+  const onFavouriteClicked = (e) => {
+    e.stopPropagation();
+    setFavourite(!favourite);
+    props.updateFavouriteCourses([{ course: props.course.name, term: props.course.term}])
+  };
+
   if (props.open) {
     fetchCourseDescription(props.course);
   }
@@ -123,7 +137,7 @@ function CourseDetail(props) {
       <Col md={{ size: 10, offset: 1 }}>
         <Button size="md" onClick={onDetailClicked} block>
           {renderCourseTitle(props.course)}
-          <HollowHeart />
+          {favourite ? <SolidHeart onClick={onFavouriteClicked} /> : <HollowHeart onClick={onFavouriteClicked} />}
         </Button>
         <Collapse isOpen={showDetail}>
           <Card outline >
@@ -149,11 +163,13 @@ CourseDetail.propTypes = {
 const mapStateToProps = (state) => ({
   ratingsMap: state.course.ratingsMap,
   courseDescriptions: state.course.descriptions,
+  favouriteCourses: state.session.user.favouriteCourses
 });
 
 const mapDispatchToProps = ({
   getBatchProfRating,
-  getCourseDescription
+  getCourseDescription,
+  updateFavouriteCourses
 });
 
 export default connect(

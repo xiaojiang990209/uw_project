@@ -21,7 +21,7 @@ function Course(props) {
   const terms = (props.terms || []).map((e => ({ value: e.key, label: e.value})));
 
   const initializeTerms = () => {
-    if (!props.subjects || !props.terms) {
+    if (!props.subjects.length || !props.terms.length) {
       props.getTerms();
     }
   };

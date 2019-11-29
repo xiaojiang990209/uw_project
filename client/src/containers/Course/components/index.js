@@ -23,5 +23,10 @@ export const MarginWrapper = styled.div`
   margin: ${({ theme }) => 4 * theme.unit.small}px auto;
 `;
 
-export const SolidHeart = () => (<FontAwesomeIcon icon={faHeart} pull="right" size="lg" style={{ color: "red"}} />);
-export const HollowHeart = () => (<FontAwesomeIcon icon={faHeartOutline} pull="right" size="lg" style={{ color: "red"}} />);
+export const SolidHeart = (props) => (
+  <span onClick={props.onClick}><FontAwesomeIcon icon={faHeart} pull="right" size="lg" style={{ color: "red"}} /></span>
+);
+
+export const HollowHeart = (props) => (
+  <span onClick={props.onClick}><FontAwesomeIcon icon={faHeartOutline} pull="right" size="lg" style={{ color: "red"}} /></span>
+);

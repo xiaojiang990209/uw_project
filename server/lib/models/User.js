@@ -20,8 +20,7 @@ const UserSchema = new Schema({
         default: Date.now
     },
     favouriteCourses: [{
-        subject: String,
-        code: String,
+        course: String,
         term: String
     }]
 });

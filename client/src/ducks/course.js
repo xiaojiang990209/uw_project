@@ -53,6 +53,8 @@ export const getBatchProfRating = (names) => (dispatch) => {
     .catch((err) => console.log(err.response));
 }
 
+
+
 const setProfRating = (name, rating) => {
   return {
     type: SET_PROF_RATING,
