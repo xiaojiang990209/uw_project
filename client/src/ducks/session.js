@@ -22,8 +22,8 @@ const authorizeUser = (dispatch, res) => {
   localStorage.setItem('jwtToken', token);
   setAuthToken(token);
 
-  const { name } = jwt_decode(token);
-  dispatch(setCurrentUser(name));
+  const { name, favouriteCourses } = jwt_decode(token);
+  dispatch(setCurrentUser({ name, favouriteCourses }));
 };
 
 export const registerUser = (userRegisterInfo, history) => (dispatch) => {

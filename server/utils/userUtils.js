@@ -75,7 +75,8 @@ const createUser = (name, email, password) => new User({
 
 const createJwtPayload = user => ({
   id: user.id,
-  name: user.name
+  name: user.name,
+  favouriteCourses: user.favouriteCourses
 });
 
 const createAuthResponse = (user) => {
@@ -83,7 +84,7 @@ const createAuthResponse = (user) => {
   const payload = createJwtPayload(user);
     jwt.sign(payload, keys.secretOrKey, { expiresIn: 300 }, (err, token) => {
       if (err) reject({ error: err });
-      resolve({ success: true, token: `Bearer ${token}`});
+      resolve({ success: true, token: `Bearer ${token}` });
     })
   })
 };

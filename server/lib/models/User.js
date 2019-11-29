@@ -18,7 +18,12 @@ const UserSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    favouriteCourses: [{
+        subject: String,
+        code: String,
+        term: String
+    }]
 });
 
 module.exports = User = mongoose.model('User', UserSchema);
