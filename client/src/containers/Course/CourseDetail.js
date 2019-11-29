@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Col, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
 import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
-import { TextWrapper, BoldTitle } from './components';
+import { TextWrapper, BoldTitle, SolidHeart, HollowHeart } from './components';
 import Button from '../../components/Button';
 
 function CourseDetail(props) {
@@ -123,6 +123,7 @@ function CourseDetail(props) {
       <Col md={{ size: 10, offset: 1 }}>
         <Button size="md" onClick={onDetailClicked} block>
           {renderCourseTitle(props.course)}
+          <HollowHeart />
         </Button>
         <Collapse isOpen={showDetail}>
           <Card outline >
