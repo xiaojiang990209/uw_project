@@ -16,6 +16,7 @@ import MatchableCreate from "../../containers/Matchable/MatchableCreate";
 import theme from "../../theme";
 import { menu_options } from '../../utils/constants';
 import { MainContainer } from './components';
+import CourseDisplay from "../Course/CourseDisplay";
 
 class App extends Component {
   render() {
@@ -28,6 +29,7 @@ class App extends Component {
             <Route exact path="/login" component={Login}/>
             <Route exact path="/" component={Login}/>
             <MainContainer>
+              <PrivateRoute exact path="/course/:term/:subject/:catalog_number" component={CourseDisplay} />
               <PrivateRoute exact path="/course" component={Course}/>
               <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
