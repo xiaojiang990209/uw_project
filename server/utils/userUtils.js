@@ -2,7 +2,6 @@ const Validator = require('validator');
 const isEmpty = require('is-empty');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
-const mongoose = require('mongoose');
 
 const validateRegisterInput = data => {
   let errors = {};
@@ -81,7 +80,7 @@ const createJwtPayload = user => ({
 
 const createAuthResponse = (user) => {
   return new Promise((resolve, reject) => {
-  const payload = createJwtPayload(user);
+    const payload = createJwtPayload(user);
     jwt.sign(payload, keys.secretOrKey, { expiresIn: 300 }, (err, token) => {
       if (err) reject({ error: err });
       resolve({ success: true, token: `Bearer ${token}` });

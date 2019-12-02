@@ -27,7 +27,7 @@ const renderInfoSession = (infoSessions, index, key) => {
   const id = cuid();
   return (
     <ListGroupItem key={key}>
-      <Button color="primary" id={id} block>
+      <Button id={id} block>
         <ListParagraphItem>{infoSession.date}</ListParagraphItem>
         <ListParagraphItem>{infoSession.employer}</ListParagraphItem>
       </Button>
@@ -61,4 +61,4 @@ const renderInfoSession = (infoSessions, index, key) => {
   );
 }
 
-export default BaseTab(fetchInfoSessions, renderInfoSession);
+export default BaseTab(fetchInfoSessions, null, renderInfoSession);

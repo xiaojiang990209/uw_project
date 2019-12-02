@@ -19,10 +19,10 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    favouriteCourses: [{
-        course: String,
-        term: String
-    }]
+    favouriteCourses: {
+      type: Schema.Types.Mixed,
+      default: {}
+    }
 });
 
 module.exports = User = mongoose.model('User', UserSchema);

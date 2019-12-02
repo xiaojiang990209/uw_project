@@ -20,7 +20,7 @@ app.use(bodyParser.json());
  * Initialize MongoDB database
  */
 mongoose.connect(
-    db, { useNewUrlParser: true }
+    db, { useNewUrlParser: true, useFindAndModify: false }
 )
 .then(console.log('MongoDB connection created!'))
 .catch(err => console.log(err));

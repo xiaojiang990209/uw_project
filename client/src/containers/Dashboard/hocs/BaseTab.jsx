@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import ReactList from 'react-list';
 
-export default function BaseTab(dataFetcher, itemRenderer) {
-  return (props) => {
-    const [data, setData] = useState(null);
+export default function BaseTab(dataFetcher, storeFetcher, itemRenderer) {
+  function Tab(props) {
+    const [data, setData] = useState(props.data);
     const [error, setError] = useState(null);
 
     const fetchData = () => {
-      dataFetcher().then(data => setData(data)).catch(err => setError(err));
+      if (dataFetcher) {
+        dataFetcher().then(data => setData(data)).catch(err => setError(err));
+      }
     }
 
     useEffect(fetchData, []);
@@ -27,4 +30,5 @@ export default function BaseTab(dataFetcher, itemRenderer) {
 
     return (<>{content}</>);
   }
+  return connect(storeFetcher, null)(Tab);
 }

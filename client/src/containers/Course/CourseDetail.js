@@ -3,24 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Col, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
 import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
-import { updateFavouriteCourses } from '../../ducks/session';
 import { TextWrapper, BoldTitle, SolidHeart, HollowHeart } from './components';
 import Button from '../../components/Button';
 
 function CourseDetail(props) {
   const [showDetail, setShowDetail] = useState(props.open);
-  const [favourite, setFavourite] = useState(
-    props.favouriteCourses.filter(e => e.course === props.course.name && e.term === props.course.term).length > 0);
   
-  useEffect(() => setShowDetail(props.open), [props.course]);
   useEffect(() => {
-    return () => {
+    setShowDetail(props.open);
+  }, [props.course]);
       
-    }
-  })
-
   const fetchCourseDescription = (course) => {
-  const distinctInstructors = [
+    const distinctInstructors = [
       ...new Set(course.sections.filter((x) => x.instructor).map((x) => x.instructor)),
     ];
     const newInstructors = distinctInstructors
@@ -96,7 +90,7 @@ function CourseDetail(props) {
     });
     return (
       <TextWrapper>
-        <Table size="sm">
+        <Table size="sm" responsive>
           <thead>
             <tr>
               <th>Section</th>
@@ -124,8 +118,7 @@ function CourseDetail(props) {
 
   const onFavouriteClicked = (e) => {
     e.stopPropagation();
-    setFavourite(!favourite);
-    props.updateFavouriteCourses([{ course: props.course.name, term: props.course.term}])
+    props.toggle({ name: props.course.name, term: props.course.term, favourite: !props.isFavourite });
   };
 
   if (props.open) {
@@ -137,7 +130,7 @@ function CourseDetail(props) {
       <Col md={{ size: 10, offset: 1 }}>
         <Button size="md" onClick={onDetailClicked} block>
           {renderCourseTitle(props.course)}
-          {favourite ? <SolidHeart onClick={onFavouriteClicked} /> : <HollowHeart onClick={onFavouriteClicked} />}
+          {props.isFavourite ? <SolidHeart onClick={onFavouriteClicked} /> : <HollowHeart onClick={onFavouriteClicked} />}
         </Button>
         <Collapse isOpen={showDetail}>
           <Card outline >
@@ -163,13 +156,11 @@ CourseDetail.propTypes = {
 const mapStateToProps = (state) => ({
   ratingsMap: state.course.ratingsMap,
   courseDescriptions: state.course.descriptions,
-  favouriteCourses: state.session.user.favouriteCourses
 });
 
 const mapDispatchToProps = ({
   getBatchProfRating,
   getCourseDescription,
-  updateFavouriteCourses
 });
 
 export default connect(

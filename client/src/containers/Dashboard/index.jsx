@@ -5,6 +5,7 @@ import Weather from '../../components/Weather';
 import TabContainer from '../../components/Tab/TabContainer';
 import NewsTab from './components/NewsTab';
 import InfoSessionTab from './components/InfoSessionTab';
+import FavouriteCourseTab from './components/FavouriteCourseTab';
 
 function Dashboard(props) {
   return (
@@ -13,6 +14,7 @@ function Dashboard(props) {
       <TabContainer>
         <NewsTab title="What's around Campus"/>
         <InfoSessionTab title="Upcoming Info Session"/>
+        <FavouriteCourseTab title="Favourite Courses"/>
       </TabContainer>
     </>
   );

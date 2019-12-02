@@ -25,6 +25,7 @@ router.get('/docs', swaggerUi.setup(swaggerDocument));
 
 router.post('/users/register', managers.user.registerHandler);
 router.post('/users/login', managers.user.loginHandler);
+router.put('/users/favouriteCourses', managers.user.favouriteCoursesHandler);
 
 router.get('/news', managers.news);
 

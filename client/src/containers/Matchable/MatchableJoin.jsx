@@ -23,7 +23,7 @@ function MatchableJoin(props) {
   const subjects = (props.subjects || []).map(selectMapper);
 
   const initializeSubjects = () => {
-    if (!props.subjects) {
+    if (!(props.subjects || []).length) {
       props.getTerms();
     }
   };
