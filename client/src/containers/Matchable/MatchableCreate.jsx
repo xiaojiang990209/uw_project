@@ -5,7 +5,7 @@ import Select from '../../components/Select';
 import { getTerms } from '../../ducks/course';
 import { fetchBookingDates, fetchBookingBuildings, fetchBookingTable } from '../../ducks/uw';
 import { createGroup } from '../../ducks/matchable';
-import { StyledModal, StyledModalBody, FormWrapper, StyledFormGroup } from './component';
+import { StyledModal, StyledModalBody, FormWrapper, StyledFormGroup, StyledBookingTable } from './component';
 import './css/modal.css';
 
 function MatchableCreate(props) {
@@ -136,7 +136,7 @@ function MatchableCreate(props) {
           <span className="text-primary">{selectedBuilding ? selectedBuilding.label : ""}, {selectedDay ? selectedDay.label : ""}</span>
         </ModalHeader>
         <StyledModalBody>
-          <div dangerouslySetInnerHTML={{ __html: bookingPage }} />
+          <StyledBookingTable dangerouslySetInnerHTML={{ __html: bookingPage }} />
         </StyledModalBody>
       </StyledModal>
     </FormWrapper>
