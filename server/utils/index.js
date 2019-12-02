@@ -1,9 +1,9 @@
-const courseUtils = require('./courseUtils');
+const uwApiUtils = require('./uwApiUtils');
 const rateMyProfUtils = require('./rateMyProfUtils');
 const globalUtils = require('./globalUtils');
 
 module.exports = {
-    ...courseUtils,
+    ...uwApiUtils,
     ...rateMyProfUtils,
-    ...globalUtils
+    ...globalUtils,
 }

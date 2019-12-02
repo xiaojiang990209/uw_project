@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Row, Col, Button, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
-import { getProfRating, getCourseDescription } from '../../ducks/course';
+import { Row, Col, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
+import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
 import { TextWrapper, BoldTitle } from './components';
+import Button from '../../components/Button';
 
 function CourseDetail(props) {
-  const [showDetail, setShowDetail] = useState(false);
+  const [showDetail, setShowDetail] = useState(props.open);
 
-  useEffect(() => setShowDetail(false), [props.course]);
+  useEffect(() => setShowDetail(props.open), [props.course]);
 
   const fetchCourseDescription = (course) => {
-    let distinctInstructors = [
+    const distinctInstructors = [
       ...new Set(course.sections.filter((x) => x.instructor).map((x) => x.instructor)),
     ];
-    distinctInstructors.forEach((x) => {
-      if (!(x in props.ratingsMap)) {
-        props.getProfRating(x);
-      }
-    });
+    const newInstructors = distinctInstructors
+      .filter(instructor => !(instructor in props.ratingsMap));
+    props.getBatchProfRating(newInstructors);
+
     if (!(course.name in props.courseDescriptions)) {
       props.getCourseDescription(course.name);
     }
@@ -107,20 +107,25 @@ function CourseDetail(props) {
 
   const onDetailClicked = (e) => {
     e.preventDefault();
+    if (props.open) return;
     if (!showDetail) {
       fetchCourseDescription(props.course);
     }
     setShowDetail(!showDetail);
   };
 
+  if (props.open) {
+    fetchCourseDescription(props.course);
+  }
+
   return (
     <Row style={{ marginTop: '5px' }}>
-      <Col md={{ size: 8, offset: 2 }}>
-        <Button color="primary" size="md" onClick={onDetailClicked} block>
+      <Col md={{ size: 10, offset: 1 }}>
+        <Button size="md" onClick={onDetailClicked} block>
           {renderCourseTitle(props.course)}
         </Button>
         <Collapse isOpen={showDetail}>
-          <Card outline color="primary">
+          <Card outline >
             <CardBody>
               {renderCourseInfo(props.course)}
               <br />
@@ -134,10 +139,10 @@ function CourseDetail(props) {
 }
 
 CourseDetail.propTypes = {
-  getProfRating: PropTypes.func.isRequired,
-  getCourseDescription: PropTypes.func.isRequired,
   ratingsMap: PropTypes.object.isRequired,
   courseDescriptions: PropTypes.object.isRequired,
+  getBatchProfRating: PropTypes.func,
+  getCourseDescription: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -145,7 +150,12 @@ const mapStateToProps = (state) => ({
   courseDescriptions: state.course.descriptions,
 });
 
+const mapDispatchToProps = ({
+  getBatchProfRating,
+  getCourseDescription
+});
+
 export default connect(
   mapStateToProps,
-  { getProfRating, getCourseDescription }
+  mapDispatchToProps
 )(CourseDetail);

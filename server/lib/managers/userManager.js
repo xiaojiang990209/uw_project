@@ -5,8 +5,8 @@ const {
     validateLoginInput,
     createAuthResponse,
     createUser
-} = require('../utils/userUtils');
-const HTTP_STATUS = require('../utils/statusCodes');
+} = require('../../utils/userUtils');
+const HTTP_STATUS = require('../../utils/statusCodes');
 
 const loginHandler = (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
@@ -27,7 +27,7 @@ const loginHandler = (req, res) => {
               .catch(err => res.status(HTTP_STATUS.BAD_REQUEST).json(err));
           })
       })
-}
+};
 
 const registerHandler = (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -55,9 +55,9 @@ const registerHandler = (req, res) => {
           })
         })
       })
-}
+};
 
 module.exports = {
     loginHandler,
     registerHandler
-}
+};

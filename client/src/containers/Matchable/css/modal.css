@@ -1,0 +1,42 @@
+.dwm_main {font-size: 14px;}
+.dwm_main a {display: block;height: 100%;}
+.dwm_main td {padding: 0;
+   border-top:  1px solid #ffffff;
+   border-left: 1px solid #e7ebee;
+   border-bottom: 0;
+   border-right: 0}
+.dwm_main td:first-child {border-left: 0}
+.dwm_main th {
+    font-weight: normal;
+    vertical-align: top;
+    padding: 0 2px 0 2px;
+    color: #ffffff;
+    background-color: #373a47;
+    border-left: 1px solid #e7ebee;
+    text-align: center;
+}
+td.I {background-color: #ddffdd}
+table.dwm_main {clear: both;width: 100%;border-spacing: 0;border-collapse: separate;border: 0;}
+td.even_row       {background-color: #ffffff}      /* even rows in the day view */
+td.odd_row        {background-color: #f2f4f6}       /* odd rows in the day view */
+td.times          {background-color: #373a47}
+.times a:link    {color: #ffffff;    text-decoration: none; font-weight: normal}
+.times a:visited {color: #ffffff; text-decoration: none; font-weight: normal}
+.times a:hover   {color: #ffffff;   text-decoration:underline; font-weight: normal}
+.dwm_main th a:link    {color: #ffffff;    text-decoration: none; font-weight: normal}
+.dwm_main th a:visited {color: #ffffff;text-decoration: none;font-weight: normal;}
+.dwm_main th a:hover   {color: #ffffff;   text-decoration:underline; font-weight: normal}
+.dwm_main tr:hover td:hover.odd_row, .dwm_main tr:hover td:hover.even_row {background-color: #aabbff}
+.dwm_main tr:hover td.times {background-color: #aabbff; color: #0B263B}
+
+
+div.celldiv1 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv2 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv3 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv4 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv5 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv6 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv7 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv8 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv9 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv10 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }

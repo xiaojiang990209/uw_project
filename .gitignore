@@ -1,5 +1,12 @@
+
+
+#Dependencies
 client/node_modules
 client/package-lock.json
-server
-.gitignore
-client/.idea
+server/package-lock.json
+server/node_modules
+
+
+#Development IDE
+*/.idea
+.idea/
