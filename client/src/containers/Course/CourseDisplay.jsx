@@ -26,7 +26,6 @@ function CourseDisplay(props) {
         ...props.favouriteCourses,
         [name]: [ ...(props.favouriteCourses[name] || []), { value: term, label } ]
       };
-      console.log(updatedFavouriteCourses);
     } else {
       updatedFavouriteCourses = {
         ...props.favouriteCourses,

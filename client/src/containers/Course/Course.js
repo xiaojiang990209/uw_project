@@ -45,7 +45,6 @@ function Course(props) {
         ...props.favouriteCourses,
         [name]: [ ...(props.favouriteCourses[name] || []), { ...selectedTerm } ]
       };
-      console.log(updatedFavouriteCourses);
     } else {
       updatedFavouriteCourses = {
         ...props.favouriteCourses,
