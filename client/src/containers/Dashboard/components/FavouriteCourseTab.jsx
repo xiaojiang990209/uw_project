@@ -25,10 +25,7 @@ const storeFetcher = (state) => {
       favouriteCourses.push({ course, term });
     });
   });
-
-  return ({
-    data: favouriteCourses
-  });
-}
+  return favouriteCourses;
+};
 
 export default BaseTab(null, storeFetcher, renderFavouriteCourses);

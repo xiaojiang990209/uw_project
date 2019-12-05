@@ -2,19 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import ReactList from 'react-list';
 
-export default function BaseTab(dataFetcher, storeFetcher, itemRenderer) {
-  function Tab(props) {
-    const [data, setData] = useState(props.data);
-    const [error, setError] = useState(null);
 
-    const fetchData = () => {
-      if (dataFetcher) {
-        dataFetcher().then(data => setData(data)).catch(err => setError(err));
-      }
-    }
-
-    useEffect(fetchData, []);
-
+/**
+ * A Hoc that is designed to display a list of items, specified by props.data
+ * @param {*} itemRenderer 
+ */
+function Tab(itemRenderer) {
+  return (props) => {
+    const { error, data } = props;
     let content;
     if (error || !data) {
       content = (<div>{error}</div>);
@@ -27,8 +22,20 @@ export default function BaseTab(dataFetcher, storeFetcher, itemRenderer) {
         </div>
       );
     }
-
     return (<>{content}</>);
-  }
-  return connect(storeFetcher, null)(Tab);
+  };
 }
+
+export default function BaseTab(apiFetcher, storeFetcher, itemRenderer) {
+  const TabComponent = Tab(itemRenderer);
+  if (storeFetcher) {
+    const mapStateToProps = (state) => ({ data: storeFetcher(state) });
+    return connect(mapStateToProps, null)(TabComponent);
+  }
+  return () => {
+    const [data, setData] = useState(null);
+    const [err, setError] = useState(null);
+    useEffect(() => { apiFetcher().then(setData).catch(setError); }, []);
+    return <TabComponent data={data} error={err} />
+  };
+};
