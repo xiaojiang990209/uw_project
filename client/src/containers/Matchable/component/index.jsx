@@ -13,10 +13,13 @@ export const FormWrapper = styled.div`
 `;
 
 export const StyledModal = styled(Modal)`
-  max-width: 60%;
-  min-width: 650px;
+  max-width: 768px;
 `
 
 export const StyledModalBody = styled(ModalBody)`
   padding: ${({theme}) => 2 * theme.unit.small}px;
 `
+
+export const StyledBookingTable = styled.div`
+  overflow-x: scroll;
+`;
