@@ -16,14 +16,15 @@ const initialState = {
 
 export const USER_LOADING = 'USER_LOADING';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const SET_FAVOURITE_COURSES = 'SET_FAVOURITE_COURSES';
 
 const authorizeUser = (dispatch, res) => {
   const { token } = res.data;
   localStorage.setItem('jwtToken', token);
   setAuthToken(token);
 
-  const { name } = jwt_decode(token);
-  dispatch(setCurrentUser(name));
+  const user = jwt_decode(token);
+  dispatch(setCurrentUser(user));
 };
 
 export const registerUser = (userRegisterInfo, history) => (dispatch) => {
@@ -38,6 +39,22 @@ export const loginUser = (userLoginInfo, history) => (dispatch) => {
     authorizeUser(dispatch, res);
     history.push('/dashboard');
   });
+};
+
+export const updateFavouriteCourses = (courses) => (dispatch, getState) => {
+  if (courses) {
+    dispatch(setFavouriteCourses(courses));
+  } else {
+    const { id, favouriteCourses } = getState().session.user;
+    client.session.saveFavouriteCourses(id, favouriteCourses);
+  }
+}
+
+const setFavouriteCourses = (courses) => {
+  return {
+    type: SET_FAVOURITE_COURSES,
+    payload: courses
+  };
 };
 
 export const setCurrentUser = (decoded) => {
@@ -73,6 +90,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case SET_FAVOURITE_COURSES:
+      return {
+        ...state,
+        user: {...state.user, favouriteCourses: action.payload }
+      };
+    
     default:
       return state;
   }

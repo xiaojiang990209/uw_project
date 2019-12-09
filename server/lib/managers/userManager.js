@@ -57,7 +57,15 @@ const registerHandler = (req, res) => {
       })
 };
 
+const favouriteCoursesHandler = async (req, res) => {
+  const { userId, favouriteCourses } = req.body;
+  User.findByIdAndUpdate(userId, { favouriteCourses: favouriteCourses })
+    .then((val) => res.json({ success: true }))
+    .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err }));
+}
+
 module.exports = {
     loginHandler,
-    registerHandler
+    registerHandler,
+    favouriteCoursesHandler
 };

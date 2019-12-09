@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { Container, Row, Col, Button, Input } from 'reactstrap';
 import CourseDetail from './CourseDetail';
 import { getCourseSchedule, getTerms } from '../../ducks/course';
+import { updateFavouriteCourses } from '../../ducks/session';
 import { Wrapper, MarginWrapper } from './components';
 
 const styles = {
@@ -18,13 +19,7 @@ function Course(props) {
   const [filteredCourses, setFilteredCourses] = useState([]);
 
   const subjects = (props.subjects || []).map((e) => ({ value: e, label: e }));
-  const terms = (props.terms || []).map((e => ({ value: e.key, label: e.value})));
-
-  const initializeTerms = () => {
-    if (!props.subjects || !props.terms) {
-      props.getTerms();
-    }
-  };
+  const terms = (props.terms || []).map((e => ({ value: e.key, label: e.value })));
 
   const submitCourse = (e) => {
     e.preventDefault();
@@ -38,8 +33,29 @@ function Course(props) {
       .catch((err) => console.log(err));
   };
 
-  const generateCourseDetails = (courses) =>
-    courses.map((value, index) => <CourseDetail key={index} course={value} />);
+  const generateCourseDetails = (courses) => courses.map((value, index) => {
+    const isFavourite = (props.favouriteCourses[value.name] || []).map(v => v.value).includes(value.term.toString());
+    return (<CourseDetail key={index} course={value} isFavourite={isFavourite} toggle={toggleFavourite}/>);
+  });
+
+  const toggleFavourite = ({name, term, favourite}) => {
+    let updatedFavouriteCourses = {};
+    if (favourite) {
+      updatedFavouriteCourses = {
+        ...props.favouriteCourses,
+        [name]: [ ...(props.favouriteCourses[name] || []), { ...selectedTerm } ]
+      };
+    } else {
+      updatedFavouriteCourses = {
+        ...props.favouriteCourses,
+        [name]: props.favouriteCourses[name].filter(v => v.value !== term.toString())
+      };
+      if (!updatedFavouriteCourses[name].length) {
+        delete updatedFavouriteCourses[name];
+      }
+    }
+    props.updateFavouriteCourses(updatedFavouriteCourses);
+  }
 
   const onCourseCodeChanged = (e) => {
     e.preventDefault();
@@ -48,7 +64,14 @@ function Course(props) {
     setFilteredCourses(filtered);
   }
 
-  useEffect(initializeTerms, []);
+  useEffect(() => {
+    if (!props.subjects.length || !props.terms.length) {
+      props.getTerms();
+    }
+    return () => {
+      props.updateFavouriteCourses(null);
+    };
+  }, []);
   useEffect(() => setFilteredCourses(courses), [courses]);
 
   return (
@@ -97,12 +120,14 @@ function Course(props) {
 
 const mapStateToProps = (state) => ({
   subjects: state.course.subjects,
-  terms: state.course.terms
+  terms: state.course.terms,
+  favouriteCourses: state.session.user.favouriteCourses
 });
 
 const mapDispatchToProps = ({
   getCourseSchedule,
-  getTerms
+  getTerms,
+  updateFavouriteCourses
 })
 
 export default connect(

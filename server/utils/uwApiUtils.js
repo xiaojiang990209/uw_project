@@ -21,6 +21,7 @@ const getClassInfo = data => {
   return {
     name,
     instructor,
+    term: data.term,
     start: date.start_time,
     end: date.end_time,
     days: date.weekdays,
@@ -55,6 +56,7 @@ const transformScheduleResponse = data => {
         course = {
           name: val.name,
           title: val.title,
+          term: val.term,
           sections: [getClassSectionInfo(val)]
         };
       }

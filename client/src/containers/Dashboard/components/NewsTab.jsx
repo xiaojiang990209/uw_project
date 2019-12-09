@@ -9,4 +9,4 @@ const renderNews = (news, index, key) => (
   </ListGroupItem>
 )
 
-export default BaseTab(fetchNews, renderNews);
+export default BaseTab(fetchNews, null, renderNews);
