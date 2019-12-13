@@ -33,9 +33,9 @@ function Course(props) {
       .catch((err) => console.log(err));
   };
 
-  const generateCourseDetails = (courses) => courses.map((value, index) => {
-    const isFavourite = (props.favouriteCourses[value.name] || []).map(v => v.value).includes(value.term.toString());
-    return (<CourseDetail key={index} course={value} isFavourite={isFavourite} toggle={toggleFavourite}/>);
+  const generateCourseDetails = (courses) => courses.map((course, index) => {
+    const isFavourite = (props.favouriteCourses[course.name] || []).map(v => v.value).includes(course.term.value.toString());
+    return (<CourseDetail key={index} course={course} isFavourite={isFavourite} toggle={toggleFavourite}/>);
   });
 
   const toggleFavourite = ({name, term, favourite}) => {
@@ -43,12 +43,12 @@ function Course(props) {
     if (favourite) {
       updatedFavouriteCourses = {
         ...props.favouriteCourses,
-        [name]: [ ...(props.favouriteCourses[name] || []), { ...selectedTerm } ]
+        [name]: [ ...(props.favouriteCourses[name] || []), { ...term } ]
       };
     } else {
       updatedFavouriteCourses = {
         ...props.favouriteCourses,
-        [name]: props.favouriteCourses[name].filter(v => v.value !== term.toString())
+        [name]: props.favouriteCourses[name].filter(v => v.value !== term.value.toString())
       };
       if (!updatedFavouriteCourses[name].length) {
         delete updatedFavouriteCourses[name];

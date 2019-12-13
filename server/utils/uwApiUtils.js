@@ -17,16 +17,17 @@ const getClassInfo = data => {
 
   const formattedLocation = location.building ? `${location.building} ${location.room}` : null;
   const name = `${data.subject} ${data.catalog_number}`;
+  const { key: value, value: label } = TERMS.filter(e => e['key'] === data.term.toString())[0];
 
   return {
+    ...data,
     name,
     instructor,
-    term: data.term,
+    term: { value, label },
     start: date.start_time,
     end: date.end_time,
     days: date.weekdays,
     location: formattedLocation,
-    ...data
   };
 }
 
