@@ -7,17 +7,26 @@
   background: $rw-box-bg;
   display: flex;
   padding: 32px 64px;
+  @media screen and (max-width: 600px) {
+    padding: 16px 16px;
+  }
 
   h2{
     margin:0 0 10px 0;
     font-size: 32px;
     letter-spacing: 2px;
+    @media screen and (max-width: 426px) {
+      font-size: 24px;
+    }
   }
   .rw-box-left{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width:30%;
+    @media screen and (max-width: 426px) {
+      width: 60%;
+    }
   }
   .rw-box-middle {
     width:40%;
@@ -25,7 +34,15 @@
     align-items: center;
     justify-content: center;
     i {
-      font-size: 120px;
+      font-size: 100px;
+    }
+    @media screen and (max-width: 768px) {
+      i {
+        font-size: 60px;
+      }
+    }
+    @media screen and (max-width: 426px) {
+      display: none;
     }
   }
   .rw-box-right{
@@ -36,6 +53,9 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
+    @media screen and (max-width: 426px) {
+      width: 40%;
+    }
   }
   .date{
     color:$rw-text-secondary-color;
@@ -50,6 +70,9 @@
     .current{
       font-size:36px;
       margin: 0px;
+      @media screen and (max-width: 426px) {
+        font-size: 30px;
+      }
     }
     .range{
       color:$rw-text-secondary-color;
