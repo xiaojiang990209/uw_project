@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import OpenWeatherApi from './utils/OpenWeatherApi';
 import TodayForecast from './TodayForecast';
 import './scss/ReactWeather.scss';
+import { TodayForecastContainer } from './component';
 
 const propTypes = {
   unit: PropTypes.oneOf(['metric', 'imperial']),
@@ -38,10 +39,10 @@ function ReactWeather(props) {
   if (data) {
     const today = data.days[0];
     content = (
-      <div className="rw-box">
+      <TodayForecastContainer>
         <TodayForecast location={data.location} todayData={today}
           unit={props.unit} lang={props.lang} />
-      </div>
+      </TodayForecastContainer>
     );
   }
 

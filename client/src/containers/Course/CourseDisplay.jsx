@@ -7,7 +7,7 @@ import CourseDetail from './CourseDetail';
 function CourseDisplay(props) {
   const [course, setCourse] = useState(null);
   const { term, subject, catalog_number } = props.match.params;
-  const isFavourite = course && (props.favouriteCourses[course.name] || []).map(v => v.value).includes(course.term.toString());
+  const isFavourite = course && (props.favouriteCourses[course.name] || []).map(v => v.value).includes(course.term.value.toString());
 
   useEffect(() => {
     getIndividualCourseSchedule(term, subject, catalog_number)
@@ -21,15 +21,14 @@ function CourseDisplay(props) {
   const toggleFavourite = ({name, term, favourite}) => {
     let updatedFavouriteCourses = {};
     if (favourite) {
-      const label = props.terms.filter(v => v.key === term)[0].value;
       updatedFavouriteCourses = {
         ...props.favouriteCourses,
-        [name]: [ ...(props.favouriteCourses[name] || []), { value: term, label } ]
+        [name]: [ ...(props.favouriteCourses[name] || []), { ...term } ]
       };
     } else {
       updatedFavouriteCourses = {
         ...props.favouriteCourses,
-        [name]: props.favouriteCourses[name].filter(v => v.value !== term.toString())
+        [name]: props.favouriteCourses[name].filter(v => v.value !== term.value.toString())
       };
       if (!updatedFavouriteCourses[name].length) {
         delete updatedFavouriteCourses[name];
