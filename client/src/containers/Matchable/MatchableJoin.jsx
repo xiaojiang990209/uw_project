@@ -6,6 +6,7 @@ import { getTerms } from '../../ducks/course';
 import { fetchBookingDates } from '../../ducks/uw';
 import { matchGroup } from '../../ducks/matchable';
 import { FormWrapper, StyledFormGroup } from './component';
+import MatchedGroupModal from './MatchableMatchedGroupModal';
 
 function MatchableJoin(props) {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -15,6 +16,7 @@ function MatchableJoin(props) {
   const [selectedAm, setSelectedAm] = useState(null);
   const [selectedGroupSize, setSelectedGroupSize] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [matchedGroups, setMatchedGroups] = useState(null);
 
   const [error, setError] = useState(null);
 
@@ -48,8 +50,15 @@ function MatchableJoin(props) {
       date.setHours(selectedAm.value === 'AM' ? hour : hour + 12);
     }
     const courseID = `${selectedSubject.value} ${selectedCourse}`;
-    matchGroup(selectedGroupSize.value, courseID, date, !!selectedHour && !!selectedAm)
-      .then(res => { if (!res.data.exactMatch.length && !res.data.fuzzyMatch.length) setError(true); })
+    matchGroup(props.user.id, selectedGroupSize.value, courseID, date, !!selectedHour && !!selectedAm)
+      .then(res => { 
+        if (!res.data.exactMatch.length && !res.data.fuzzyMatch.length){ 
+          setError(true);
+        } else {
+          console.log(res.data);
+          setMatchedGroups(res.data);
+        } 
+      })
       .catch(err => setError(err));
   }
 
@@ -111,12 +120,14 @@ function MatchableJoin(props) {
         </StyledFormGroup>
         <Button block type="submit" color="success">Find!</Button>
         { error && groupNotFoundErrorBlock }
+        <MatchedGroupModal matchedGroups={matchedGroups} />
       </Form>
     </FormWrapper>
   );
 }
 
 const mapStateToProps = (state) => ({
+  user: state.session.user,
   subjects: state.course.subjects
 });
 

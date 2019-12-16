@@ -18,29 +18,34 @@ const fetchGroupHandler = (req, res) => {
     const dateMin = isToday ? today : moment(parsedDate).startOf('day');
     const dateMax = moment(parsedDate).endOf('day');
 
-
-    MatchableGroup.find({groupSize: { $lte: maxMembers}, courseID, startDate: {$gte: dateMin}, endDate: {$lte: dateMax }})
-        .then(groups => {
+    MatchableGroup.find({groupSize: { $lte: maxMembers}, startDate: {$gte: dateMin}, endDate: {$lte: dateMax }})
+        .then(allGroups => {
             let data = {};
-            if(!groups.length) return res.status(HTTP_STATUS.NO_CONTENT);
+            if(!allGroups.length) return res.status(HTTP_STATUS.NO_CONTENT).end();
 
+
+            const groups = allGroups.filter(group => group.courseID === courseID);
             const fullGroups = groups.filter((group) => group.isFull);
             const unFullGroups =  groups.filter((group) => !group.isFull);
+            const subject = courseID.split(" ")[0];
+            const sameSubjectGroups = allGroups.filter(group => group.courseID !== courseID && group.courseID.startsWith(subject));
 
-            const userGroups = groups.filter((group) => group.users[userID]).forEach((group) => {group.hasUser = true}); //groups that you are in for this date, ALL
+            const userGroups = groups.filter((group) => group.users[userID]).map((group) => ({...group, hasUser: true})); //groups that you are in for this date, ALL
             const exactMatchFull = fullGroups.filter((group) => group.startDate <= parsedDate && parsedDate <= group.endDate) && !userGroups.includes(userGroups);//groups exact match and full, ALL
             data.disabled = userGroups.concat(exactMatchFull);
 
             //all the group exact match unfull and you are not in, ALL
-            data.exactMatch = hasTime ? unFullGroups.filter((group) => (group.startDate <= parsedDate && parsedDate <= group.endDate && !data.userGroups.includes(group))) : [];
+            data.exactMatch = hasTime ? unFullGroups.filter((group) => (group.startDate <= parsedDate && parsedDate <= group.endDate && !userGroups.includes(group))) : [];
 
             //TODO: limit the size of return
             //all the group fuzzy match unfull and you are not in, 10
-            data.fuzzyMatch = unFullGroups.filter((group) => !data.exactMatch.includes(group) && !data.userGroups.includes(group));
+            data.fuzzyMatch = unFullGroups
+              .filter((group) => !data.exactMatch.includes(group) && !userGroups.includes(group))
+              .concat(sameSubjectGroups);
 
             return res.json(data);
-        }
-    );
+        })
+        .catch(err => { console.log(err); res.err({}); });
 };
 
 
