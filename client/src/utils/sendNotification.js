@@ -1,7 +1,7 @@
 import toast from 'cogo-toast';
 
 const option = {
-  hideAfter: 1.5
+  hideAfter: 1
 };
 
 export const showSuccessNotif = (message) => toast.success(message, option);

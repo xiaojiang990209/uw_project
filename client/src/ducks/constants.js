@@ -9,3 +9,9 @@ export const CREATE_GROUP_MESSAGE = {
     failure: 'Failed to create group',
     loading: 'Creating group...'
 };
+
+export const MATCH_GROUP_MESSAGE = {
+    success: 'Group matched successfully',
+    failure: 'Failed to find group',
+    loading: 'Matching group for you...'
+};
