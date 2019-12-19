@@ -8,6 +8,4 @@ export const Button = styled(BasicButton)`
 
 export const CourseTitleButton = styled(Button)`
   height: ${({theme}) => theme.unit.large}px;
-`
-
-export default Button;
+`;

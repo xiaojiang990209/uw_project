@@ -10,14 +10,14 @@ export const showLoadingNotif = (message) => toast.loading(message, option);
 
 export const showErrorNotif = (message) => toast.error(message, option);
 
-export const withNotification = (successMsg, errorMsg, loadingMsg) => (promise) => {
-  const loadingNotif = showLoadingNotif(loadingMsg);
+export default ({ success, failure, loading }) => (promise) => {
+  const loadingNotif = showLoadingNotif(loading);
   const successNotif = (args) => {
-    loadingNotif.then(() => showSuccessNotif(successMsg));
+    loadingNotif.then(() => showSuccessNotif(success));
     return args;
   }
   const errorNotif = (err) => {
-    loadingNotif.then(() => showErrorNotif(errorMsg));
+    loadingNotif.then(() => showErrorNotif(failure));
     throw err;
   }
   return promise.then(successNotif).catch(errorNotif);
