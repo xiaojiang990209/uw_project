@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import toast from 'cogo-toast';
 import { Row, Col, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
 import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
 import { TextWrapper, BoldTitle, SolidHeart, HollowHeart } from './components';
-import Button from '../../components/Button';
+import { CourseTitleButton } from '../../components/Button';
 
 function CourseDetail(props) {
   const [showDetail, setShowDetail] = useState(props.open);
-  
+
   useEffect(() => {
     setShowDetail(props.open);
   }, [props.course]);
-      
+
   const fetchCourseDescription = (course) => {
     const distinctInstructors = [
       ...new Set(course.sections.filter((x) => x.instructor).map((x) => x.instructor)),
@@ -118,8 +119,15 @@ function CourseDetail(props) {
 
   const onFavouriteClicked = (e) => {
     e.stopPropagation();
-    props.toggle({ name: props.course.name, term: props.course.term, favourite: !props.isFavourite });
+    const updatedFavouriteStatus = !props.isFavourite;
+    showFavouriteNotification(updatedFavouriteStatus, props.course.name);
+    props.toggle({ name: props.course.name, term: props.course.term, favourite: updatedFavouriteStatus });
   };
+
+  const showFavouriteNotification = (favourite, course) => {
+    const message = favourite ? "favourited" : "unfavourited";
+    toast.success(`${course} has been ${message}!`);
+  }
 
   if (props.open) {
     fetchCourseDescription(props.course);
@@ -128,10 +136,10 @@ function CourseDetail(props) {
   return (
     <Row style={{ marginTop: '5px' }}>
       <Col md={{ size: 10, offset: 1 }}>
-        <Button size="md" onClick={onDetailClicked} block>
+        <CourseTitleButton size="md" onClick={onDetailClicked} block>
           {renderCourseTitle(props.course)}
           {props.isFavourite ? <SolidHeart onClick={onFavouriteClicked} /> : <HollowHeart onClick={onFavouriteClicked} />}
-        </Button>
+        </CourseTitleButton>
         <Collapse isOpen={showDetail}>
           <Card outline >
             <CardBody>

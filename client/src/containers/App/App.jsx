@@ -1,9 +1,6 @@
-import "./App.css";
-
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-
 import StoreProvider from "../../contexts/StoreProvider";
 import Register from "../../containers/Register/Register";
 import Login from "../../containers/Register/Login";
