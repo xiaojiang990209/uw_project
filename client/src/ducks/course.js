@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { withNotification } from '../utils/sendNotification';
 
 const initialState = {
   ratingsMap: {},
@@ -14,7 +15,11 @@ export const SET_SUBJECTS_AND_TERMS = 'SET_SUBJECTS_AND_TERMS';
 export const STATE_KEY = 'course';
 
 export const getCourseSchedule = (term, subject) => (dispatch) => {
-  return axios.get(`/api/schedule/${term}/${subject}`);
+  return withNotification(
+    'Course schedule loaded successfully',
+    'Failed to load course schedule',
+    'Loading course schedule'
+  )(axios.get(`/api/schedule/${term}/${subject}`));
 };
 
 export const getIndividualCourseSchedule = (term, subject, catalog_number) => {

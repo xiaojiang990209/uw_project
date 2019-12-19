@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import toast from 'cogo-toast';
 import { Row, Col, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
 import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
 import { TextWrapper, BoldTitle, SolidHeart, HollowHeart } from './components';
 import { CourseTitleButton } from '../../components/Button';
+import { showSuccessNotif } from '../../utils/sendNotification';
 
 function CourseDetail(props) {
   const [showDetail, setShowDetail] = useState(props.open);
@@ -120,14 +120,11 @@ function CourseDetail(props) {
   const onFavouriteClicked = (e) => {
     e.stopPropagation();
     const updatedFavouriteStatus = !props.isFavourite;
-    showFavouriteNotification(updatedFavouriteStatus, props.course.name);
+    if (updatedFavouriteStatus) {
+      showSuccessNotif(`${props.course.name} has been favourited!`);
+    }
     props.toggle({ name: props.course.name, term: props.course.term, favourite: updatedFavouriteStatus });
   };
-
-  const showFavouriteNotification = (favourite, course) => {
-    const message = favourite ? "favourited" : "unfavourited";
-    toast.success(`${course} has been ${message}!`);
-  }
 
   if (props.open) {
     fetchCourseDescription(props.course);
