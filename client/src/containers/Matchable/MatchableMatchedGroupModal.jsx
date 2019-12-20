@@ -16,16 +16,12 @@ function MatchedGroupModal(props) {
       <ModalBody>
         <strong>We have found the following study groups:</strong><br/>
         <ReactList length={exactMatch.length} itemRenderer={(index, key) => (
-          <ListGroupItem key={key}>
-            <MatchedGroup group={exactMatch[index]} />
-          </ListGroupItem>
+          <MatchedGroup key={key} group={exactMatch[index]} user={props.user}/>
         )} /> 
         <hr/>
-        <strong>You may also be interested:</strong><br/>
+        <strong>You may also be interested in:</strong><br/>
         <ReactList length={fuzzyMatch.length} itemRenderer={(index, key) => (
-          <ListGroupItem key={key}>
-            <MatchedGroup group={fuzzyMatch[index]} />
-          </ListGroupItem>
+          <MatchedGroup key={key} group={fuzzyMatch[index]} user={props.user}/>
         )} />
       </ModalBody>
     </Modal>

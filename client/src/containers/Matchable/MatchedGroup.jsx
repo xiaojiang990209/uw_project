@@ -1,27 +1,27 @@
 import React from 'react';
-import { Button, Row, Col, Container } from 'reactstrap';
+import { Button, Card, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import { joinGroup } from '../../ducks/matchable';
 
 function MatchedGroup(props) {
-  const { group } = props;
-  console.log(group);
+  const { group, user } = props;
 
-  const onJoinGroup = () => joinGroup(group._id, '5da7caef11aed184842b6b03');
+  const onJoinGroup = () => joinGroup(group._id, user);
+
+  const locale = 'en-CA';
+  const date = new Date(group.startDate).toLocaleDateString(locale, { dateStyle: 'short' })
+  const from  = new Date(group.startDate).toLocaleTimeString(locale, { timeStyle: 'short' });
+  const to  = new Date(group.endDate).toLocaleTimeString(locale, { timeStyle: 'short' });
 
   return (
-    <Container>
-      <Row>
-        <Col xs="9">
-          <Row><Col><strong>Course:</strong> {group.courseID}</Col></Row>
-          <Row><Col><strong>Members:</strong> {group.users.length}</Col></Row>
-          <Row><Col><strong>From:</strong> {new Date(group.startDate).toLocaleString()}</Col></Row>
-          <Row><Col><strong>To:</strong> {new Date(group.endDate).toLocaleString()}</Col></Row>
-        </Col>
-        <Col xs="3" style={{ display: 'flex', alignItems: 'center' }}>
-          <Button color="success" onClick={onJoinGroup}>Join</Button>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Card>
+        <CardBody>
+          <CardTitle>{group.courseID}</CardTitle>
+          <CardSubtitle>{date}, {from} - {to}</CardSubtitle>
+        </CardBody>
+      </Card>
+      <Button color="success" onClick={onJoinGroup}>Join</Button>
+    </>
   );
 }
 
