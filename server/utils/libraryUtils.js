@@ -36,10 +36,10 @@ const collectBookingTable = ($) => {
   });
   $('#day_main > tbody > tr > td > div > a > img').each((i, op) => {
     const oldSrc = $(op).attr('src');
-    const newSrc = `/images/${oldSrc}`;
+    const newSrc = `/images/${oldSrc.substring(oldSrc.lastIndexOf('/'))}`;
     $(op).attr('src', newSrc);
-    $(op).attr('width', '14');
-    $(op).attr('height', '14');
+    $(op).attr('width', '12');
+    $(op).attr('height', '12');
   });
 
   return $.html($('#day_main'));
@@ -53,7 +53,7 @@ const collectDates = ($) => {
 
 const collectBuildings = ($) => {
   const buildings = [];
-  $('#area option').each((i, op) => buildings.push({
+  $('#area_select option').each((i, op) => buildings.push({
     'label': $(op).text().trim(),
     'value': $(op).attr('value')
   }));
