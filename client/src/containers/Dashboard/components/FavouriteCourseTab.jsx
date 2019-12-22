@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../../../components/Button';
+import { Button } from '../../../components/Button';
 import BaseTab from '../hocs/BaseTab';
 import { Link } from 'react-router-dom';
 import { ListGroupItem } from 'reactstrap';

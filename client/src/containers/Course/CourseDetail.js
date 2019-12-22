@@ -4,15 +4,16 @@ import { connect } from 'react-redux';
 import { Row, Col, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
 import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
 import { TextWrapper, BoldTitle, SolidHeart, HollowHeart } from './components';
-import Button from '../../components/Button';
+import { CourseTitleButton } from '../../components/Button';
+import { showSuccessNotif } from '../../utils/sendNotification';
 
 function CourseDetail(props) {
   const [showDetail, setShowDetail] = useState(props.open);
-  
+
   useEffect(() => {
     setShowDetail(props.open);
   }, [props.course]);
-      
+
   const fetchCourseDescription = (course) => {
     const distinctInstructors = [
       ...new Set(course.sections.filter((x) => x.instructor).map((x) => x.instructor)),
@@ -118,7 +119,11 @@ function CourseDetail(props) {
 
   const onFavouriteClicked = (e) => {
     e.stopPropagation();
-    props.toggle({ name: props.course.name, term: props.course.term, favourite: !props.isFavourite });
+    const updatedFavouriteStatus = !props.isFavourite;
+    if (updatedFavouriteStatus) {
+      showSuccessNotif(`${props.course.name} has been favourited!`);
+    }
+    props.toggle({ name: props.course.name, term: props.course.term, favourite: updatedFavouriteStatus });
   };
 
   if (props.open) {
@@ -128,10 +133,10 @@ function CourseDetail(props) {
   return (
     <Row style={{ marginTop: '5px' }}>
       <Col md={{ size: 10, offset: 1 }}>
-        <Button size="md" onClick={onDetailClicked} block>
+        <CourseTitleButton size="md" onClick={onDetailClicked} block>
           {renderCourseTitle(props.course)}
           {props.isFavourite ? <SolidHeart onClick={onFavouriteClicked} /> : <HollowHeart onClick={onFavouriteClicked} />}
-        </Button>
+        </CourseTitleButton>
         <Collapse isOpen={showDetail}>
           <Card outline >
             <CardBody>

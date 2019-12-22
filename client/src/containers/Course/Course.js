@@ -29,8 +29,7 @@ function Course(props) {
       .then((res) => {
         setCourses(res.data);
         setShowCourseComponent(true);
-      })
-      .catch((err) => console.log(err));
+      });
   };
 
   const generateCourseDetails = (courses) => courses.map((course, index) => {
