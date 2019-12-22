@@ -15,3 +15,9 @@ export const MATCH_GROUP_MESSAGE = {
     failure: 'Failed to find group',
     loading: 'Matching group for you...'
 };
+
+export const UPDATE_GROUP_MESSAGE = {
+    success: 'Successfully updated group',
+    failure: 'Failed to update group',
+    loading: 'Updating group...'
+};

@@ -61,9 +61,9 @@ function MatchableCreate(props) {
     date.setHours(selectedAm.value === 'AM' ? hour : hour + 12);
     const duration = parseInt(selectedDuration.value);
     const groupSize = parseInt(selectedGroupSize.value);
-    createGroup(date, courseID, groupSize, duration, '5dd5e650ed8370000859142a')
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
+    createGroup(props.user.id, date, courseID, groupSize, duration)
+      .then(data => setError(false)) 
+      .catch(err => setError(true));
   }
 
   const displayRoomStatus = (e) => {
@@ -144,6 +144,7 @@ function MatchableCreate(props) {
 }
 
 const mapStateToProps = (state) => ({
+  user: state.session.user,
   subjects: state.course.subjects
 });
 
