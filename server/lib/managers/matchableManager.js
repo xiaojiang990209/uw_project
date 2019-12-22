@@ -69,6 +69,8 @@ const updateGroupHandler = async (req, res) => {
         _.remove(groupJoining.users, (id) => id.toString().localeCompare(userID) === 0) :
         groupJoining.users.push(userID);
 
+    groupJoining.markModified('users');
+
     if(!groupJoining.users.length) await MatchableGroup.findByIdAndDelete(groupID).exec();
     if(groupJoining.groupSize === groupJoining.users.length) groupJoining.isFull = true;
 

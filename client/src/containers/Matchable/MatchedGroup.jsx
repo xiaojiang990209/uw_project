@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Card, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
+import { Button, CardHeader, CardBody, CardText } from 'reactstrap';
 import { joinGroup } from '../../ducks/matchable';
+import { StyledCard } from './component';
 
 function MatchedGroup(props) {
   const { group, user } = props;
@@ -13,15 +14,20 @@ function MatchedGroup(props) {
   const to  = new Date(group.endDate).toLocaleTimeString(locale, { timeStyle: 'short' });
 
   return (
-    <>
-      <Card>
-        <CardBody>
-          <CardTitle>{group.courseID}</CardTitle>
-          <CardSubtitle>{date}, {from} - {to}</CardSubtitle>
-        </CardBody>
-      </Card>
-      <Button color="success" onClick={onJoinGroup}>Join</Button>
-    </>
+    <StyledCard>
+      <CardHeader tag="h5">
+        {group.courseID} @ {from} - {to}
+      </CardHeader>
+      <CardBody>
+        <CardText>
+          Max members: {group.groupSize}<br/>
+          Current members: {group.users.length}
+        </CardText>
+        <Button color="secondary" onClick={onJoinGroup} block>
+          {group.users.includes(user) ? "Leave" : "Join"}
+        </Button>
+      </CardBody>
+    </StyledCard>
   );
 }
 

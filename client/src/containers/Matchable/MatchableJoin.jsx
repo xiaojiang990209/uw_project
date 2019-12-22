@@ -118,7 +118,7 @@ function MatchableJoin(props) {
         </StyledFormGroup>
         <Button block type="submit" color="success">Find!</Button>
         { error && groupNotFoundErrorBlock }
-        <MatchedGroupModal matchedGroups={matchedGroups} user={props.user.id}/>
+        <MatchedGroupModal matchedGroups={matchedGroups} user={props.user.id} onCreateGroup={redirectOnError}/>
       </Form>
     </FormWrapper>
   );
