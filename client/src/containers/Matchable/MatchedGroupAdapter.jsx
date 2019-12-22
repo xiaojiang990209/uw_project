@@ -3,7 +3,7 @@ import { Button, CardHeader, CardBody, CardText } from 'reactstrap';
 import { joinGroup } from '../../ducks/matchable';
 import { StyledCard } from './component';
 
-function MatchedGroup(props) {
+function MatchedGroupAdapter(props) {
   const { group, user } = props;
 
   const onJoinGroup = () => joinGroup(group._id, user);
@@ -31,4 +31,4 @@ function MatchedGroup(props) {
   );
 }
 
-export default MatchedGroup;
+export default MatchedGroupAdapter;
