@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactList from 'react-list';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import MatchedGroupAdapter from './MatchedGroup';
+import MatchedGroupAdapter from './MatchedGroupAdapter';
 import { StyledButton, StyledGroupResultWrapper } from './component';
 
 function MatchedGroupModal(props) { 
