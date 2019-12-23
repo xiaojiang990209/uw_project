@@ -14,6 +14,7 @@ import theme from "../../theme";
 import { menu_options } from '../../utils/constants';
 import { MainContainer } from './components';
 import CourseDisplay from "../Course/CourseDisplay";
+import MatchedGroupDisplay from '../Matchable/MatchedGroupDisplay';
 
 class App extends Component {
   render() {
@@ -30,6 +31,7 @@ class App extends Component {
               <PrivateRoute exact path="/course" component={Course}/>
               <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
+              <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard}/>
               </Switch>

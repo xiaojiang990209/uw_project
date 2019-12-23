@@ -6,7 +6,11 @@ import { StyledCard } from './component';
 function MatchedGroupAdapter(props) {
   const { group, user } = props;
 
-  const onJoinGroup = () => joinGroup(group._id, user);
+  const onJoinGroup = () => {
+    joinGroup(group._id, user)
+      .then((res) => props.onJoinGroup(group._id))
+      .catch(console.log);
+  }
 
   const locale = 'en-CA';
   const date = new Date(group.startDate).toLocaleDateString(locale, { dateStyle: 'short' })

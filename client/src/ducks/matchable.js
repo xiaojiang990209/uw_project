@@ -16,3 +16,6 @@ export const createGroup = (userID, startDate, courseID, groupSize, duration) =>
   const body = { userID, groupSize, startDate, courseID, duration };
   return withNotification(CREATE_GROUP_MESSAGE)(axios.post('/api/matchable/groups', body));
 }
+
+export const getGroup = (groupId) =>
+  axios.get(`/api/matchable/groups/${groupId}`).then(res => res.data);

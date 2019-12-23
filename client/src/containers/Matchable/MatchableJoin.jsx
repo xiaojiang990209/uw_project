@@ -77,6 +77,10 @@ function MatchableJoin(props) {
     </Button>
   );
 
+  const onJoinGroup = (groupId) => {
+    props.history.push(`/matchable/groups/${groupId}`);
+  }
+
   return (
     <FormWrapper>
       <br/>
@@ -118,7 +122,8 @@ function MatchableJoin(props) {
         </StyledFormGroup>
         <Button block type="submit" color="success">Find!</Button>
         { error && groupNotFoundErrorBlock }
-        <MatchedGroupModal matchedGroups={matchedGroups} user={props.user.id} onCreateGroup={redirectOnError}/>
+          <MatchedGroupModal matchedGroups={matchedGroups} user={props.user.id}
+            onCreateGroup={redirectOnError} onJoinGroup={onJoinGroup}/>
       </Form>
     </FormWrapper>
   );
