@@ -1,5 +1,6 @@
 const HTTP_STATUS = require('../../utils/statusCodes');
 const MatchableGroup = require('../models/MatchableGroup');
+const User = require('../models/User');
 const moment = require('moment');
 const _ = require('lodash');
 
@@ -22,7 +23,6 @@ const fetchGroupHandler = (req, res) => {
         .then(allGroups => {
             let data = {};
             if(!allGroups.length) return res.status(HTTP_STATUS.NO_CONTENT).end();
-
 
             const groups = allGroups.filter(group => group.courseID === courseID);
             const fullGroups = groups.filter((group) => group.isFull);
@@ -64,11 +64,13 @@ const registerGroupHandler = (req, res) => {
 const updateGroupHandler = async (req, res) => {
     const {groupID, userID} = req.body;
     const groupJoining =  await MatchableGroup.findById(groupID).exec();
+    const existingUser = groupJoining.users.find((id) => id.toString().localeCompare(userID) == 0);
 
-    groupJoining.users.find((id) => id.toString().localeCompare(userID) === 0) ?
-        _.remove(groupJoining.users, (id) => id.toString().localeCompare(userID) === 0) :
-        groupJoining.users.push(userID);
-
+    if (existingUser) {
+      _.remove(groupJoining.users, existingUser);
+    } else {
+      groupJoining.users.push(userID);
+    }
     groupJoining.markModified('users');
 
     if(!groupJoining.users.length) await MatchableGroup.findByIdAndDelete(groupID).exec();
@@ -79,7 +81,21 @@ const updateGroupHandler = async (req, res) => {
     }).catch(err => console.log(err));
 };
 
+const getGroupHandler = async (req, res) => {
+    const { groupId } = req.params;
+    const userMapper = (user) => ({ id: user._id, name: user.name });
+    try {
+      const group = (await MatchableGroup.findById(groupId).exec()).toObject();
+      const users = (await User.find({ '_id': { $in: group.users } }).exec())
+        .map(userMapper);
+      return res.json({ ...group, users });
+    } catch (err) {
+      console.log(err);
+    }
+}
+
 module.exports = {
+    getGroupHandler,
     registerGroupHandler,
     fetchGroupHandler,
     updateGroupHandler,
