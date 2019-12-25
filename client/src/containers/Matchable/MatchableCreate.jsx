@@ -62,7 +62,7 @@ function MatchableCreate(props) {
     const duration = parseInt(selectedDuration.value);
     const groupSize = parseInt(selectedGroupSize.value);
     createGroup(props.user.id, date, courseID, groupSize, duration)
-      .then(data => setError(false)) 
+      .then(data => props.history.push(`/matchable/groups/${data.id}`))
       .catch(err => setError(true));
   }
 

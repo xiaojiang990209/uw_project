@@ -56,7 +56,7 @@ const registerGroupHandler = (req, res) => {
     const newGroup = new MatchableGroup({groupSize, courseID, startDate: parsedStartDate, endDate, users: [userID], isFull: false, location});
     newGroup.save()
         .then(() => {
-            res.json({success: true});
+            res.json({id: newGroup._id});
         })
         .catch(err => console.log(err));
 };
