@@ -14,7 +14,7 @@ export const joinGroup = (groupID, userID) => {
 
 export const createGroup = (userID, startDate, courseID, groupSize, duration) => {
   const body = { userID, groupSize, startDate, courseID, duration };
-  return withNotification(CREATE_GROUP_MESSAGE)(axios.post('/api/matchable/groups', body));
+  return withNotification(CREATE_GROUP_MESSAGE)(axios.post('/api/matchable/groups', body).then(res => res.data));
 }
 
 export const getGroup = (groupId) =>

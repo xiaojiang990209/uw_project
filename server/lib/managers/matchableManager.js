@@ -71,9 +71,13 @@ const updateGroupHandler = async (req, res) => {
     } else {
       groupJoining.users.push(userID);
     }
-    groupJoining.markModified('users');
 
-    if(!groupJoining.users.length) await MatchableGroup.findByIdAndDelete(groupID).exec();
+    if (!groupJoining.users.length) {
+      await MatchableGroup.findByIdAndDelete(groupID).exec();
+    } else {
+      groupJoining.markModified('users');
+    }
+
     if(groupJoining.groupSize === groupJoining.users.length) groupJoining.isFull = true;
 
     groupJoining.save().then(() => {

@@ -6,9 +6,9 @@ import { StyledCard } from './component';
 function MatchedGroupAdapter(props) {
   const { group, user } = props;
 
-  const onJoinGroup = () => {
+  const onUpdateGroup = () => {
     joinGroup(group._id, user)
-      .then((res) => props.onJoinGroup(group._id))
+      .then((res) => !group.users.includes(user) && props.onJoinGroup(group._id))
       .catch(console.log);
   }
 
@@ -27,7 +27,7 @@ function MatchedGroupAdapter(props) {
           Max members: {group.groupSize}<br/>
           Current members: {group.users.length}
         </CardText>
-        <Button color="secondary" onClick={onJoinGroup} block>
+        <Button color="secondary" onClick={onUpdateGroup} block>
           {group.users.includes(user) ? "Leave" : "Join"}
         </Button>
       </CardBody>
