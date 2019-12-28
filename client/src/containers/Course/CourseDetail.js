@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Row, Col, Table, Collapse, Card, CardBody, CardText } from 'reactstrap';
+import { Table } from 'reactstrap';
 import { getBatchProfRating, getCourseDescription } from '../../ducks/course';
-import { TextWrapper, BoldTitle, SolidHeart, HollowHeart } from './components';
-import { CourseTitleButton } from '../../components/Button';
-import { showSuccessNotif } from '../../utils/sendNotification';
+import { TextWrapper } from './components';
 
 function CourseDetail(props) {
-  const [showDetail, setShowDetail] = useState(props.open);
-
-  useEffect(() => {
-    setShowDetail(props.open);
-  }, [props.course]);
-
   const fetchCourseDescription = (course) => {
     const distinctInstructors = [
       ...new Set(course.sections.filter((x) => x.instructor).map((x) => x.instructor)),
@@ -21,17 +13,7 @@ function CourseDetail(props) {
     const newInstructors = distinctInstructors
       .filter(instructor => !(instructor in props.ratingsMap));
     props.getBatchProfRating(newInstructors);
-
-    if (!(course.name in props.courseDescriptions)) {
-      props.getCourseDescription(course.name);
-    }
   };
-
-  const renderCourseTitle = (course) => (
-    <span>
-      {course.name}: {course.title}
-    </span>
-  );
 
   const renderProfRating = (instructor) => {
     let ratingRow = <td>{instructor}</td>;
@@ -48,34 +30,10 @@ function CourseDetail(props) {
     return ratingRow;
   };
 
-  const renderCourseInfo = (course) => {
-    let infoSection;
-    let info = props.courseDescriptions[course.name];
-    if (info !== undefined && info !== null) {
-      infoSection = (
-        <TextWrapper>
-          <BoldTitle>Description</BoldTitle>
-          <CardText>{info.description}</CardText>
-          <BoldTitle>Prerequisites</BoldTitle>
-          <CardText>{info.prerequisites || 'None'}</CardText>
-          <BoldTitle>Antirequisites</BoldTitle>
-          <CardText>{info.antirequisites || 'None'}</CardText>
-        </TextWrapper>
-      );
-    }
-    return infoSection;
-  };
-
   const renderCourseSections = (course) => {
     const sections = course.sections.map((value, index) => {
-      const timeSlot =
-        value.start === null ? (
-          <td>TBA</td>
-        ) : (
-          <td>
-            {value.start}-{value.end}, {value.days}
-          </td>
-        );
+      const timeSlot = value.start === null ?
+        <td>TBA</td> : <td>{value.start}-{value.end}, {value.days}</td>
       return (
         <tr key={index}>
           <td>{value.section}</td>
@@ -108,47 +66,9 @@ function CourseDetail(props) {
     );
   };
 
-  const onDetailClicked = (e) => {
-    e.preventDefault();
-    if (props.open) return;
-    if (!showDetail) {
-      fetchCourseDescription(props.course);
-    }
-    setShowDetail(!showDetail);
-  };
+  useEffect(() => fetchCourseDescription(props.course), []);
 
-  const onFavouriteClicked = (e) => {
-    e.stopPropagation();
-    const updatedFavouriteStatus = !props.isFavourite;
-    if (updatedFavouriteStatus) {
-      showSuccessNotif(`${props.course.name} has been favourited!`);
-    }
-    props.toggle({ name: props.course.name, term: props.course.term, favourite: updatedFavouriteStatus });
-  };
-
-  if (props.open) {
-    fetchCourseDescription(props.course);
-  }
-
-  return (
-    <Row style={{ marginTop: '5px' }}>
-      <Col md={{ size: 10, offset: 1 }}>
-        <CourseTitleButton size="md" onClick={onDetailClicked} block>
-          {renderCourseTitle(props.course)}
-          {props.isFavourite ? <SolidHeart onClick={onFavouriteClicked} /> : <HollowHeart onClick={onFavouriteClicked} />}
-        </CourseTitleButton>
-        <Collapse isOpen={showDetail}>
-          <Card outline >
-            <CardBody>
-              {renderCourseInfo(props.course)}
-              <br />
-              {renderCourseSections(props.course)}
-            </CardBody>
-          </Card>
-        </Collapse>
-      </Col>
-    </Row>
-  );
+  return renderCourseSections(props.course);
 }
 
 CourseDetail.propTypes = {

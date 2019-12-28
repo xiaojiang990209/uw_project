@@ -7,6 +7,7 @@ import Login from "../../containers/Register/Login";
 import PrivateRoute from "../../routes/PrivateRoute";
 import Dashboard from "../../containers/Dashboard";
 import Course from "../../containers/Course/Course";
+import CourseSubject from "../../containers/Course/CourseSubject";
 import Navbar from "../../containers/Navbar/Navbar";
 import MatchableJoin from "../../containers/Matchable/MatchableJoin";
 import MatchableCreate from "../../containers/Matchable/MatchableCreate";
@@ -14,6 +15,7 @@ import theme from "../../theme";
 import { menu_options } from '../../utils/constants';
 import { MainContainer } from './components';
 import CourseDisplay from "../Course/CourseDisplay";
+import CourseDetailV2 from "../Course/CourseDetailV2";
 
 class App extends Component {
   render() {
@@ -26,8 +28,9 @@ class App extends Component {
             <Route exact path="/login" component={Login}/>
             <Route exact path="/" component={Login}/>
             <MainContainer>
-              <PrivateRoute exact path="/course/:term/:subject/:catalog_number" component={CourseDisplay} />
               <PrivateRoute exact path="/course" component={Course}/>
+              <PrivateRoute exact path="/course/:subject" component={CourseSubject}/>
+              <PrivateRoute exact path="/course/:subject/:catalog_number" component={CourseDetailV2}/>
               <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
               <Switch>
