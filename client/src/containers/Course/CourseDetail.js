@@ -12,58 +12,49 @@ function CourseDetail(props) {
     ];
     const newInstructors = distinctInstructors
       .filter(instructor => !(instructor in props.ratingsMap));
-    props.getBatchProfRating(newInstructors);
-  };
-
-  const renderProfRating = (instructor) => {
-    let ratingRow = <td>{instructor}</td>;
-    let rating = props.ratingsMap[instructor];
-    if (rating && rating.score) {
-      ratingRow = (
-        <td>
-          <a href={rating.url}>
-            {instructor} ({rating.score})
-          </a>
-        </td>
-      );
-    }
-    return ratingRow;
+    newInstructors && props.getBatchProfRating(newInstructors);
   };
 
   const renderCourseSections = (course) => {
     const sections = course.sections.map((value, index) => {
-      const timeSlot = value.start === null ?
-        <td>TBA</td> : <td>{value.start}-{value.end}, {value.days}</td>
+      const instructor = value.instructor || '';
+      const rating = props.ratingsMap[instructor];
+      const ratingInfo = (rating && rating.score) ?
+        <a href={rating.url} target='__blank'>{instructor} ({rating.score})</a> :
+        instructor.toString();
+
+      const timeSlot = value.start ?
+        `${value.start}-${value.end}, ${value.days}` :
+        'TBA';
+
       return (
         <tr key={index}>
           <td>{value.section}</td>
           <td>{value.class_number}</td>
-          <td>
-            {value.total} / {value.capacity}
-          </td>
-          {timeSlot}
+          <td>{value.total} / {value.capacity}</td>
+          <td>{timeSlot}</td>
           <td>{value.location}</td>
-          {renderProfRating(value.instructor)}
+          <td>{ratingInfo}</td>
         </tr>
       );
-    });
-    return (
-      <TextWrapper>
-        <Table size="sm" responsive>
-          <thead>
-            <tr>
-              <th>Section</th>
-              <th>Class</th>
-              <th>Enrolled</th>
-              <th>Time</th>
-              <th>Location</th>
-              <th>Instructor</th>
-            </tr>
-          </thead>
-          <tbody>{sections}</tbody>
-        </Table>
-      </TextWrapper>
-    );
+  });
+  return (
+    <TextWrapper>
+      <Table size="sm" responsive>
+        <thead>
+          <tr>
+            <th>Section</th>
+            <th>Class</th>
+            <th>Enrolled</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Instructor</th>
+          </tr>
+        </thead>
+        <tbody>{sections}</tbody>
+      </Table>
+    </TextWrapper>
+  );
   };
 
   useEffect(() => fetchCourseDescription(props.course), []);
