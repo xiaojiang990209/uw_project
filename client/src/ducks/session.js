@@ -42,12 +42,10 @@ export const loginUser = (userLoginInfo, history) => (dispatch) => {
 };
 
 export const updateFavouriteCourses = (courses) => (dispatch, getState) => {
-  if (courses) {
-    dispatch(setFavouriteCourses(courses));
-  } else {
-    const { id, favouriteCourses } = getState().session.user;
-    client.session.saveFavouriteCourses(id, favouriteCourses);
-  }
+  console.log('here');
+  const { id, favouriteCourses } = getState().session.user;
+  client.session.saveFavouriteCourses(id, favouriteCourses)
+    .then((res) => { dispatch(setFavouriteCourses(courses)) })
 }
 
 const setFavouriteCourses = (courses) => {
@@ -95,7 +93,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         user: {...state.user, favouriteCourses: action.payload }
       };
-    
+
     default:
       return state;
   }

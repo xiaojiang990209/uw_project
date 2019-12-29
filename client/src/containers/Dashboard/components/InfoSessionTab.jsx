@@ -12,7 +12,7 @@ import {
 import styled from 'styled-components';
 import BaseTab from '../hocs/BaseTab';
 import { fetchInfoSessions } from '../../../ducks/uw';
-import { Button } from '../../../components/Button';
+import Button from '../../../components/Button';
 
 const Bold = styled.span`
   font-weight: bold;

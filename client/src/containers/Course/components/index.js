@@ -25,28 +25,46 @@ export const MarginWrapper = styled.div`
   margin: ${({ theme }) => 4 * theme.unit.small}px auto;
 `;
 
-export const SolidHeart = (props) => (
+const SolidHeart = (props) => (
   <span onClick={props.onClick}><FontAwesomeIcon icon={faHeart} pull="right" size="lg"/></span>
 );
 
-export const HollowHeart = (props) => (
+const HollowHeart = (props) => (
   <span onClick={props.onClick}><FontAwesomeIcon icon={faHeartOutline} pull="right" size="lg"/></span>
 );
 
 export const InfoCard = (props) => (
   <Card onClick={props.onClick}>
-    {props.title && <Title>{props.title}</Title>}
-    {props.subtitle && <Subtitle>{props.subtitle}</Subtitle>}
-    {props.content && <Content>{props.content}</Content>}
+    <Title>{props.title}</Title>
+    <Subtitle>{props.subtitle}</Subtitle>
+    <Content>{props.content}</Content>
+  </Card>
+)
+
+export const SubjectCard = (props) => (
+  <Card onClick={props.onClick}>
+    <Title>{props.title}</Title>
+    <Subtitle>{props.subtitle}</Subtitle>
+    <Content>{props.content}</Content>
   </Card>
 );
 
 export const DetailCard = (props) => (
-  <Card onClick={props.onClick}>
-    {props.title && <Title>{props.title}</Title>}
-    {props.subtitle && <Subtitle>{props.subtitle}</Subtitle>}
-    {props.content && <Content detail>{props.content}</Content>}
-    {props.children}
+  <Card>
+    <Title>
+      {props.title}
+      {props.isFavourite ?
+        <SolidHeart onClick={props.onFavouriteClicked} /> :
+        <HollowHeart onClick={props.onFavouriteClicked} />}
+    </Title>
+    <Subtitle>{props.subtitle}</Subtitle>
+    <Content detail>{props.content}</Content>
+    <br/>
+    <Subtitle>Prerequisites</Subtitle>
+    <Content>{props.prerequisites || 'None'}</Content>
+    <br/>
+    <Subtitle>Antirequisites</Subtitle>
+    <Content>{props.antirequisites || 'None'}</Content>
   </Card>
 );
 

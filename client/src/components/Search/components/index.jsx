@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Input } from 'reactstrap';
-import { StyledWrapper } from '../../Card/components';
+import { Card } from '../../Card';
 
-export const SearchCard = styled(StyledWrapper)`
+export const SearchCard = styled(Card)`
   display: flex;
   padding: 0px;
   position: sticky;

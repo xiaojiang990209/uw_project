@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCourses } from '../../ducks/course';
-import { InfoCard, MarginWrapper, Wrapper } from './components';
+import { SubjectCard, MarginWrapper, Wrapper } from './components';
 import { Container } from 'reactstrap';
 import Search from '../../components/Search';
 
@@ -18,7 +18,10 @@ function CourseSubject(props) {
 
   const generateCourses = () => filteredCourses.map((course, idx) => (
     <MarginWrapper key={idx}>
-      <InfoCard title={course.name} subtitle={course.title} content={course.description}
+      <SubjectCard
+        title={course.name}
+        subtitle={course.title}
+        content={course.description}
         onClick={() => props.history.push(`/course/${subject}/${course.catalog_number}`)}/>
     </MarginWrapper>
   ));
