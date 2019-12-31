@@ -9,7 +9,7 @@ import { updateFavouriteCourses } from '../../ducks/session';
 import { showSuccessNotif } from '../../utils/sendNotification';
 import CourseSchedule from './CourseSchedule';
 
-function CourseDetailV2(props) {
+function CourseDetail(props) {
   const { subject, catalog_number } = props.match.params;
   const courseName = `${subject} ${catalog_number}`;
   const [scheduleMap, setScheduleMap] = useState({});
@@ -107,4 +107,4 @@ const mapDispatchToProps = ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CourseDetailV2);
+)(CourseDetail);
