@@ -7,7 +7,7 @@ import Button from '../../components/Button';
 import { getTerms, getCourseDescription, getIndividualCourseSchedule } from '../../ducks/course';
 import { updateFavouriteCourses } from '../../ducks/session';
 import { showSuccessNotif } from '../../utils/sendNotification';
-import CourseDetail from './CourseDetail';
+import CourseSchedule from './CourseSchedule';
 
 function CourseDetailV2(props) {
   const { subject, catalog_number } = props.match.params;
@@ -83,7 +83,7 @@ function CourseDetailV2(props) {
           <Card>
             <Subtitle>{getScheduleTitle()}</Subtitle>
             <br/>
-            <CourseDetail course={scheduleMap[selectedTerm.key]} />
+            <CourseSchedule course={scheduleMap[selectedTerm.key]} />
           </Card>
         }
       </Container>
