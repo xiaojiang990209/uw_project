@@ -37,3 +37,10 @@ export const StyledGroupResultWrapper = styled.div`
   max-height: 70vh;
   overflow: auto;
 `;
+
+export const StyledUsername = styled.div`
+  display: inline-block;
+  font-size: 1.2rem;
+  vertical-align: middle;
+  margin-left: ${({theme}) => theme.unit.medium}px;
+`;

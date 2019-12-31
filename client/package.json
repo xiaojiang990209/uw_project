@@ -21,6 +21,7 @@
     "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
+    "react-avatar": "^3.7.0",
     "react-burger-menu": "^2.6.11",
     "react-dom": "^16.10.2",
     "react-list": "^0.8.13",

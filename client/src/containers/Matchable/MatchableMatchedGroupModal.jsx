@@ -18,7 +18,7 @@ function MatchedGroupModal(props) {
       <ModalBody>
         <StyledGroupResultWrapper>
           <ReactList length={matches.length} itemRenderer={(idx, key) => (
-            <MatchedGroupAdapter key={key} group={matches[idx]} user={props.user} />
+            <MatchedGroupAdapter key={key} group={matches[idx]} user={props.user} onJoinGroup={props.onJoinGroup}/>
           )} />
         </StyledGroupResultWrapper>
         <StyledButton color="danger" outline block onClick={props.onCreateGroup}>
