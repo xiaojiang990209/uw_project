@@ -1,5 +1,6 @@
 const HTTP_STATUS = require('../../utils/statusCodes');
 const MatchableGroup = require('../models/MatchableGroup');
+const User = require('../models/User');
 const moment = require('moment');
 const _ = require('lodash');
 
@@ -55,7 +56,7 @@ const registerGroupHandler = (req, res) => {
     const newGroup = new MatchableGroup({groupSize, courseID, startDate: parsedStartDate, endDate, users: [userId], isFull: false, location});
     newGroup.save()
         .then(() => {
-            res.json({success: true});
+            res.json({id: newGroup._id});
         })
         .catch(err => console.log(err));
 };
@@ -63,14 +64,20 @@ const registerGroupHandler = (req, res) => {
 const updateGroupHandler = async (req, res) => {
     const {groupID, userId} = req.body;
     const groupJoining =  await MatchableGroup.findById(groupID).exec();
+    const existingUser = groupJoining.users.find((id) => id.toString().localeCompare(userID) == 0);
 
-    groupJoining.users.find((id) => id.toString().localeCompare(userId) === 0) ?
-        _.remove(groupJoining.users, (id) => id.toString().localeCompare(userId) === 0) :
-        groupJoining.users.push(userId);
+    if (existingUser) {
+      _.remove(groupJoining.users, existingUser);
+    } else {
+      groupJoining.users.push(userID);
+    }
 
-    groupJoining.markModified('users');
+    if (!groupJoining.users.length) {
+      await MatchableGroup.findByIdAndDelete(groupID).exec();
+    } else {
+      groupJoining.markModified('users');
+    }
 
-    if(!groupJoining.users.length) await MatchableGroup.findByIdAndDelete(groupID).exec();
     if(groupJoining.groupSize === groupJoining.users.length) groupJoining.isFull = true;
 
     groupJoining.save().then(() => {
@@ -78,7 +85,21 @@ const updateGroupHandler = async (req, res) => {
     }).catch(err => console.log(err));
 };
 
+const getGroupHandler = async (req, res) => {
+    const { groupId } = req.params;
+    const userMapper = (user) => ({ id: user._id, name: user.name });
+    try {
+      const group = (await MatchableGroup.findById(groupId).exec()).toObject();
+      const users = (await User.find({ '_id': { $in: group.users } }).exec())
+        .map(userMapper);
+      return res.json({ ...group, users });
+    } catch (err) {
+      console.log(err);
+    }
+}
+
 module.exports = {
+    getGroupHandler,
     registerGroupHandler,
     fetchGroupHandler,
     updateGroupHandler,

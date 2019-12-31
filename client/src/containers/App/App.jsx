@@ -14,6 +14,7 @@ import CourseSubject from "../Course/CourseSubject";
 import Dashboard from "../Dashboard";
 import MatchableJoin from "../Matchable/MatchableJoin";
 import MatchableCreate from "../Matchable/MatchableCreate";
+import MatchedGroupDisplay from '../Matchable/MatchedGroupDisplay';
 import Navbar from "../Navbar/Navbar";
 import Login from "../Register/Login";
 import Register from "../Register/Register";
@@ -34,6 +35,7 @@ class App extends Component {
               <PrivateRoute exact path="/course/:subject/:catalog_number" component={CourseDetail}/>
               <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
+              <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard}/>
               </Switch>
