@@ -64,12 +64,12 @@ const registerGroupHandler = (req, res) => {
 const updateGroupHandler = async (req, res) => {
     const {groupID, userId} = req.body;
     const groupJoining =  await MatchableGroup.findById(groupID).exec();
-    const existingUser = groupJoining.users.find((id) => id.toString().localeCompare(userID) == 0);
+    const existingUser = groupJoining.users.find((id) => id.toString().localeCompare(userId) == 0);
 
     if (existingUser) {
       _.remove(groupJoining.users, existingUser);
     } else {
-      groupJoining.users.push(userID);
+      groupJoining.users.push(userId);
     }
 
     if (!groupJoining.users.length) {
