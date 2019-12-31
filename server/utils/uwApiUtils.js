@@ -76,6 +76,19 @@ const paramToScheduleURL = (req) => {
 
 // --------------------------------------------------------------------------
 
+const paramToSubjectsURL = (req) => '/codes/subjects.json';
+const transformSubjectsResponse = data => data.map(e => ({
+  subject: e.subject,
+  description: e.description
+}));
+
+// --------------------------------------------------------------------------
+
+const paramToCoursesURL = (req) => `/courses/${req.params.subject}.json`;
+const transformCoursesResponse = data => data;
+
+// --------------------------------------------------------------------------
+
 const paramToDescriptionURL = (req) => `/courses/${req.params.subject}/${req.params.catalog_number}.json`;
 const transformDescriptionResponse = data => data;
 
@@ -131,10 +144,14 @@ module.exports = {
     paramToScheduleURL,
     transformDescriptionResponse,
     paramToDescriptionURL,
+    paramToSubjectsURL,
+    transformSubjectsResponse,
     transformImportantDatesResponse,
     paramToImportantDatesURL,
     transformInfoSessionResponse,
     paramToInfoSessionURL,
     transformNewsResponse,
-    paramToNewsURL
+    paramToNewsURL,
+    transformCoursesResponse,
+    paramToCoursesURL
 }

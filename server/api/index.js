@@ -11,6 +11,8 @@ router.use('/docs', swaggerUi.serve);
 
 router.get('/schedule/detail/:subject/:catalog_number', managers.uwApi.descriptionHandler);
 
+router.get('/schedule/courses/:subject', managers.uwApi.coursesHandler);
+router.get('/schedule/subjects', managers.uwApi.subjectsHandler);
 router.get('/schedule/:term/:subject', managers.uwApi.scheduleHandler);
 router.get('/schedule/:term/:subject/:catalog_number', managers.uwApi.scheduleHandler);
 

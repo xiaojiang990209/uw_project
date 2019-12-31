@@ -20,8 +20,8 @@ const UserSchema = new Schema({
         default: Date.now
     },
     favouriteCourses: {
-      type: Schema.Types.Mixed,
-      default: {}
+      type: [String],
+      default: []
     }
 });
 

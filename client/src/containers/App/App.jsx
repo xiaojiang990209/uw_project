@@ -2,19 +2,22 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import StoreProvider from "../../contexts/StoreProvider";
-import Register from "../../containers/Register/Register";
-import Login from "../../containers/Register/Login";
 import PrivateRoute from "../../routes/PrivateRoute";
-import Dashboard from "../../containers/Dashboard";
-import Course from "../../containers/Course/Course";
-import Navbar from "../../containers/Navbar/Navbar";
-import MatchableJoin from "../../containers/Matchable/MatchableJoin";
-import MatchableCreate from "../../containers/Matchable/MatchableCreate";
 import theme from "../../theme";
+
 import { menu_options } from '../../utils/constants';
 import { MainContainer } from './components';
-import CourseDisplay from "../Course/CourseDisplay";
+
+import Course from "../Course/Course";
+import CourseDetail from "../Course/CourseDetail";
+import CourseSubject from "../Course/CourseSubject";
+import Dashboard from "../Dashboard";
+import MatchableJoin from "../Matchable/MatchableJoin";
+import MatchableCreate from "../Matchable/MatchableCreate";
 import MatchedGroupDisplay from '../Matchable/MatchedGroupDisplay';
+import Navbar from "../Navbar/Navbar";
+import Login from "../Register/Login";
+import Register from "../Register/Register";
 
 class App extends Component {
   render() {
@@ -27,8 +30,9 @@ class App extends Component {
             <Route exact path="/login" component={Login}/>
             <Route exact path="/" component={Login}/>
             <MainContainer>
-              <PrivateRoute exact path="/course/:term/:subject/:catalog_number" component={CourseDisplay} />
               <PrivateRoute exact path="/course" component={Course}/>
+              <PrivateRoute exact path="/course/:subject" component={CourseSubject}/>
+              <PrivateRoute exact path="/course/:subject/:catalog_number" component={CourseDetail}/>
               <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
               <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />

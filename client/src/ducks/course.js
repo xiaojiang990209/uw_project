@@ -15,12 +15,21 @@ export const SET_SUBJECTS_AND_TERMS = 'SET_SUBJECTS_AND_TERMS';
 
 export const STATE_KEY = 'course';
 
+export const getSubjects = () => {
+  return axios.get('/api/schedule/subjects').then(res => res.data);
+}
+
+export const getCourses = (subject) => {
+  return axios.get(`/api/schedule/courses/${subject}`).then(res => res.data);
+}
+
 export const getCourseSchedule = (term, subject) => (dispatch) => {
   return withNotification(SCHEDULE_MESSAGE)(axios.get(`/api/schedule/${term}/${subject}`));
 };
 
 export const getIndividualCourseSchedule = (term, subject, catalog_number) => {
-  return axios.get(`/api/schedule/${term}/${subject}/${catalog_number}`).then(res => res.data);
+  return withNotification(SCHEDULE_MESSAGE)(
+    axios.get(`/api/schedule/${term}/${subject}/${catalog_number}`).then(res => res.data));
 }
 
 export const getTerms = () => (dispatch) => axios.get('/api/terms')
