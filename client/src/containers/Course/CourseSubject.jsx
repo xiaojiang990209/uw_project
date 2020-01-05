@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCourses } from '../../ducks/course';
-import { SubjectCard, MarginWrapper, Wrapper } from './components';
+import { SubjectCard, MarginWrapper } from './components';
 import { Container } from 'reactstrap';
 import Search from '../../components/Search';
 
@@ -32,15 +32,13 @@ function CourseSubject(props) {
   }
 
   return (
-    <Wrapper>
-      <Container>
-        <br/><br/>
-        <h4>Choose from the following <strong>{subject.toUpperCase()}</strong> courses</h4>
-        <hr/>
-        <Search placeholder="Enter your course" onChange={onCourseChanged} confirmText="Search" />
-        {filteredCourses && generateCourses()}
-      </Container>
-    </Wrapper>
+    <Container>
+      <br/>
+      <h4>Choose from the following <strong>{subject.toUpperCase()}</strong> courses</h4>
+      <hr/>
+      <Search placeholder="Enter your course" onChange={onCourseChanged} confirmText="Search" />
+      {filteredCourses && generateCourses()}
+    </Container>
   );
 }
 

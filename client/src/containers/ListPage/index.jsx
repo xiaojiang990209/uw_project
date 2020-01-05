@@ -12,8 +12,6 @@ function Dashboard(props) {
     <>
       <Weather />
       <TabContainer>
-        <NewsTab title="What's around Campus"/>
-        <InfoSessionTab title="Upcoming Info Session"/>
         <FavouriteCourseTab title="Favourite Courses"/>
       </TabContainer>
     </>

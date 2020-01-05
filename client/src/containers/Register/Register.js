@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../ducks/session';
-import { FormFeedback, FormGroup, Input, Form, Button } from 'reactstrap';
+import { FormGroup, Input, Form, Button } from 'reactstrap';
 
 import RegisterContainer from './components/RegisterContainer';
 import RegisterFormWrapper from './components/RegisterFormWrapper';

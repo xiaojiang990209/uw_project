@@ -9,7 +9,7 @@ import { StyledModal, StyledModalBody, FormWrapper, StyledFormGroup, StyledBooki
 import './css/modal.css';
 
 function MatchableCreate(props) {
-  const referral = props.location.state;
+  const referral = props.location.state || {};
   const [selectedSubject, setSelectedSubject] = useState(referral.selectedSubject);
   const [selectedCourse, setSelectedCourse] = useState(referral.selectedCourse || "");
   const [selectedDay, setSelectedDay] = useState(referral.selectedDay);
@@ -84,37 +84,37 @@ function MatchableCreate(props) {
       <hr/>
       <Form onSubmit={onFormSubmit}>
         <StyledFormGroup row>
-          <Label for="subject" md={3}>Subject</Label>
+          <Label for="subject" md={2}>Subject</Label>
           <Col>
             <Select value={selectedSubject} onChange={setSelectedSubject} options={subjects} placeholder="Subject" required/>
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
-          <Label for="courseCode" md={3}>Course code</Label>
+          <Label for="courseCode" md={2}>Course code</Label>
           <Col>
               <Input id="courseCode" placeholder="Course code" value={selectedCourse} maxLength={3} required onChange={e => setSelectedCourse(e.target.value)}/>
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
-          <Label for="maxMembers" md={3}>Max Group Size</Label>
+          <Label for="maxMembers" md={2}>Max Group Size</Label>
           <Col>
             <Select value={selectedGroupSize} onChange={setSelectedGroupSize} options={groupSizes} placeholder="Group Size" required/>
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
-          <Label for="dates" md={3}>Date</Label>
+          <Label for="dates" md={2}>Date</Label>
           <Col>
             <Select value={selectedDay} onChange={setSelectedDay} options={dates} placeholder="Date" required/>
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
-          <Label for="duration" md={3}>Duration</Label>
+          <Label for="duration" md={2}>Duration</Label>
           <Col>
             <Select value={selectedDuration} onChange={setSelectedDuration} options={durations} placeholder="Duration" required/>
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
-          <Label for="time" md={3}>Time</Label>
+          <Label for="time" md={2}>Time</Label>
           <Col md={3}>
             <Select value={selectedHour} onChange={setSelectedHour} options={hour} placeholder="Hour" required/>
           </Col>
@@ -123,7 +123,7 @@ function MatchableCreate(props) {
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
-          <Label for="building" md={3}>Building</Label>
+          <Label for="building" md={2}>Building</Label>
           <Col>
             <Select value={selectedBuilding} onChange={setSelectedBuilding} options={buildings} placeholder="Building" required />
           </Col>

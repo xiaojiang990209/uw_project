@@ -6,6 +6,7 @@ export const SearchCard = styled(Card)`
   display: flex;
   padding: 0px;
   position: sticky;
+  background: #e0e0e0;
   top: 65px;
 `;
 

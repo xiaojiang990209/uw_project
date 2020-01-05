@@ -13,7 +13,6 @@ function MatchedGroupAdapter(props) {
   }
 
   const locale = 'en-CA';
-  const date = new Date(group.startDate).toLocaleDateString(locale, { dateStyle: 'short' })
   const from  = new Date(group.startDate).toLocaleTimeString(locale, { timeStyle: 'short' });
   const to  = new Date(group.endDate).toLocaleTimeString(locale, { timeStyle: 'short' });
 

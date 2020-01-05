@@ -6,12 +6,6 @@ import { faHeart as faHeartOutline } from '@fortawesome/free-regular-svg-icons'
 
 import { Card, Title, Subtitle, Content } from '../../../components/Card';
 
-export const Wrapper = styled.div`
-  min-height: 100%;
-  width: 85%;
-  margin: 0px auto;
-`;
-
 export const TextWrapper = styled.div`
   font-size: 14px;
 `;
@@ -53,9 +47,9 @@ export const DetailCard = (props) => (
   <Card>
     <Title>
       {props.title}
-      {props.isFavourite ?
+      {props.showFavourite && (props.isFavourite ?
         <SolidHeart onClick={props.onFavouriteClicked} /> :
-        <HollowHeart onClick={props.onFavouriteClicked} />}
+        <HollowHeart onClick={props.onFavouriteClicked} />)}
     </Title>
     <Subtitle>{props.subtitle}</Subtitle>
     <Content detail>{props.content}</Content>

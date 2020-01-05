@@ -135,7 +135,8 @@ const paramToNewsURL = (req) => "news.json";
 const transformNewsResponse = (data) => {
   return data.map((val) => ({
     title: entities.decode(val.title),
-    link: val.link
+    link: val.link,
+    date: new Date(val.updated).toLocaleString('en-CA')
   }));
 }
 
