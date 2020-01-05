@@ -5,17 +5,13 @@ import {
   Collapse,
   NavbarToggler,
   Nav,
-  NavItem,
-  UncontrolledDropdown
 } from 'reactstrap';
 import {
-  StyledDropdownMenu,
-  StyledDropdownItem,
-  StyledDropdownToggle,
   StyledNavbar,
   StyledNavbarBrand,
-  StyledNavLink
 } from './components';
+import DropdownNavItem from './components/DropdownNavItem';
+import LinkNavItem from './components/LinkNavItem';
 
 function Navbar(props) {
   const { options, isAuthenticated, logoutUser } = props;
@@ -25,29 +21,15 @@ function Navbar(props) {
 
   const canShow = (option) => !option.private || isAuthenticated;
 
-  const toNavItem = (option, idx) => {
-    if (option.nested) {
-      return (
-        canShow(option) && <UncontrolledDropdown nav inNavbar key={idx}>
-          <StyledDropdownToggle nav caret>
-            {option.name}
-          </StyledDropdownToggle>
-          <StyledDropdownMenu>
-            {option.nested.map((nestedOption, idx) => (
-              canShow(nestedOption) && <StyledDropdownItem key={idx}>
-                <StyledNavLink href={nestedOption.route}>{nestedOption.name}</StyledNavLink>
-              </StyledDropdownItem>
-            ))}
-          </StyledDropdownMenu>
-        </UncontrolledDropdown>
-      )
-    }
-    return (
-      canShow(option) && <NavItem key={idx}>
-        <StyledNavLink href={option.route}>{option.name}</StyledNavLink>
-      </NavItem>
-    );
-  }
+  const convertToNavItem = (option, idx) => (
+    canShow(option) && (
+      option.nested ?
+        <DropdownNavItem key={idx} option={{...option, nested: option.nested.filter(canShow)}} /> :
+        <LinkNavItem key={idx} option={option} />
+    )
+  );
+
+  const signOutOption = ({ route: '#', name: 'Sign out' })
 
   return (
     <StyledNavbar light expand="md">
@@ -55,12 +37,8 @@ function Navbar(props) {
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ml-auto" navbar>
-          {options.map(toNavItem)}
-          {isAuthenticated && <NavItem onClick={() => logoutUser(props.history)}>
-            <StyledNavLink href="#">
-              Sign out
-            </StyledNavLink>
-          </NavItem>}
+          {options.map(convertToNavItem)}
+          {isAuthenticated && <LinkNavItem option={signOutOption} onClick={() => logoutUser(props.history)}/>}
         </Nav>
       </Collapse>
     </StyledNavbar>

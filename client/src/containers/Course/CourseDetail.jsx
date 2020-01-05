@@ -17,11 +17,6 @@ function CourseDetail(props) {
   const [favourite, setFavourite] = useState(props.favouriteCourses && props.favouriteCourses.includes(courseName));
   const favouriteRef = useRef(favourite);
 
-  // Listen for route changes
-  props.history.listen((loc, act) => {
-    console.log('changed');
-  });
-
   useEffect(() => {
     if (!(props.terms || []).length) {
       props.getTerms();

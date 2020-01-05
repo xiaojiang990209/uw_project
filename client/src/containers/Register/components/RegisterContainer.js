@@ -16,8 +16,7 @@ const RegisterContainer = styled.div`
   -ms-flex-pack: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  background-color: ${({ theme }) => theme.color.primary};
-  height: 100vh;
+  height: 80vh;
 `;
 
 export default RegisterContainer;
