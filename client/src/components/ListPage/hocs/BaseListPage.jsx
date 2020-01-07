@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import ReactList from 'react-list';
-
+import LoadingGate from "../../LoadingGate";
 
 /**
  * A Hoc that is designed to display a list of items, specified by props.data
@@ -10,19 +10,11 @@ import ReactList from 'react-list';
 function ListPage(itemRenderer) {
   return (props) => {
     const { error, data } = props;
-    let content;
-    if (error || !data) {
-      content = (<div>{error}</div>);
-    } else {
-      content = (
-        <div style={{overflow: 'auto'}}>
-          <ReactList
-            itemRenderer={(index, key) => itemRenderer(data, index, key)}
-            length={data.length} />
-        </div>
-      );
-    }
-    return (<>{content}</>);
+    return (error || !data) ?
+      (<div>{error}</div>) :
+      (<div style={{ overflow: 'auto' }}>
+        <ReactList itemRenderer={(index, key) => itemRenderer(data, index, key)} length={data.length}/>
+      </div>)
   };
 }
 
@@ -35,7 +27,14 @@ export default function BaseListPage(apiFetcher, storeFetcher, itemRenderer) {
   return () => {
     const [data, setData] = useState(null);
     const [err, setError] = useState(null);
-    useEffect(() => { apiFetcher().then(setData).catch(setError); }, []);
-    return <ListComponent data={data} error={err} />
-  };
-};
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+      apiFetcher().then((data) => {
+        setData(data);
+        setLoading(false);
+    }).catch(setError); }, []);
+
+    return isLoading ? <LoadingGate label={"default label"} /> : <ListComponent data={data} error={err} />
+  }
+}

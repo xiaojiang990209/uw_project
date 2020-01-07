@@ -8,7 +8,7 @@ export const RegisterFormWrapper = styled.div`
   padding: 32px;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0px 0px 6px rgba(0,0,0,0.25);
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
   .form-group {
     margin-bottom: 22px;
   }
