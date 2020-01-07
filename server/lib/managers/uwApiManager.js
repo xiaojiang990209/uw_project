@@ -3,8 +3,12 @@ const uwClient = new uwapi({ API_KEY: process.env.UW_API_SECRET });
 const {
     transformScheduleResponse,
     paramToScheduleURL,
+    transformSubjectsResponse,
+    paramToSubjectsURL,
     transformDescriptionResponse,
     paramToDescriptionURL,
+    transformCoursesResponse,
+    paramToCoursesURL,
     transformImportantDatesResponse,
     paramToImportantDatesURL,
     transformInfoSessionResponse,
@@ -27,6 +31,8 @@ const baseUwGetHandler = (urlGetter, successTransformer) => (req, res) => {
 
 const scheduleHandler = baseUwGetHandler(paramToScheduleURL, transformScheduleResponse);
 const descriptionHandler = baseUwGetHandler(paramToDescriptionURL, transformDescriptionResponse);
+const subjectsHandler = baseUwGetHandler(paramToSubjectsURL, transformSubjectsResponse);
+const coursesHandler = baseUwGetHandler(paramToCoursesURL, transformCoursesResponse);
 const importantDatesHandler = baseUwGetHandler(paramToImportantDatesURL, transformImportantDatesResponse);
 const infoSessionHandler = baseUwGetHandler(paramToInfoSessionURL, transformInfoSessionResponse);
 const newsHandler = baseUwGetHandler(paramToNewsURL, transformNewsResponse);
@@ -34,7 +40,9 @@ const newsHandler = baseUwGetHandler(paramToNewsURL, transformNewsResponse);
 module.exports = {
     scheduleHandler,
     descriptionHandler,
+    subjectsHandler,
     importantDatesHandler,
     infoSessionHandler,
-    newsHandler
+    newsHandler,
+    coursesHandler
 };

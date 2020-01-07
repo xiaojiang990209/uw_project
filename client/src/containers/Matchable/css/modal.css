@@ -16,9 +16,10 @@
     text-align: center;
 }
 td.I {background-color: #ddffdd}
+.dwm_main td.row_labels     {background-color: #373a47; white-space: nowrap}    /* used for the row labels column */
 table.dwm_main {clear: both;width: 100%;border-spacing: 0;border-collapse: separate;border: 0;}
-td.even_row       {background-color: #ffffff}      /* even rows in the day view */
-td.odd_row        {background-color: #f2f4f6}       /* odd rows in the day view */
+tr.even_row td.new {background-color: #ffffff}
+tr.odd_row td.new {background-color: #f2f4f6}
 td.times          {background-color: #373a47}
 .times a:link    {color: #ffffff;    text-decoration: none; font-weight: normal}
 .times a:visited {color: #ffffff; text-decoration: none; font-weight: normal}
@@ -26,17 +27,26 @@ td.times          {background-color: #373a47}
 .dwm_main th a:link    {color: #ffffff;    text-decoration: none; font-weight: normal}
 .dwm_main th a:visited {color: #ffffff;text-decoration: none;font-weight: normal;}
 .dwm_main th a:hover   {color: #ffffff;   text-decoration:underline; font-weight: normal}
+.row_labels a:link    {color: #ffffff;    text-decoration: none; font-weight: normal}
+.row_labels a:visited {color: #ffffff;text-decoration: none;font-weight: normal;}
+.row_labels a:hover   {color: #ffffff;   text-decoration:underline; font-weight: normal}
 .dwm_main tr:hover td:hover.odd_row, .dwm_main tr:hover td:hover.even_row {background-color: #aabbff}
 .dwm_main tr:hover td.times {background-color: #aabbff; color: #0B263B}
+.dwm_main td:hover.new, .dwm_main td.new_hover {background-color: #ffc0da}
+.dwm_main tr:hover td.row_labels, .dwm_main td.row_labels_hover {background-color: #ffc0da; color: #0B263B}
+.dwm_main#month_main td:hover.valid, .dwm_main#month_main td.valid_hover {background-color: #ffc0da}
 
 
-div.celldiv1 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
-div.celldiv2 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
-div.celldiv3 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
-div.celldiv4 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
-div.celldiv5 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
-div.celldiv6 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
-div.celldiv7 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
-div.celldiv8 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
-div.celldiv9 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
-div.celldiv10 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.celldiv {max-width: 100%;overflow: hidden;margin: 0;padding: 0;}
+div.slots1 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.slots2 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.slots3 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.slots4 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.slots5 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.slots6 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.slots7 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.slots8 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.slots9 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+div.slots10 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
+td.new a, a.new_booking {display: block; font-size: medium; text-align: center}
+td.new img, .new_booking img {margin: 0 auto; }

@@ -22,7 +22,7 @@ class Login extends Component {
 
   componentDidMount() {
     if (this.props.session.isAuthenticated) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/');
     }
   }
 
@@ -65,7 +65,6 @@ class Login extends Component {
 
     return (
       <RegisterContainer theme={this.props.theme}>
-        <h3 style={{ color: '#fff' }}>WAssisT</h3>
         <RegisterFormWrapper>
           <Form onSubmit={this.onSubmit}>
             <FormGroup>

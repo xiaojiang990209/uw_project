@@ -10,7 +10,7 @@ const currentGroupValidator = (req, res, next) => {
     if (isEmpty(data.courseID))   errors.courseID = "Course id is required";
     if (isEmpty(data.date))  errors.date = "Date of the study is required";
     if (isEmpty(data.hasTime)) errors.hasTime = "hasTime is required";
-    if (isEmpty(data.userID)) errors.userID = "User id is required";
+    if (isEmpty(data.userId)) errors.user = "User id is required";
 
    if(!_.isEqual(errors, {}))  return res.status(HTTP_STATUS.BAD_REQUEST).json(errors);
    next();
@@ -20,7 +20,7 @@ const registerGroupValidator = (req, res, next) => {
     let data = Object.assign({}, req.body);
     let errors = {};
 
-    if (isEmpty(data.userID)) errors.userID = "user id is required";
+    if (isEmpty(data.userId)) errors.user = "user id is required";
     if (isEmpty(data.courseID)) errors.courseID = "Course id is required";
     if (isEmpty(data.startDate)) errors.startDate = "Start date is required";
     if (isEmpty(data.duration)) errors.duration = "Duration of the study is required";

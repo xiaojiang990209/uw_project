@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../ducks/session';
-import { FormFeedback, FormGroup, Input, Form, Button } from 'reactstrap';
+import { FormGroup, Input, Form, Button } from 'reactstrap';
 
 import RegisterContainer from './components/RegisterContainer';
 import RegisterFormWrapper from './components/RegisterFormWrapper';
@@ -25,7 +25,7 @@ class Register extends Component {
 
   componentDidMount() {
     if (this.props.session.isAuthenticated) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/');
     }
   }
 
@@ -77,7 +77,6 @@ class Register extends Component {
     const { name, email, password, confirmPassword, registerError } = this.state;
     return (
       <RegisterContainer theme={this.props.theme}>
-        <h3 style={{ color: '#fff' }}>WAssisT</h3>
         <RegisterFormWrapper>
           <Form onSubmit={this.submitForm}>
             <FormGroup>

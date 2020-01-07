@@ -11,6 +11,8 @@ router.use('/docs', swaggerUi.serve);
 
 router.get('/schedule/detail/:subject/:catalog_number', managers.uwApi.descriptionHandler);
 
+router.get('/schedule/courses/:subject', managers.uwApi.coursesHandler);
+router.get('/schedule/subjects', managers.uwApi.subjectsHandler);
 router.get('/schedule/:term/:subject', managers.uwApi.scheduleHandler);
 router.get('/schedule/:term/:subject/:catalog_number', managers.uwApi.scheduleHandler);
 
@@ -25,15 +27,17 @@ router.get('/docs', swaggerUi.setup(swaggerDocument));
 
 router.post('/users/register', managers.user.registerHandler);
 router.post('/users/login', managers.user.loginHandler);
+router.put('/users/favouriteCourses', middleware.account.ensureLoggedIn, managers.user.favouriteCoursesHandler);
 
 router.get('/news', managers.news);
 
 router.put('/terms',  managers.terms.updateTermHandler);
 router.get('/terms', managers.terms.getTermHandler);
 
-router.post('/matchable/current-groups', middleware.ensureLoggedIn, validators.matchable.currentGroupValidator,  managers.matchable.fetchGroupHandler);//fetching existing groups, post because we need body
-router.post('/matchable/groups', middleware.ensureLoggedIn, middleware.ensureLoggedIn, validators.matchable.registerGroupValidator,  managers.matchable.registerGroupHandler);//register a new group
-router.post('/matchable/update-group', middleware.ensureLoggedIn, managers.matchable.updateGroupHandler);//join a new group
+router.post('/matchable/current-groups', middleware.account.ensureLoggedIn, validators.matchable.currentGroupValidator,  managers.matchable.fetchGroupHandler);//fetching existing groups, post because we need body
+router.post('/matchable/groups', middleware.account.ensureLoggedIn, validators.matchable.registerGroupValidator,  managers.matchable.registerGroupHandler);//register a new group
+router.post('/matchable/update-group', middleware.account.ensureLoggedIn, managers.matchable.updateGroupHandler);//join a new group
+router.get('/matchable/groups/:groupId', managers.matchable.getGroupHandler);
 
 router.get('/library/dates', managers.library.getDatesHandler);
 router.get('/library/buildings', managers.library.getBuildingHandler);

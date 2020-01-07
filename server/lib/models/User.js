@@ -18,6 +18,10 @@ const UserSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    favouriteCourses: {
+      type: [String],
+      default: []
     }
 });
 

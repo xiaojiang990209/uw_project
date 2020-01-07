@@ -17,15 +17,17 @@ const getClassInfo = data => {
 
   const formattedLocation = location.building ? `${location.building} ${location.room}` : null;
   const name = `${data.subject} ${data.catalog_number}`;
+  const { key: value, value: label } = TERMS.filter(e => e['key'] === data.term.toString())[0];
 
   return {
+    ...data,
     name,
     instructor,
+    term: { value, label },
     start: date.start_time,
     end: date.end_time,
     days: date.weekdays,
     location: formattedLocation,
-    ...data
   };
 }
 
@@ -55,6 +57,7 @@ const transformScheduleResponse = data => {
         course = {
           name: val.name,
           title: val.title,
+          term: val.term,
           sections: [getClassSectionInfo(val)]
         };
       }
@@ -70,6 +73,19 @@ const paramToScheduleURL = (req) => {
   }
   return `/terms/${term}/${subject}/schedule.json`;
 }
+
+// --------------------------------------------------------------------------
+
+const paramToSubjectsURL = (req) => '/codes/subjects.json';
+const transformSubjectsResponse = data => data.map(e => ({
+  subject: e.subject,
+  description: e.description
+}));
+
+// --------------------------------------------------------------------------
+
+const paramToCoursesURL = (req) => `/courses/${req.params.subject}.json`;
+const transformCoursesResponse = data => data;
 
 // --------------------------------------------------------------------------
 
@@ -119,7 +135,8 @@ const paramToNewsURL = (req) => "news.json";
 const transformNewsResponse = (data) => {
   return data.map((val) => ({
     title: entities.decode(val.title),
-    link: val.link
+    link: val.link,
+    date: new Date(val.updated).toLocaleString('en-CA')
   }));
 }
 
@@ -128,10 +145,14 @@ module.exports = {
     paramToScheduleURL,
     transformDescriptionResponse,
     paramToDescriptionURL,
+    paramToSubjectsURL,
+    transformSubjectsResponse,
     transformImportantDatesResponse,
     paramToImportantDatesURL,
     transformInfoSessionResponse,
     paramToInfoSessionURL,
     transformNewsResponse,
-    paramToNewsURL
+    paramToNewsURL,
+    transformCoursesResponse,
+    paramToCoursesURL
 }
