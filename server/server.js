@@ -15,6 +15,7 @@ const  io = require('socket.io')(server);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static('client/build'))
 
 /*
  * Initialize MongoDB database
@@ -36,7 +37,7 @@ app.use('/api', api);
 
 const port = process.env.PORT || 5000;
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     const Path = path.join(__dirname, '/client/build/index.html');
     res.sendFile(Path);
 });
