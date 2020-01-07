@@ -45,4 +45,7 @@ export const StyledDropdownMenu = styled(DropdownMenu)`
 
 export const StyledDropdownItem = styled(DropdownItem)`
   padding: 0px ${({theme}) => theme.unit.small}px;
+  &:active {
+    background-color: #e7e7e7;
+  }
 `;

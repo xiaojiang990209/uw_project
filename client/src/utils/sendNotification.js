@@ -1,7 +1,7 @@
 import toast from 'cogo-toast';
 
 const option = {
-  hideAfter: 1
+  hideAfter: 1,
 };
 
 export const showSuccessNotif = (message) => toast.success(message, option);
@@ -15,10 +15,10 @@ export default ({ success, failure, loading }) => (promise) => {
   const successNotif = (args) => {
     loadingNotif.then(() => showSuccessNotif(success));
     return args;
-  }
+  };
   const errorNotif = (err) => {
     loadingNotif.then(() => showErrorNotif(failure));
     throw err;
-  }
+  };
   return promise.then(successNotif).catch(errorNotif);
-}
+};
