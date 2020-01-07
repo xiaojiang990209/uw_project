@@ -19,12 +19,11 @@ export default class OpenWeatherApi {
       args
     );
 
-    return axios.get(endPointToday, { params })
-      .then(todayResponse => {
-        const todayData = todayResponse.data;
-        if (todayData) return this._map(todayData, params.lang);
-        return {};
-      });
+    return axios.get(endPointToday, { params }).then((todayResponse) => {
+      const todayData = todayResponse.data;
+      if (todayData) return this._map(todayData, params.lang);
+      return {};
+    });
   }
 
   _map(today, lang) {
@@ -42,8 +41,8 @@ export default class OpenWeatherApi {
         },
         wind: today.wind.speed.toFixed(0),
         humidity: today.main.humidity,
-      }
-    ]
+      },
+    ];
     return mapped;
   }
 }

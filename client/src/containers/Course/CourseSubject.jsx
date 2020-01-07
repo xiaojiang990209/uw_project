@@ -28,8 +28,9 @@ function CourseSubject(props) {
 
   const onCourseChanged = (e) => {
     e.preventDefault();
-    setFilteredCourses(courses.filter(c => c.name.toLowerCase().includes(e.target.value.toLowerCase())));
-  }
+    const courseCode = e.target.value.match(/(\d+)/);
+    setFilteredCourses(courses.filter(subject => subject.name.includes(courseCode ? courseCode[0] : '')));
+  };
 
   return (
     <Container>

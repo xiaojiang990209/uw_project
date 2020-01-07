@@ -6,7 +6,7 @@ const initialState = {
   ratingsMap: {},
   descriptions: {},
   subjects: [],
-  terms: []
+  terms: [],
 };
 
 export const SET_PROF_RATING = 'SET_PROF_RATING';
@@ -16,12 +16,12 @@ export const SET_SUBJECTS_AND_TERMS = 'SET_SUBJECTS_AND_TERMS';
 export const STATE_KEY = 'course';
 
 export const getSubjects = () => {
-  return axios.get('/api/schedule/subjects').then(res => res.data);
-}
+  return axios.get('/api/schedule/subjects').then((res) => res.data);
+};
 
 export const getCourses = (subject) => {
-  return axios.get(`/api/schedule/courses/${subject}`).then(res => res.data);
-}
+  return axios.get(`/api/schedule/courses/${subject}`).then((res) => res.data);
+};
 
 export const getCourseSchedule = (term, subject) => (dispatch) => {
   return withNotification(SCHEDULE_MESSAGE)(axios.get(`/api/schedule/${term}/${subject}`));
@@ -29,13 +29,16 @@ export const getCourseSchedule = (term, subject) => (dispatch) => {
 
 export const getIndividualCourseSchedule = (term, subject, catalog_number) => {
   return withNotification(SCHEDULE_MESSAGE)(
-    axios.get(`/api/schedule/${term}/${subject}/${catalog_number}`).then(res => res.data));
-}
+    axios.get(`/api/schedule/${term}/${subject}/${catalog_number}`).then((res) => res.data)
+  );
+};
 
-export const getTerms = () => (dispatch) => axios.get('/api/terms')
-  .then((res) => res.data)
-  .then((data) => dispatch(setSubjectsAndTerms(data)))
-  .catch((err) => console.log(err));
+export const getTerms = () => (dispatch) =>
+  axios
+    .get('/api/terms')
+    .then((res) => res.data)
+    .then((data) => dispatch(setSubjectsAndTerms(data)))
+    .catch((err) => console.log(err));
 
 export const getCourseDescription = (course) => (dispatch) => {
   // Set the corresponding course to null first before actually
@@ -59,10 +62,10 @@ export const getBatchProfRating = (names) => (dispatch) => {
   return axios
     .post(`/api/rating`, { names })
     .then((res) => {
-      res.data.forEach(info => dispatch(setProfRating(info.name, info)));
+      res.data.forEach((info) => dispatch(setProfRating(info.name, info)));
     })
     .catch((err) => console.log(err.response));
-}
+};
 
 const setProfRating = (name, rating) => {
   return {
@@ -80,7 +83,7 @@ const setCourseDescription = (course, description) => {
 
 const setSubjectsAndTerms = (data) => ({
   type: SET_SUBJECTS_AND_TERMS,
-  payload: data
+  payload: data,
 });
 
 const courseReducer = (state = initialState, action) => {
@@ -105,7 +108,7 @@ const courseReducer = (state = initialState, action) => {
       return {
         ...state,
         subjects: action.payload.subjects,
-        terms: action.payload.terms
+        terms: action.payload.terms,
       };
 
     default:

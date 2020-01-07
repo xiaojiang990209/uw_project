@@ -4,14 +4,14 @@ export const menu_options = [
     nested: [
       {
         route: '/course',
-        name: 'Find courses'
+        name: 'Find courses',
       },
       {
         private: true,
         route: '/course/favourite',
-        name: 'Favourite courses'
-      }
-    ]
+        name: 'Favourite courses',
+      },
+    ],
   },
   {
     name: 'Matchable',
@@ -20,34 +20,34 @@ export const menu_options = [
       {
         private: true,
         route: '/matchable/join',
-        name: 'Join a group'
+        name: 'Join a group',
       },
       {
         private: true,
         route: '/matchable/create',
-        name: 'Create a group'
-      }
-    ]
+        name: 'Create a group',
+      },
+    ],
   },
   {
     route: '/carpool',
-    name: 'Carpool'
+    name: 'Carpool',
   },
   {
     route: '/housing',
-    name: 'Housing'
+    name: 'Housing',
   },
   {
     name: 'Other',
     nested: [
       {
         route: '/news',
-        name: 'News'
+        name: 'News',
       },
       {
         route: '/infosession',
-        name: 'Info Session'
-      }
-    ]
-  }
+        name: 'Info Session',
+      },
+    ],
+  },
 ];
