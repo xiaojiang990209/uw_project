@@ -35,6 +35,6 @@ export default function BaseListPage(apiFetcher, storeFetcher, itemRenderer) {
         setLoading(false);
     }).catch(setError); }, []);
 
-    return isLoading ? <LoadingGate label={"default label"} /> : <ListComponent data={data} error={err} />
+    return isLoading ? <LoadingGate /> : <ListComponent data={data} error={err} />
   }
 }
