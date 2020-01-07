@@ -25,6 +25,7 @@ class BaseScraper:
 
         try:
             response = self._session.get(url, timeout=self._timeout)
+            print (response)
             response.raise_for_status()
         except (RequestException):
             return None

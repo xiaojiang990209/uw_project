@@ -17,6 +17,7 @@ class FBGroupScraper:
         url = self._scrape_url.format(group_id)
 
         while True:
+            print (url)
             html = self.base_scraper.get_response(url)
             posts = self.converter.get_posts(html)
             for post in posts:

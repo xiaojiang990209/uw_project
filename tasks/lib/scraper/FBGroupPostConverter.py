@@ -16,7 +16,7 @@ class FBGroupPostConverter:
     _post_timestamp_no_year_format = '%d %B at %H:%M'
     _post_timestamp_year_format = '%d %B %Y at %H:%M'
     _post_content_cleanup_rules = [
-        re.compile(r"\+(\d){1}\n"),
+        re.compile(r"(\+(\d){1}\n)|(^\+(\d){1,2}$)"),
         re.compile(r"\nMESSAGE")
     ]
 
@@ -82,22 +82,30 @@ class FBGroupPostConverter:
 
     def _extract_content(self, detail, post):
         content_text = None
+        # Try different parsing methods
+        # Text-based
         if detail:
-            # Text-based
             content_elem = detail.find('div:last-child > div:last-child', first=True)
             if content_elem and content_elem.text:
                 content_text = content_elem.text
-        else:
-            # Story-based
-            content_elem = post.find('div.story_body_container > div:nth-child(2)', first=True)
-            if content_elem and content_elem.text:
-                content_text = content_elem.text
+
+        if content_text:
+            for cleanup_rule in self._post_content_cleanup_rules:
+                content_text = re.sub(cleanup_rule, '', content_text)
+            if content_text:
+                return content_text
+
+        # Story-based
+        content_elem = post.find('div.story_body_container > div:nth-child(2)', first=True)
+        if content_elem and content_elem.text:
+            content_text = content_elem.text
 
         if not content_text:
             return None
 
         for cleanup_rule in self._post_content_cleanup_rules:
             content_text = re.sub(cleanup_rule, '', content_text)
+
         return content_text
 
     def _extract_photos(self, post):
