@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { getCourseSchedule, getTerms, getSubjects } from '../../ducks/course';
-import { Wrapper, MarginWrapper, InfoCard } from './components';
+import { MarginWrapper, InfoCard } from './components';
 import Search from '../../components/Search';
 
 function Course(props) {
@@ -24,22 +24,20 @@ function Course(props) {
   }
 
   return (
-    <Wrapper>
-      <Container>
-        <br/><br/>
-        <h4>Choose from the following subjects</h4>
-        <hr/>
-        <Search placeholder="Enter your subject" onChange={onCourseChanged} confirmText="Search" />
-        {filteredSubjects && generateSubjects()}
-      </Container>
-    </Wrapper>
+    <Container>
+      <br/>
+      <h4>Choose from the following subjects</h4>
+      <hr/>
+      <Search placeholder="Enter your subject" onChange={onCourseChanged} confirmText="Search" />
+      {filteredSubjects && generateSubjects()}
+    </Container>
   );
 }
 
 const mapStateToProps = (state) => ({
   subjects: state.course.subjects,
   terms: state.course.terms,
-  favouriteCourses: state.session.user.favouriteCourses
+  favouriteCourses: state.session.user && state.session.user.favouriteCourses
 });
 
 const mapDispatchToProps = ({

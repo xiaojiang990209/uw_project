@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Avatar from 'react-avatar';
-import { Form, FormGroup, Label, Input, ListGroup, ListGroupItem } from 'reactstrap';
+import { Form, FormGroup, Input, ListGroup, ListGroupItem } from 'reactstrap';
 import ReactList from 'react-list';
 import { getGroup } from '../../ducks/matchable';
 import { FormWrapper, StyledUsername } from './component';

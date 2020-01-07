@@ -6,7 +6,7 @@ export const StyledFormGroup = styled(FormGroup)`
 `;
 
 export const FormWrapper = styled.div`
-  width: 75%;
+  width: 90%;
   margin: 0px auto;
   padding: ${({theme}) => theme.unit.medium}px;
   font-size: 16px;

@@ -7,7 +7,7 @@ import ReactList from 'react-list';
  * A Hoc that is designed to display a list of items, specified by props.data
  * @param {*} itemRenderer 
  */
-function Tab(itemRenderer) {
+function ListPage(itemRenderer) {
   return (props) => {
     const { error, data } = props;
     let content;
@@ -15,7 +15,7 @@ function Tab(itemRenderer) {
       content = (<div>{error}</div>);
     } else {
       content = (
-        <div style={{overflow: 'auto', maxHeight: 400}}>
+        <div style={{overflow: 'auto'}}>
           <ReactList
             itemRenderer={(index, key) => itemRenderer(data, index, key)}
             length={data.length} />
@@ -26,16 +26,16 @@ function Tab(itemRenderer) {
   };
 }
 
-export default function BaseTab(apiFetcher, storeFetcher, itemRenderer) {
-  const TabComponent = Tab(itemRenderer);
+export default function BaseListPage(apiFetcher, storeFetcher, itemRenderer) {
+  const ListComponent = ListPage(itemRenderer);
   if (storeFetcher) {
     const mapStateToProps = (state) => ({ data: storeFetcher(state) });
-    return connect(mapStateToProps, null)(TabComponent);
+    return connect(mapStateToProps, null)(ListComponent);
   }
   return () => {
     const [data, setData] = useState(null);
     const [err, setError] = useState(null);
     useEffect(() => { apiFetcher().then(setData).catch(setError); }, []);
-    return <TabComponent data={data} error={err} />
+    return <ListComponent data={data} error={err} />
   };
 };

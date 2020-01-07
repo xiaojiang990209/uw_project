@@ -1,4 +1,3 @@
-import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
@@ -30,19 +29,18 @@ const authorizeUser = (dispatch, res) => {
 export const registerUser = (userRegisterInfo, history) => (dispatch) => {
   return client.session.register(userRegisterInfo).then((res) => {
     authorizeUser(dispatch, res);
-    history.push('/dashboard');
+    history.push('/');
   });
 };
 
 export const loginUser = (userLoginInfo, history) => (dispatch) => {
   return client.session.login(userLoginInfo).then((res) => {
     authorizeUser(dispatch, res);
-    history.push('/dashboard');
+    history.push('/');
   });
 };
 
 export const updateFavouriteCourses = (courses) => (dispatch, getState) => {
-  console.log('here');
   const { id, favouriteCourses } = getState().session.user;
   client.session.saveFavouriteCourses(id, favouriteCourses)
     .then((res) => { dispatch(setFavouriteCourses(courses)) })
@@ -68,10 +66,11 @@ export const setUserLoading = () => {
   };
 };
 
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (history) => (dispatch) => {
   localStorage.clear();
   setAuthToken(false);
   dispatch(setCurrentUser());
+  history.push('/');
 };
 
 //Reducer

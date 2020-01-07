@@ -11,11 +11,14 @@ import { MainContainer } from './components';
 import Course from "../Course/Course";
 import CourseDetail from "../Course/CourseDetail";
 import CourseSubject from "../Course/CourseSubject";
-import Dashboard from "../Dashboard";
 import MatchableJoin from "../Matchable/MatchableJoin";
 import MatchableCreate from "../Matchable/MatchableCreate";
 import MatchedGroupDisplay from '../Matchable/MatchedGroupDisplay';
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../../components/Navbar";
+import Landing from "../Landing";
+import News from "../ListPage/News";
+import InfoSession from "../ListPage/InfoSession";
+import FavouriteCourse from "../ListPage/FavouriteCourse";
 import Login from "../Register/Login";
 import Register from "../Register/Register";
 
@@ -25,19 +28,21 @@ class App extends Component {
       <StoreProvider history={this.props.history}>
         <ThemeProvider theme={theme}>
           <Router>
-            <Navbar options={menu_options}/>
-            <Route exact path="/register" component={Register}/>
-            <Route exact path="/login" component={Login}/>
-            <Route exact path="/" component={Login}/>
             <MainContainer>
-              <PrivateRoute exact path="/course" component={Course}/>
-              <PrivateRoute exact path="/course/:subject" component={CourseSubject}/>
-              <PrivateRoute exact path="/course/:subject/:catalog_number" component={CourseDetail}/>
+              <Navbar options={menu_options} history={this.props.history}/>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/register" component={Register}/>
+              <Route exact path="/login" component={Login}/>
               <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
               <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
+              <Route exact path="/news" component={News} />
+              <Route exact path="/infosession" component={InfoSession} />
               <Switch>
-                <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+                <Route exact path="/course" component={Course}/>
+                <PrivateRoute exact path="/course/favourite" component={FavouriteCourse} />
+                <Route exact path="/course/:subject" component={CourseSubject}/>
+                <Route exact path="/course/:subject/:catalog_number" component={CourseDetail}/>
               </Switch>
             </MainContainer>
           </Router>
