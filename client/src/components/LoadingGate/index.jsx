@@ -4,11 +4,10 @@ import styled from 'styled-components';
 
 const LoadContainer = styled.div`
   max-width: 950px;
-    height: 300px;
- 
-    display: flex;
-      align-items: flex-end;
-    justify-content: center;
+  height: 300px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
  `;
 
