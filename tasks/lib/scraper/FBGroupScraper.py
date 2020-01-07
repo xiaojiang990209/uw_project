@@ -5,7 +5,7 @@ COLLECTED_AT = 'collected_at';
 
 class FBGroupScraper:
     _scrape_url = 'https://m.facebook.com/groups/{}'
-    _next_page_url = 'https://m.facebook.com/{}'
+    _next_page_url = 'https://m.facebook.com{}'
 
     def __init__(self, converter):
         self.base_scraper = BaseScraper()
@@ -13,7 +13,6 @@ class FBGroupScraper:
 
     def get_result(self, group_id=None, num_posts=None):
         results = []
-        timestamp = int(time())
         self.converter.set_group_id(group_id)
         url = self._scrape_url.format(group_id)
 
@@ -22,8 +21,9 @@ class FBGroupScraper:
             posts = self.converter.get_posts(html)
             for post in posts:
                 result = self.converter.convert(post)
-                result[COLLECTED_AT] = timestamp
-                results.append(result)
+                if result:
+                    results.append(result)
+
                 if len(results) == num_posts:
                     return results
 

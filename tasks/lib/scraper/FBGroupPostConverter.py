@@ -15,27 +15,35 @@ class FBGroupPostConverter:
     _post_timestamp_yesterday_format = 'Yesterday at %H:%M'
     _post_timestamp_no_year_format = '%d %B at %H:%M'
     _post_timestamp_year_format = '%d %B %Y at %H:%M'
+    _post_content_cleanup_rules = [
+        re.compile(r"\+(\d){1}\n"),
+        re.compile(r"\nMESSAGE")
+    ]
 
     def set_group_id(self, group_id):
         self.group_id = group_id
 
     def get_posts(self, html):
-        return html.find('article')
+        return html.find('div#m_group_stories_container > section > article')
 
     def convert(self, post):
         post_id = self._extract_post_id(post)
         post_url = self._display_url.format(self.group_id, post_id)
         detail = self._extract_detail(post)
+        title = self._extract_title(detail)
         content = self._extract_content(detail, post)
-        return {
-            'post_id': post_id,
-            'post_url': post_url,
-            'title': self._extract_title(detail),
-            'price': self._extract_price(detail),
-            'content': content,
-            'photos': self._extract_photos(post),
-            'created_at': self._extract_time(post),
-        }
+        if title or content:
+            return {
+                'post_id': post_id,
+                'post_url': post_url,
+                'title': title,
+                'content': content,
+                'price': self._extract_price(detail),
+                'photos': self._extract_photos(post),
+                'created_at': self._extract_time(post),
+            }
+
+        return None
 
     def get_next_page_url(self, post):
         next_page_elem = post.find('#m_more_item > a', first=True)
@@ -51,7 +59,7 @@ class FBGroupPostConverter:
     def _extract_post_id(self, post):
         try:
             data_ft = json.loads(post.attrs['data-ft'])
-            return data_ft['top_level_post_id']
+            return int(data_ft['top_level_post_id'])
         except:
             return None
 
@@ -65,20 +73,32 @@ class FBGroupPostConverter:
     def _extract_price(self, detail):
         try:
             price_elem = detail.find('div:nth-child(2)', first=True)
+            # Story based post will have price of +(digit)
+            if price_elem.text.startswith('+'):
+                return None
             return price_elem.text
         except:
             return None
 
     def _extract_content(self, detail, post):
-        # Text-based
+        content_text = None
         if detail:
+            # Text-based
             content_elem = detail.find('div:last-child > div:last-child', first=True)
             if content_elem and content_elem.text:
-                return content_elem.text
+                content_text = content_elem.text
+        else:
+            # Story-based
+            content_elem = post.find('div.story_body_container > div:nth-child(2)', first=True)
+            if content_elem and content_elem.text:
+                content_text = content_elem.text
 
-        # Story-based
-        content_elem = post.find('div.story_body_container > div:nth-child(2)', first=True)
-        return content_elem.text if content_elem else None
+        if not content_text:
+            return None
+
+        for cleanup_rule in self._post_content_cleanup_rules:
+            content_text = re.sub(cleanup_rule, '', content_text)
+        return content_text
 
     def _extract_photos(self, post):
         try:
@@ -102,7 +122,6 @@ class FBGroupPostConverter:
             return None
 
     def _parse_datetime(self, time_text):
-        print (time_text)
         """
         Q: How to convert time?
         Known formats:
