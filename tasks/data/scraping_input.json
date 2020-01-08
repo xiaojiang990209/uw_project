@@ -3,42 +3,42 @@
     "group_id": "1028477820535630",
     "type": "HOUSING",
     "location": "Waterloo",
-    "number": 100
+    "number": 200
   },
   {
     "group_id": "142679255268",
     "type": "HOUSING",
     "location": "Waterloo",
-    "number": 100
+    "number": 200
   },
   {
     "group_id": "WaterlooSublet",
     "type": "HOUSING",
     "location": "Waterloo",
-    "number": 100
+    "number": 200
   },
   {
     "group_id": "370115193161790",
     "type": "HOUSING",
     "location": "Toronto",
-    "number": 100
+    "number": 200
   },
   {
     "group_id": "225049564330328",
     "type": "CARPOOL",
     "location": "Waterloo",
-    "number": 100
+    "number": 200
   },
   {
     "group_id": "110354088989367",
     "type": "HOUSING",
     "location": "Waterloo",
-    "number": 100
+    "number": 200
   },
   {
     "group_id": "1201322059930986",
     "type": "HOUSING",
     "location": "Toronto",
-    "number": 100
+    "number": 200
   }
 ]

@@ -17,8 +17,9 @@ class FBGroupScraper:
         url = self._scrape_url.format(group_id)
 
         while True:
-            print (url)
             html = self.base_scraper.get_response(url)
+            if not html:
+                break
             posts = self.converter.get_posts(html)
             for post in posts:
                 result = self.converter.convert(post)
@@ -28,8 +29,11 @@ class FBGroupScraper:
                 if len(results) == num_posts:
                     return results
 
-            url = self._next_page_url.format(
-                    self.converter.get_next_page_url(html))
+            url_suffix = self.converter.get_next_page_url(html)
+            if not url_suffix:
+                break
+
+            url = self._next_page_url.format(url_suffix)
 
         return results
 

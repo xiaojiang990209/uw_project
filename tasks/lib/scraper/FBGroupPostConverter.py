@@ -46,7 +46,10 @@ class FBGroupPostConverter:
         return None
 
     def get_next_page_url(self, post):
-        next_page_elem = post.find('#m_more_item > a', first=True)
+        next_page_elem = post.find('div#m_more_item > a', first=True)
+        if not next_page_elem:
+            print (post)
+            return None
         return next_page_elem.attrs['href']
 
     def _extract_detail(self, post):
