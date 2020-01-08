@@ -1,0 +1,9 @@
+cron:
+- description: "Facebook scraping job every 6 hours"
+  url: /scrape
+  target: tasks
+  schedule: every 6 hours
+- description: "Daily cleaning job"
+  url: /clean
+  target: tasks
+  schedule: every 24 hours

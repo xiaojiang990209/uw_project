@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 
 from lib.repository.FBGroupRepository import FBGroupRepository
 
-# Default truncate data that are older than ~3 months
-TRUNCATE_DATE = (datetime.utcnow() - timedelta(weeks=12)).timestamp()
+# Default truncate data that are older than a month
+TRUNCATE_DATE = (datetime.utcnow() - timedelta(weeks=4)).timestamp()
 
 @app.route('/clean')
 def clean():
