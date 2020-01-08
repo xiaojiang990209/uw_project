@@ -1,0 +1,3 @@
+Flask==1.1.1
+requests_html==0.10.0
+mongoengine==0.19.1

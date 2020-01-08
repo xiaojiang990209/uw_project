@@ -9,6 +9,7 @@ class HousingGroupPost(Document):
     price = StringField()
     content = StringField()
     photos = ListField(URLField())
+    location = StringField()
     created_at = LongField()
     collected_at = LongField(default=lambda: datetime.utcnow().timestamp())
 
