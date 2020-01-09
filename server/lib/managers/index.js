@@ -6,4 +6,5 @@ module.exports = {
     rateMyProf: require('./rateMyProfManager'),
     terms: require('./term'),
     library: require('./libraryManager'),
+    fbGroupPost: require('./fbGroupPostManager'),
 };
