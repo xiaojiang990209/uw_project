@@ -1,0 +1,11 @@
+cron:
+- description: "Facebook scraping job every 6 hours"
+  url: /scrape
+  target: cron
+  schedule: every 6 hours synchronized
+  timezone: America/Toronto
+- description: "Daily cleaning job"
+  url: /clean
+  target: cron
+  schedule: every 24 hours synchronized
+  timezone: America/Toronto
