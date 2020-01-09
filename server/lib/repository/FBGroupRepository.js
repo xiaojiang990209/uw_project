@@ -2,7 +2,7 @@ const HousingGroupPost = require('../models/HousingGroupPost');
 const CarpoolGroupPost = require('../models/CarpoolGroupPost');
 const { FB_GROUP_TYPES } = require('../../utils/constants');
 
-DEFAULT_QUERY_LIMIT = 20;
+DEFAULT_QUERY_LIMIT = 30;
 
 class FBGroupRepository {
     getGroupPosts({ city, created_at, limit, type }) {

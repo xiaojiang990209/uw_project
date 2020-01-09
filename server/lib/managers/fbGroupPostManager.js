@@ -3,24 +3,42 @@ const { FB_GROUP_TYPES } = require('../../utils/constants');
 
 const FBGroupRepository = require('../repository/FBGroupRepository');
 
-// Assume path of the kind
-// 1. '/housing?city=Toronto' if first query
-// 2. '/housing?city=Toronto&created_at=214930290'
-
+/**
+ *  getFBGroupPosts: fetches group post from MongoDB using repository
+ *  request would contain the following query params:
+ *    - type: housing / carpool
+ *    - limit: size of paginated response (nullable)
+ *    - created_at: the start timestamp for the next page response (nullable)
+ *    - city
+ *
+ *  response would follow the following format:
+ *  {
+ *    data: [FBGroupPost],
+ *    next_timestamp: Timestamp to pass back for next response page
+ *  }
+ *
+ */
 const getFBGroupPosts = (req, res) => {
   const query_params = req.query;
-  const fb_group_type = FB_GROUP_TYPES[query_params.type.toUpperCase()];
+  const fbGroupType = FB_GROUP_TYPES[query_params.type.toUpperCase()];
   return FBGroupRepository
-    .getGroupPosts({ ...query_params, type: fb_group_type })
-    .then((data) => res.json(_construct_post_response(data)))
+    .getGroupPosts({ ...query_params, type: fbGroupType })
+    .then((data) => res.json(_constructPostResponse(data)))
     .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).send({ message: err }));
 }
 
-const _construct_post_response = (data) => {
-  const next_timestamp = Math.min.apply(null, data.map((d) => d.created_at));
+const _constructPostResponse = (data) => {
+  let nextTimestamp = Math.min.apply(null, data.map((d) => d.created_at));
+
+  const postsWithNextTimestamp = data.filter((d) => d.created_at === nextTimestamp);
+  if (postsWithNextTimestamp.length > 1) {
+    data = data.filter((d) => d.created_at !== nextTimestamp);
+    nextTimestamp = Math.min.apply(null, data.map((d) => d.created_at));
+  }
+
   return ({
     data,
-    next_timestamp
+    nextTimestamp
   });
 }
 
