@@ -2,7 +2,8 @@ const THEME = {
   color: {
     background: '#FFFFE0',
     primary: '#373a47',
-    secondary: '#f4f4f4',
+    secondary: 'aliceblue',
+    text: 'cadetblue'
   },
   unit: {
     small: 4,

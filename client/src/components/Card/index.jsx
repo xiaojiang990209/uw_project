@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const Card = styled.div`
-  background: aliceblue;
-  color: cadetblue;
+  background: ${({theme}) => theme.color.secondary};
+  color: ${({theme}) => theme.color.text};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
   padding: ${({theme}) => 6*theme.unit.small}px;
@@ -26,7 +26,7 @@ export const Subtitle = styled.p`
   display: flex;
   align-items: center;
 
-  color: cadetblue;
+  color: ${({theme}) => theme.color.text};
 
   margin: 0px;
   margin-top: ${({theme}) => 0.5*theme.unit.small}px;
