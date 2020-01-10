@@ -9,7 +9,6 @@ const cacheChecking = (req, res, next) => {
         res.response = res.json;
         res.json = (data) => {
             cache.save(req.originalUrl, data);
-            cache.getStats();
             res.response(data);
         };
         next();

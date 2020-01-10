@@ -34,8 +34,8 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register}/>
               <Route exact path="/login" component={Login}/>
-              <PrivateRoute exact path='/matchable/join' component={MatchableJoin} />
-              <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
+              <PrivateRoute exact path='/matchable/join' component={} />
+              <PrivateRoute exact path='/matchable/create' component={} />
               <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
               <Route exact path="/news" component={News} />
               <Route exact path="/infosession" component={InfoSession} />

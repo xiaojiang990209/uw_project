@@ -2,9 +2,10 @@ import axios from 'axios';
 import withNotification from '../utils/sendNotification';
 import { CREATE_GROUP_MESSAGE, MATCH_GROUP_MESSAGE, UPDATE_GROUP_MESSAGE } from './constants';
 
-export const matchGroup = (userId, maxMembers, courseID, date, hasTime) => {
-  const body = { userId, maxMembers, courseID, date, hasTime };
-  return withNotification(MATCH_GROUP_MESSAGE)(axios.post('/api/matchable/current-groups', body));
+export const matchGroup = (subject, courseID = '') => {
+  return withNotification(MATCH_GROUP_MESSAGE)(
+    axios.get(`/api/matchable/current-groups?subject=${subject}&courseID=${courseID}`)
+  );
 };
 
 export const joinGroup = (groupID, userId) => {
