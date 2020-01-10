@@ -12,13 +12,9 @@ const _ = require('lodash');
  * }
  */
 const fetchGroupHandler = (req, res) => {
-    const {maxMembers, courseID, date, hasTime, userId } = req.body; //date has to be in Date format
-    const parsedDate = new Date(date);
-    const today = new Date();
-    const isToday = parsedDate.getDate() === today.getDate() && parsedDate.getMonth() === today.getMonth() && parsedDate.getFullYear() === today.getFullYear();
-    const dateMin = isToday ? today : moment(parsedDate).startOf('day');
-    const dateMax = moment(parsedDate).endOf('day');
+    const { subject, courseID } = req.query; //date has to be in Date format
 
+    MatchableGroup.find({subject: subject, courseID: courseID}).then();
     MatchableGroup.find({groupSize: { $lte: maxMembers}, startDate: {$gte: dateMin}, endDate: {$lte: dateMax }})
         .then(allGroups => {
             let data = {};
@@ -37,8 +33,6 @@ const fetchGroupHandler = (req, res) => {
             //all the group exact match unfull and you are not in, ALL
             data.exactMatch = hasTime ? unFullGroups.filter((group) => (group.startDate <= parsedDate && parsedDate <= group.endDate && !userGroups.includes(group))) : [];
 
-            //TODO: limit the size of return
-            //all the group fuzzy match unfull and you are not in, 10
             data.fuzzyMatch = unFullGroups
               .filter((group) => !data.exactMatch.includes(group) && !userGroups.includes(group))
               .concat(sameSubjectGroups);

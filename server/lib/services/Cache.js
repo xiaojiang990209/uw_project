@@ -12,14 +12,14 @@ class Cache {
     }
 
     get(key) {
-        const value = this.cache.get(key);
+        const result = this.cache.get(key);
 
-        if (value) {
+        if (result) {
             console.log(key + " exists in cache");
-            delete value.timestamp;
+
             //saving the new timestamp to cache
-            this.cache.set(key, {value, timestamp: new Date().getTime()});
-            return value;
+            this.cache.set(key, {result, timestamp: new Date().getTime()});
+            return result.value;
         }
 
         console.log(key + " does not exist");

@@ -10,11 +10,6 @@ import MatchedGroupModal from './MatchableMatchedGroupModal';
 
 function MatchableJoin(props) {
   const [selectedSubject, setSelectedSubject] = useState(null);
-  const [dates, setDates] = useState([]);
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [selectedHour, setSelectedHour] = useState(null);
-  const [selectedAm, setSelectedAm] = useState(null);
-  const [selectedGroupSize, setSelectedGroupSize] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [matchedGroups, setMatchedGroups] = useState(null);
 
@@ -29,45 +24,26 @@ function MatchableJoin(props) {
       props.getTerms();
     }
   };
-  const initializeBookingDates = () => {
-    fetchBookingDates()
-      .then(data => setDates(data.dates.map(selectMapper)))
-      .catch(err => console.log(err));
-  }
-
-  const hour = [...Array(13).keys()].slice(1).map(selectMapper);
-  const am = ['AM', 'PM'].map(selectMapper);
-  const groupSizes = [...Array(13).keys()].slice(2).map(selectMapper);
-
   useEffect(initializeSubjects, []);
-  useEffect(initializeBookingDates, []);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    const date = new Date(selectedDay.value);
-    if (selectedHour && selectedAm) {
-      const hour = parseInt(selectedHour.value);
-      date.setHours(selectedAm.value === 'AM' ? hour : hour + 12);
-    }
-    const courseID = `${selectedSubject.value} ${selectedCourse}`;
-    matchGroup(props.user.id, selectedGroupSize.value, courseID, date, !!selectedHour && !!selectedAm)
+    const subject = selectedSubject.value;
+    const courseID =selectedCourse;
+    matchGroup(subject, courseID)
       .then(res => { 
-        if (!res.data.exactMatch.length && !res.data.fuzzyMatch.length){ 
+        if (!res.data){
           return setError(true);
         }
         setMatchedGroups(res.data);
       })
       .catch(err => setError(err));
-  }
+  };
 
   const redirectOnError = () => {
     props.history.push('/matchable/create', {
       selectedSubject,
       selectedCourse,
-      selectedDay,
-      selectedHour,
-      selectedAm,
-      selectedGroupSize
     });
   };
 
@@ -79,7 +55,7 @@ function MatchableJoin(props) {
 
   const onJoinGroup = (groupId) => {
     props.history.push(`/matchable/groups/${groupId}`);
-  }
+  };
 
   return (
     <FormWrapper>
@@ -94,30 +70,9 @@ function MatchableJoin(props) {
           </Col>
         </StyledFormGroup>
         <StyledFormGroup row>
-          <Label for="courseCode" md={2}>Course code</Label>
+          <Label for="courseCode" md={2}>Course code(optional)</Label>
           <Col>
               <Input id="courseCode" placeholder="Course code" value={selectedCourse} maxLength={3} required onChange={e => setSelectedCourse(e.target.value)}/>
-          </Col>
-        </StyledFormGroup>
-        <StyledFormGroup row>
-          <Label for="maxMembers" md={2}>Max Group Size</Label>
-          <Col>
-            <Select value={selectedGroupSize} onChange={setSelectedGroupSize} options={groupSizes} placeholder="Group Size" required/>
-          </Col>
-        </StyledFormGroup>
-        <StyledFormGroup row>
-          <Label for="dates" md={2}>Date</Label>
-          <Col>
-            <Select value={selectedDay} onChange={setSelectedDay} options={dates} placeholder="Date" required/>
-          </Col>
-        </StyledFormGroup>
-        <StyledFormGroup row>
-          <Label for="time" md={2}>Time (Optional)</Label>
-          <Col md={3}>
-            <Select value={selectedHour} onChange={setSelectedHour} options={hour} placeholder="Hour" />
-          </Col>
-          <Col md={3}>
-            <Select value={selectedAm} onChange={setSelectedAm} options={am} placeholder="AM" />
           </Col>
         </StyledFormGroup>
         <Button block type="submit" color="success">Find!</Button>
