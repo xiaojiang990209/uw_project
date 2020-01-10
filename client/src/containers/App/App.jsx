@@ -22,6 +22,7 @@ import FavouriteCourse from "../ListPage/FavouriteCourse";
 import Login from "../Register/Login";
 import Register from "../Register/Register";
 import ComingSoon from '../../components/ComingSoon'
+import FBPost from '../ListPage/FBPost';
 
 class App extends Component {
   render() {
@@ -39,8 +40,7 @@ class App extends Component {
               <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
               <Route exact path="/news" component={News} />
               <Route exact path="/infosession" component={InfoSession} />
-              <Route exact path="/housing" component={ComingSoon}/>
-              <Route exact path="/carpool" component={ComingSoon}/>
+              <Route exact path="/posts/:type/:city" component={FBPost}/>
               <Switch>
                 <Route exact path="/course" component={Course}/>
                 <PrivateRoute exact path="/course/favourite" component={FavouriteCourse} />

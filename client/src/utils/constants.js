@@ -30,12 +30,26 @@ export const menu_options = [
     ],
   },
   {
-    route: '/carpool',
     name: 'Carpool',
+    nested: [
+      {
+        route: '/posts/carpool/Waterloo',
+        name: 'Waterloo'
+      },
+    ]
   },
   {
-    route: '/housing',
     name: 'Housing',
+    nested: [
+      {
+        route: '/posts/housing/Waterloo',
+        name: 'Waterloo'
+      },
+      {
+        route: '/posts/housing/Toronto',
+        name: 'Toronto'
+      },
+    ]
   },
   {
     name: 'Other',
