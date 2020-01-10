@@ -41,7 +41,6 @@ class Cache {
         //get existing keys [] & get map for all keys
         //[['url', {data, timestamp: Date}],['url', timestamp: Date]]
         console.log("Max number of keys reached, cleaning cache...");
-        console.log( Object.entries(this.cache.mget(this.cache.keys())));
         const cacheList = Object.entries(this.cache.mget(this.cache.keys()));
 
         //sort by timestamp(min......max)
