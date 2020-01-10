@@ -20,7 +20,7 @@ const StyledLink = styled.a`
     text-decoration: none;
   }
   &:hover ${Card} {
-    background-color: #e9e9e9;
+    box-shadow: 0px 8px 20px rgba(50, 50, 50, 0.1) ;
   }
 `;
 
@@ -55,4 +55,23 @@ export const FavouriteCourseCard = (props) => (
     </Card>
   </Link>
 );
+
+const StyledPostImage = styled.img`
+  height: 150px;
+  margin: ${({theme}) => 2*theme.unit.small}px;
+`;
+
+export const FBPostCard = (props) => (
+  <StyledLink href={props.post_url} target='__blank'>
+    <Card>
+      {props.title && <StyledTitle>{props.title}</StyledTitle>}
+      <StyledSubtitle>Posted on {props.published_at}</StyledSubtitle>
+      {props.price && <StyledSubtitle>{props.price}</StyledSubtitle>}
+      {props.content && <Content>{props.content}</Content>}
+      {props.photos.map((url, idx) => (
+        <StyledPostImage key={idx} src={url} alt="post_pic" />
+      ))}
+    </Card>
+  </StyledLink>
+)
 

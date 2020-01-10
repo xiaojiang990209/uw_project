@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const Card = styled.div`
-  background: ${({theme}) => theme.color.secondary};
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: aliceblue;
+  color: cadetblue;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
   padding: ${({theme}) => 6*theme.unit.small}px;
 `;
@@ -18,14 +19,14 @@ export const Title = styled.p`
 
 export const Subtitle = styled.p`
   font-style: normal;
-  font-weight: 500;
+  font-weight: bold;
   font-size: 16px;
   line-height: 16px;
 
   display: flex;
   align-items: center;
 
-  color: rgba(0, 0, 0, 0.4);
+  color: cadetblue;
 
   margin: 0px;
   margin-top: ${({theme}) => 0.5*theme.unit.small}px;
@@ -34,10 +35,11 @@ export const Subtitle = styled.p`
 const FullContent = styled.p`
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 18px;
   margin: 0px;
   margin-top: ${({theme}) => 2*theme.unit.small}px;
+  color: #000;
 `;
 
 const EllipsisContent = styled(FullContent)`
