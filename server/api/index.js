@@ -11,14 +11,14 @@ router.use('/docs', swaggerUi.serve);
 
 router.get('/schedule/detail/:subject/:catalog_number', managers.uwApi.descriptionHandler);
 
-router.get('/schedule/courses/:subject', managers.uwApi.coursesHandler);
+router.get('/schedule/courses/:subject', middleware.caching.cacheChecking, managers.uwApi.coursesHandler);
 router.get('/schedule/subjects', managers.uwApi.subjectsHandler);
 router.get('/schedule/:term/:subject', managers.uwApi.scheduleHandler);
-router.get('/schedule/:term/:subject/:catalog_number', managers.uwApi.scheduleHandler);
+router.get('/schedule/:term/:subject/:catalog_number', middleware.caching.cacheChecking, managers.uwApi.scheduleHandler);
 
-router.get('/importantdates', managers.uwApi.importantDatesHandler);
+router.get('/importantdates', middleware.caching.cacheChecking, managers.uwApi.importantDatesHandler);
 
-router.get('/infosession', managers.uwApi.infoSessionHandler);
+router.get('/infosession',  middleware.caching.cacheChecking, managers.uwApi.infoSessionHandler);
 
 router.get('/rating/:name', managers.rateMyProf.profInfoHandler);
 router.post('/rating', managers.rateMyProf.profInfoListHandler);
@@ -29,7 +29,7 @@ router.post('/users/register', managers.user.registerHandler);
 router.post('/users/login', managers.user.loginHandler);
 router.put('/users/favouriteCourses', middleware.account.ensureLoggedIn, managers.user.favouriteCoursesHandler);
 
-router.get('/news', managers.news);
+router.get('/news',  middleware.caching.cacheChecking, managers.news);
 
 router.put('/terms',  managers.terms.updateTermHandler);
 router.get('/terms', managers.terms.getTermHandler);

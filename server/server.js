@@ -15,7 +15,7 @@ const  io = require('socket.io')(server);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static('client/build'))
+app.use(express.static('client/build'));
 
 /*
  * Initialize MongoDB database
