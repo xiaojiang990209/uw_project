@@ -43,4 +43,5 @@ router.get('/library/dates', managers.library.getDatesHandler);
 router.get('/library/buildings', managers.library.getBuildingHandler);
 router.get('/library/rooms', managers.library.getRoomHandler);
 
+router.get('/posts', managers.fbGroupPost.getFBGroupPosts);
 module.exports = router;
