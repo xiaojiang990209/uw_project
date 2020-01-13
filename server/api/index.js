@@ -39,7 +39,7 @@ router.get('/matchable/groups', middleware.account.ensureLoggedIn,  managers.mat
 router.get('/matchable/groups/:subject', middleware.account.ensureLoggedIn,  managers.matchable.fetchBySubjectHandler);//fetching existing groups
 router.post('/matchable/groups', middleware.account.ensureLoggedIn,  managers.matchable.registerGroupHandler);//register a new group
 router.patch('/matchable/groups/:groupId', middleware.account.ensureLoggedIn, managers.matchable.patchGroupHandler);//join a new group
-router.get('/matchable/group/:groupId', managers.matchable.getOneGroupHandler);
+router.get('/matchable/group/:groupId',  middleware.account.ensureLoggedIn, managers.matchable.getOneGroupHandler);
 
 router.get('/library/dates', managers.library.getDatesHandler);
 router.get('/library/buildings', managers.library.getBuildingHandler);
