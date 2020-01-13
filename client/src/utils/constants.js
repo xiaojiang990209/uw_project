@@ -34,22 +34,22 @@ export const menu_options = [
     nested: [
       {
         route: '/posts/carpool/Waterloo',
-        name: 'Waterloo'
+        name: 'Waterloo',
       },
-    ]
+    ],
   },
   {
     name: 'Housing',
     nested: [
       {
         route: '/posts/housing/Waterloo',
-        name: 'Waterloo'
+        name: 'Waterloo',
       },
       {
         route: '/posts/housing/Toronto',
-        name: 'Toronto'
+        name: 'Toronto',
       },
-    ]
+    ],
   },
   {
     name: 'Other',

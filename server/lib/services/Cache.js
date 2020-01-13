@@ -53,6 +53,14 @@ class Cache {
         this.del(deleteKeys);
     }
 
+    getKeys(){
+        return this.cache.keys();
+    }
+
+    getStats(){
+       return this.cache.getStats();
+    }
+
     del(keys) {
         this.cache.del(keys);
     }

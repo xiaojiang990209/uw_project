@@ -3,7 +3,7 @@ const THEME = {
     background: '#FFFFE0',
     primary: '#373a47',
     secondary: 'aliceblue',
-    text: 'cadetblue'
+    text: 'cadetblue',
   },
   unit: {
     small: 4,
