@@ -2,20 +2,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const MatchableGroupSchema = new Schema({
+    groupName: {
+        type: String,
+        required: true,
+    },
     subject: {
       type: String,
       required: true,
     },
-    courseID: {
+    courseId: {
         type: String,
-        required: true,
     },
-    startDate: {
-        type: Date,
-        required: true
-    },
-    endDate: {
-        type: Date,
+    time: {
+        type: Number,
         required: true,
     },
     groupSize: {
@@ -27,7 +26,9 @@ const MatchableGroupSchema = new Schema({
     },
     location: {
         type: String,
-        required: false
+    },
+    description: {
+        type: String,
     },
     isFull : {
         type: Boolean,

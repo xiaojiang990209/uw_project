@@ -1,100 +1,72 @@
 const HTTP_STATUS = require('../../utils/statusCodes');
 const MatchableGroup = require('../models/MatchableGroup');
 const User = require('../models/User');
-const moment = require('moment');
 const _ = require('lodash');
 
-/**
- * {
- *   disabled:       [MatchableGroup], groups that current user is in or it is full
- *   exactMatch :    [MatchableGroup],
- *   fuzzyMatch:     [MatchableGroup],
- * }
- */
-const fetchGroupHandler = (req, res) => {
-    const { subject, courseID } = req.query; //date has to be in Date format
+const fetchGroupsHandler = (req, res) => {
+    MatchableGroup.find({}).then((groups) => {
+        const subjectGroupsMap = {}; //<Subject, number of groups>
+        groups.forEach((group) => {
+            if(!subjectGroupsMap[group.subject]) subjectGroupsMap[group.subject] = 1;
+            else subjectGroupsMap[group.subject]++;
+        });
+       return res.json(subjectGroupsMap);
+    }).catch(err => { console.log(err); res.err({}); });
+};
 
-    MatchableGroup.find({subject: subject, courseID: courseID}).then();
-    MatchableGroup.find({groupSize: { $lte: maxMembers}, startDate: {$gte: dateMin}, endDate: {$lte: dateMax }})
-        .then(allGroups => {
-            let data = {};
-            if(!allGroups.length) return res.status(HTTP_STATUS.NO_CONTENT).end();
 
-            const groups = allGroups.filter(group => group.courseID === courseID);
-            const fullGroups = groups.filter((group) => group.isFull);
-            const unFullGroups =  groups.filter((group) => !group.isFull);
-            const subject = courseID.split(" ")[0];
-            const sameSubjectGroups = allGroups.filter(group => group.courseID !== courseID && group.courseID.startsWith(subject));
+const fetchBySubjectHandler = (req, res) => {
+    const { subject } = req.params;
 
-            const userGroups = groups.filter((group) => group.users[userId]).map((group) => ({...group, hasUser: true})); //groups that you are in for this date, ALL
-            const exactMatchFull = fullGroups.filter((group) => group.startDate <= parsedDate && parsedDate <= group.endDate) && !userGroups.includes(userGroups);//groups exact match and full, ALL
-            data.disabled = userGroups.concat(exactMatchFull);
-
-            //all the group exact match unfull and you are not in, ALL
-            data.exactMatch = hasTime ? unFullGroups.filter((group) => (group.startDate <= parsedDate && parsedDate <= group.endDate && !userGroups.includes(group))) : [];
-
-            data.fuzzyMatch = unFullGroups
-              .filter((group) => !data.exactMatch.includes(group) && !userGroups.includes(group))
-              .concat(sameSubjectGroups);
-
-            return res.json(data);
-        })
-        .catch(err => { console.log(err); res.err({}); });
+    MatchableGroup.find({subject: subject}).then((groups) => {
+        return res.json(groups);
+    }).catch(err => { console.log(err); res.err({}); });
 };
 
 
 const registerGroupHandler = (req, res) => {
-    const { groupSize, courseID, startDate, duration, userId, location } = req.body;
-    const parsedStartDate = new Date(startDate);
-    let endDate = moment(parsedStartDate).add( Math.floor(duration), "h").add((duration%1)*60, "m");
-    const newGroup = new MatchableGroup({groupSize, courseID, startDate: parsedStartDate, endDate, users: [userId], isFull: false, location});
+    const { groupName, subject, courseId, time, groupSize, location, description, userId} = req.body;
+    const timestamp = new Date(time).getTime();
+
+    const newGroup =
+        new MatchableGroup({groupName, subject, courseId, time: timestamp, groupSize, users: [userId],  location, description, isFull: false});
     newGroup.save()
         .then(() => {
-            res.json({id: newGroup._id});
+            return res.json({id: newGroup._id});
         })
         .catch(err => console.log(err));
 };
 
-const updateGroupHandler = async (req, res) => {
-    const {groupID, userId} = req.body;
-    const groupJoining =  await MatchableGroup.findById(groupID).exec();
-    const existingUser = groupJoining.users.find((id) => id.toString().localeCompare(userId) == 0);
+const patchGroupHandler = async (req, res) => {
+    const {groupId} = req.params;
+    const {users} = req.body;
+    const targetGroup =  await MatchableGroup.findById(groupId).exec();
 
-    if (existingUser) {
-      _.remove(groupJoining.users, existingUser);
-    } else {
-      groupJoining.users.push(userId);
+    //checking the users length exceed the limit
+    if(users.length > targetGroup.groupSize){
+        res.err({});
     }
 
-    if (!groupJoining.users.length) {
-      await MatchableGroup.findByIdAndDelete(groupID).exec();
-    } else {
-      groupJoining.markModified('users');
-    }
+    targetGroup.users = users;
+    if(targetGroup.groupSize === users.length) targetGroup.isFull = true;
 
-    if(groupJoining.groupSize === groupJoining.users.length) groupJoining.isFull = true;
 
-    groupJoining.save().then(() => {
+    targetGroup.save().then(() => {
         res.json({success: true});
     }).catch(err => console.log(err));
 };
 
-const getGroupHandler = async (req, res) => {
+const getOneGroupHandler = async (req, res) => {
     const { groupId } = req.params;
-    const userMapper = (user) => ({ id: user._id, name: user.name });
-    try {
-      const group = (await MatchableGroup.findById(groupId).exec()).toObject();
-      const users = (await User.find({ '_id': { $in: group.users } }).exec())
-        .map(userMapper);
-      return res.json({ ...group, users });
-    } catch (err) {
-      console.log(err);
-    }
-}
+    const targetGroup =  await MatchableGroup.findById(groupId).exec();
+
+    return res.json(targetGroup);
+};
 
 module.exports = {
-    getGroupHandler,
+    fetchGroupsHandler,
+    fetchBySubjectHandler,
     registerGroupHandler,
-    fetchGroupHandler,
-    updateGroupHandler,
+    patchGroupHandler,
+    getOneGroupHandler,
 };
