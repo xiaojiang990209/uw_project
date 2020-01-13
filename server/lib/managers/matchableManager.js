@@ -1,6 +1,5 @@
 const HTTP_STATUS = require('../../utils/statusCodes');
 const MatchableGroup = require('../models/MatchableGroup');
-const User = require('../models/User');
 const _ = require('lodash');
 
 const fetchGroupsHandler = (req, res) => {
@@ -11,16 +10,20 @@ const fetchGroupsHandler = (req, res) => {
             else subjectGroupsMap[group.subject]++;
         });
        return res.json(subjectGroupsMap);
-    }).catch(err => { console.log(err); res.err({}); });
+    }).catch(err => {
+        console.log(err);
+        res.status(HTTP_STATUS.BAD_REQUEST).send("ERROR: fetching groups error");
+    });
 };
 
 
 const fetchBySubjectHandler = (req, res) => {
     const { subject } = req.params;
 
-    MatchableGroup.find({subject: subject}).then((groups) => {
-        return res.json(groups);
-    }).catch(err => { console.log(err); res.err({}); });
+    MatchableGroup.find({subject: subject}).then(res.json).catch(err => {
+        console.log(err);
+        res.status(HTTP_STATUS.BAD_REQUEST).send("ERROR: find by subject error");
+    });
 };
 
 
@@ -44,7 +47,7 @@ const patchGroupHandler = async (req, res) => {
 
     //checking the users length exceed the limit
     if(users.length > targetGroup.groupSize){
-        res.err({});
+        res.status(HTTP_STATUS.BAD_REQUEST).send("ERROR: max number of groups members exceeded");
     }
 
     targetGroup.users = users;
