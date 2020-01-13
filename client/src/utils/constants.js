@@ -19,8 +19,8 @@ export const menu_options = [
     nested: [
       {
         private: true,
-        route: '/matchable/join',
-        name: 'Join a group',
+        route: '/matchable/groups',
+        name: 'Find study group',
       },
       {
         private: true,
