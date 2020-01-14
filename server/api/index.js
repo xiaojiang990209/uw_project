@@ -35,8 +35,8 @@ router.put('/terms',  managers.terms.updateTermHandler);
 router.get('/terms', managers.terms.getTermHandler);
 
 //Matchable
-router.get('/matchable/groups', middleware.account.ensureLoggedIn,  managers.matchable.fetchGroupsHandler);//fetching existing groups
-router.get('/matchable/groups/:subject', middleware.account.ensureLoggedIn,  managers.matchable.fetchBySubjectHandler);//fetching existing groups
+router.get('/matchable/groups', managers.matchable.fetchGroupsHandler);//fetching existing groups
+router.get('/matchable/groups/:subject', managers.matchable.fetchBySubjectHandler);//fetching existing groups
 router.post('/matchable/groups', middleware.account.ensureLoggedIn,  managers.matchable.registerGroupHandler);//register a new group
 router.patch('/matchable/groups/:groupId', middleware.account.ensureLoggedIn, managers.matchable.patchGroupHandler);//join a new group
 router.get('/matchable/group/:groupId',  middleware.account.ensureLoggedIn, managers.matchable.getOneGroupHandler);

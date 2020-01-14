@@ -9,7 +9,8 @@ const fetchGroupsHandler = (req, res) => {
             if(!subjectGroupsMap[group.subject]) subjectGroupsMap[group.subject] = 1;
             else subjectGroupsMap[group.subject]++;
         });
-       return res.json(subjectGroupsMap);
+
+        return res.json(Object.keys(subjectGroupsMap).map((k) => ({ subject: k, count: subjectGroupsMap[k] })));
     }).catch(err => {
         console.log(err);
         res.status(HTTP_STATUS.BAD_REQUEST).send("ERROR: fetching groups error");
@@ -20,7 +21,9 @@ const fetchGroupsHandler = (req, res) => {
 const fetchBySubjectHandler = (req, res) => {
     const { subject } = req.params;
 
-    MatchableGroup.find({subject: subject}).then(res.json).catch(err => {
+  MatchableGroup.find({subject: subject}).then((groups) => {
+    return res.json(groups);
+  }).catch(err => {
         console.log(err);
         res.status(HTTP_STATUS.BAD_REQUEST).send("ERROR: find by subject error");
     });
