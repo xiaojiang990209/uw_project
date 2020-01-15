@@ -1,4 +1,3 @@
-import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
 import client from '../client';
@@ -19,8 +18,7 @@ export const SET_FAVOURITE_COURSES = 'SET_FAVOURITE_COURSES';
 
 const authorizeUser = (dispatch, res) => {
   const { token } = res.data;
-  localStorage.setItem('jwtToken', token);
-  setAuthToken(token);
+  localStorage.setItem('jwtToken', `Bearer ${token}`);
 
   const user = jwt_decode(token);
   dispatch(setCurrentUser(user));
@@ -69,7 +67,6 @@ export const setUserLoading = () => {
 
 export const logoutUser = (history) => (dispatch) => {
   localStorage.clear();
-  setAuthToken(false);
   dispatch(setCurrentUser());
   history.push('/');
 };

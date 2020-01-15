@@ -23,4 +23,4 @@ export const createGroup = (userId, startDate, courseID, groupSize, duration) =>
 };
 
 export const getGroup = (groupId) =>
-  axios.get(`/api/matchable/groups/${groupId}`).then((res) => res.data);
+  axios.get(`/api/matchable/group/${groupId}`).then((res) => res.data);

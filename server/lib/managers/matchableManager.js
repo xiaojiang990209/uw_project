@@ -65,9 +65,15 @@ const patchGroupHandler = async (req, res) => {
 
 const getOneGroupHandler = async (req, res) => {
     const { groupId } = req.params;
-    const targetGroup =  await MatchableGroup.findById(groupId).exec();
-
-    return res.json(targetGroup);
+    const userMapper = (user) => ({ id: user._id, name: user.name });
+    try {
+      const group = (await MatchableGroup.findById(groupId).exec()).toObject();
+      const users = (await User.find({ '_id': { $in: group.users } }).exec())
+        .map(userMapper);
+      return res.json({ ...group, users });
+    } catch (err) {
+      console.log(err);
+    }
 };
 
 module.exports = {
