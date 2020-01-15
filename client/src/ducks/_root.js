@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import course, * as Course from './course';
 import session, * as Session from './session';
+import './axiosInitialize';
 
 export default (history) =>
   combineReducers({
