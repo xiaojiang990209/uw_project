@@ -21,9 +21,9 @@ const fetchGroupsHandler = (req, res) => {
 const fetchBySubjectHandler = (req, res) => {
     const { subject } = req.params;
 
-  MatchableGroup.find({subject: subject}).then((groups) => {
-    return res.json(groups);
-  }).catch(err => {
+    MatchableGroup.find({subject: subject}).then((groups) => {
+      return res.json(groups);
+    }).catch(err => {
         console.log(err);
         res.status(HTTP_STATUS.BAD_REQUEST).send("ERROR: find by subject error");
     });
@@ -31,7 +31,8 @@ const fetchBySubjectHandler = (req, res) => {
 
 
 const registerGroupHandler = (req, res) => {
-    const { groupName, subject, courseId, time, groupSize, location, description, userId} = req.body;
+    const { groupName, subject, courseId, time, groupSize, location, description } = req.body;
+    const userId = req.user;
     const timestamp = new Date(time).getTime();
 
     const newGroup =
