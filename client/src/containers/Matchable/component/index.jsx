@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import Avatar from 'react-avatar';
+import ReactList from 'react-list';
 import { Link } from 'react-router-dom';
-import { Button, Card as RCard, Modal, ModalBody, FormGroup, ListGroupItem } from 'reactstrap';
+import { Button, Card as RCard, Modal, ModalBody, FormGroup, ListGroup, ListGroupItem } from 'reactstrap';
 import { Card, Title, Subtitle, Content } from '../../../components/Card';
 
 export const StyledFormGroup = styled(FormGroup)`
@@ -41,15 +43,9 @@ export const StyledGroupResultWrapper = styled.div`
   overflow: auto;
 `;
 
-export const StyledUsername = styled.div`
-  display: inline-block;
-  font-size: 1.2rem;
-  vertical-align: middle;
-  margin-left: ${({theme}) => theme.unit.medium}px;
-`;
-
 export const StyledListGroupItem = styled(ListGroupItem)`
   border: none;
+  background: transparent;
 `;
 
 export const MatchableSubjectGroupCard = (props) => (
@@ -75,4 +71,31 @@ export const MatchableGroupCard = (props) => (
       {props.description && <Content detail>{props.description}</Content>}
     </Card>
   </Link>
+);
+
+const StyledUsername = styled.div`
+  display: inline-block;
+  font-size: 1.2rem;
+  vertical-align: middle;
+  margin-left: ${({theme}) => theme.unit.medium}px;
+`;
+
+export const MatchableGroupDisplayCard = (props) => (
+  <Card>
+      <Title>{props.name}</Title>
+      {props.course && <StyledSubtitle>{props.course}</StyledSubtitle>}
+      <StyledSubtitle>{props.date}</StyledSubtitle>
+      {props.location && <StyledSubtitle>{props.location}</StyledSubtitle>}
+      <StyledSubtitle>{`Member count: ${props.users.length} / ${props.size}`}</StyledSubtitle>
+      {props.description && <Content detail>{props.description}</Content>}
+      <hr/>
+      <Subtitle>Members</Subtitle>
+      <Subtitle></Subtitle>
+      <ReactList length={props.users.length} itemRenderer={(idx, key) => (
+        <StyledListGroupItem key={key} style={{ border: 'none' }}>
+          <Avatar name={props.users[idx].name} size="50" round/>
+          <StyledUsername>{props.users[idx].name}</StyledUsername>
+        </StyledListGroupItem>
+      )} />
+  </Card>
 );
