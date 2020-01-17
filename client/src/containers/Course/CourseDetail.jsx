@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { DetailCard } from './components';
@@ -15,7 +15,6 @@ function CourseDetail(props) {
   const [scheduleMap, setScheduleMap] = useState({});
   const [selectedTerm, setSelectedTerm] = useState(null);
   const [favourite, setFavourite] = useState(props.favouriteCourses && props.favouriteCourses.includes(courseName));
-  const favouriteRef = useRef(favourite);
 
   useEffect(() => {
     if (!(props.terms || []).length) {
@@ -24,19 +23,7 @@ function CourseDetail(props) {
     if (!(courseName in props.courseDescriptions)) {
       props.getCourseDescription(courseName);
     }
-    return saveFavouriteCourses;
   }, []);
-  useEffect(() => { favouriteRef.current = favourite; }, [favourite]);
-
-  const saveFavouriteCourses = () => {
-    const isFavourite = favouriteRef.current;
-    if (favourite !== isFavourite) {
-      const updatedFavouriteCourses = isFavourite ?
-        [ ...props.favouriteCourses, courseName ] :
-        props.favouriteCourses.filter(c => c !== courseName);
-      props.updateFavouriteCourses(updatedFavouriteCourses);
-    }
-  }
 
   const onTermClicked = (term) => {
     if (!(term.key in scheduleMap)) {
@@ -49,10 +36,15 @@ function CourseDetail(props) {
 
   const onFavouriteClicked = (e) => {
     e.stopPropagation();
-    if (!favourite) {
+    const isFavourite = !favourite;
+    if (isFavourite) {
       showSuccessNotif(`${courseName} has been favourited`);
     }
-    setFavourite(!favourite);
+    const updatedFavouriteCourses = isFavourite ?
+      [ ...props.favouriteCourses, courseName ] :
+      props.favouriteCourses.filter(c => c !== courseName);
+    props.updateFavouriteCourses(updatedFavouriteCourses);
+    setFavourite(isFavourite);
   }
 
   const getScheduleTitle = () => `Schedule for ${courseName} in ${selectedTerm.value}`;
