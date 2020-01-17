@@ -1,0 +1,12 @@
+runtime: nodejs10
+
+env_variables:
+  UW_API_SECRET:
+  MONGO_HOST:
+
+handlers:
+- url: /.*
+  secure: always
+  redirect_http_response_code: 301
+  script: auto
+
