@@ -22,7 +22,7 @@ const fetchBySubjectHandler = (req, res) => {
     const { subject } = req.params;
 
     MatchableGroup.find({subject: subject}).then((groups) => {
-      return res.json(groups);
+        res.json(groups);
     }).catch(err => {
         console.log(err);
         res.status(HTTP_STATUS.BAD_REQUEST).send("ERROR: find by subject error");
