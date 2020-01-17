@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { getGroups } from '../../ducks/matchable';
 import ListPage from '../../components/ListPage';
-import { MatchableGroupCard, StyledListGroupItem } from './component';
+import { MatchableGroupCard,  } from './component/MatchableSingleGroup';
+import {StyledListGroupItem } from './component';
 
 const renderCourseGroups = (listings, index, key) => {
   const listing = listings[index];
+  const coeff = 1000 * 60 * 5;
   const course = listing.subject && listing.courseId ?
     `${listing.subject} ${listing.courseId}` :
     null;
@@ -17,7 +19,8 @@ const renderCourseGroups = (listings, index, key) => {
         link={`/matchable/groups/${listing._id}`}
         name={listing.groupName}
         course={course}
-        date={new Date(listing.time).toLocaleString('en-CA')}
+
+        date={new Date(Math.round(listing.time / coeff) * coeff).toLocaleString('en-CA')}
         location={listing.location}
         description={listing.description}/>
     </StyledListGroupItem>

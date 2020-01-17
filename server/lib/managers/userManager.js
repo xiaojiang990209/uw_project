@@ -63,7 +63,7 @@ const favouriteCoursesHandler = async (req, res) => {
   User.findByIdAndUpdate(user, { favouriteCourses: favouriteCourses })
     .then((val) => res.json({ success: true }))
     .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err }));
-}
+};
 
 module.exports = {
     loginHandler,

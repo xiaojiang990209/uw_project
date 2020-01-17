@@ -30,6 +30,12 @@ const MatchableGroupSchema = new Schema({
     description: {
         type: String,
     },
+    posts: {
+        type: [{
+            timePosted: Number,
+            ownerId: {type: Schema.Types.ObjectId, ref: 'User'},
+            postData: String }]
+    },
     isFull : {
         type: Boolean,
     }

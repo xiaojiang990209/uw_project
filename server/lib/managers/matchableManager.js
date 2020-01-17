@@ -76,10 +76,26 @@ const getOneGroupHandler = async (req, res) => {
     }
 };
 
+//Add
+//postData
+const updatePostsHandler = async (req, res) => {
+    const { groupId } = req.params;
+    const {postData} = req.body;
+    const userId = '5e150846be209100070276e3';
+
+    const group = (await MatchableGroup.findById(groupId).exec()).toObject();
+    const updateObj = {timePosted: new Date().getTime(), ownerId: userId, postData: postData};
+
+    MatchableGroup.findByIdAndUpdate(groupId, {posts: [...group.posts, updateObj]})
+        .then((val) => res.json({ success: true }))
+        .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err }));
+};
+
 module.exports = {
     fetchGroupsHandler,
     fetchBySubjectHandler,
     registerGroupHandler,
     patchGroupHandler,
     getOneGroupHandler,
+    updatePostsHandler,
 };

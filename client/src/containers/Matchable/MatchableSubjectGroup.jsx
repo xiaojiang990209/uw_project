@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { getGroups } from '../../ducks/matchable';
 import ListPage from '../../components/ListPage';
-import { MatchableSubjectGroupCard, StyledListGroupItem } from './component';
+import { MatchableSubjectGroupCard,  } from './component/MatchableSingleGroup';
+import { StyledListGroupItem } from './component';
 
 const renderSubjectGroups = (listings, index, key) => {
   const listing = listings[index];
@@ -16,7 +17,7 @@ const renderSubjectGroups = (listings, index, key) => {
       </MatchableSubjectGroupCard>
     </StyledListGroupItem>
   );
-}
+};
 
 function MatchableSubjectGroup(props) {
   const MatchableSubjectGroupComponent = ListPage(
@@ -29,7 +30,7 @@ function MatchableSubjectGroup(props) {
       <MatchableSubjectGroupComponent />
     </Container>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   userId: state.session.user.id
