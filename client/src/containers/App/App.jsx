@@ -11,7 +11,8 @@ import { MainContainer } from './components';
 import Course from "../Course/Course";
 import CourseDetail from "../Course/CourseDetail";
 import CourseSubject from "../Course/CourseSubject";
-import MatchableJoin from "../Matchable/MatchableJoin";
+import MatchableSubjectGroup from "../Matchable/MatchableSubjectGroup";
+import MatchableCourseGroup from "../Matchable/MatchableCourseGroup";
 import MatchableCreate from "../Matchable/MatchableCreate";
 import MatchedGroupDisplay from '../Matchable/MatchedGroupDisplay';
 import Navbar from "../../components/Navbar";
@@ -35,7 +36,8 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register}/>
               <Route exact path="/login" component={Login}/>
-              <PrivateRoute exact path='/matchable/join' component={ComingSoon} />
+              <PrivateRoute exact path='/matchable/groups' component={MatchableSubjectGroup} />
+              <PrivateRoute exact path='/matchable/groups/subject/:subject' component={MatchableCourseGroup} />
               <PrivateRoute exact path='/matchable/create' component={ComingSoon} />
               <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
               <Route exact path="/news" component={News} />

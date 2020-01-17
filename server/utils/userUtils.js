@@ -81,9 +81,9 @@ const createJwtPayload = user => ({
 const createAuthResponse = (user) => {
   return new Promise((resolve, reject) => {
     const payload = createJwtPayload(user);
-    jwt.sign(payload, keys.secretOrKey, { expiresIn: 300 }, (err, token) => {
+    jwt.sign(payload, keys.secretOrKey, { expiresIn: '24h' }, (err, token) => {
       if (err) reject({ error: err });
-      resolve({ success: true, token: `Bearer ${token}` });
+      resolve({ success: true, token: token });
     })
   })
 };
