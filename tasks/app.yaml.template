@@ -1,0 +1,12 @@
+runtime: python37
+service: cron
+
+env_variables:
+  MONGO_DB:
+  MONGO_HOST:
+
+handlers:
+- url: /.*
+  secure: always
+  script: auto
+
