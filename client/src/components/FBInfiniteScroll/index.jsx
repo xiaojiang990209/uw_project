@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Button from '../Button';
 import { default as Scroll } from 'react-infinite-scroller';
 import { getPosts } from '../../ducks/fbGroupPost';
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'reactstrap';
 import { getGroup } from '../../ducks/matchable';
-import { MatchableGroupDisplayCard } from './component/MatchableSingleGroup';
+import MatchableGroupDisplayCard from './MatchableSingleGroup';
 
 function MatchedGroup(props) {
   const { groupId } = props.match.params;
@@ -22,6 +22,9 @@ function MatchedGroup(props) {
       <h4><strong>{group.groupName}</strong></h4>
       <hr/>
       <MatchableGroupDisplayCard
+        groupId={groupId}
+        isGroupFull={group.users.length == group.groupSize}
+        posts={group.posts}
         name={group.groupName}
         course={`${group.subject} ${group.courseId}`}
         size={group.groupSize}

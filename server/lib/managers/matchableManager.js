@@ -9,7 +9,6 @@ const fetchGroupsHandler = (req, res) => {
             if(!subjectGroupsMap[group.subject]) subjectGroupsMap[group.subject] = 1;
             else subjectGroupsMap[group.subject]++;
         });
-
         return res.json(Object.keys(subjectGroupsMap).map((k) => ({ subject: k, count: subjectGroupsMap[k] })));
     }).catch(err => {
         console.log(err);
@@ -49,14 +48,24 @@ const patchGroupHandler = async (req, res) => {
     const {users} = req.body;
     const targetGroup =  await MatchableGroup.findById(groupId).exec();
 
+    if(!users.length){
+        MatchableGroup.findByIdAndDelete(groupId)
+            .then((val) => res.json({ success: true }))
+            .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err }));
+    }
+
     //checking the users length exceed the limit
     if(users.length > targetGroup.groupSize){
         res.status(HTTP_STATUS.BAD_REQUEST).send("ERROR: max number of groups members exceeded");
     }
 
     targetGroup.users = users;
-    if(targetGroup.groupSize === users.length) targetGroup.isFull = true;
+    const usersString = users.map((id) => id.toString());
+    targetGroup.posts = targetGroup.posts.filter((post) => usersString.includes(post.ownerId.toString()));
+    console.log(targetGroup.users);
+    console.log(targetGroup.posts);
 
+    if(targetGroup.groupSize === users.length) targetGroup.isFull = true;
 
     targetGroup.save().then(() => {
         res.json({success: true});
@@ -67,9 +76,13 @@ const getOneGroupHandler = async (req, res) => {
     const { groupId } = req.params;
     const userMapper = (user) => ({ id: user._id, name: user.name });
     try {
-      const group = (await MatchableGroup.findById(groupId).exec()).toObject();
+      let group = (await MatchableGroup.findById(groupId).exec()).toObject();
       const users = (await User.find({ '_id': { $in: group.users } }).exec())
         .map(userMapper);
+
+
+      group.posts = group.posts.map((p) => ({ ...p, ownerName: users.find((u) => u.id.toString() === p.ownerId.toString()).name}));
+
       return res.json({ ...group, users });
     } catch (err) {
       console.log(err);
@@ -81,10 +94,12 @@ const getOneGroupHandler = async (req, res) => {
 const updatePostsHandler = async (req, res) => {
     const { groupId } = req.params;
     const {postData} = req.body;
-    const userId = '5e150846be209100070276e3';
+    const userId = req.user;
+    console.log(req.user);
 
     const group = (await MatchableGroup.findById(groupId).exec()).toObject();
     const updateObj = {timePosted: new Date().getTime(), ownerId: userId, postData: postData};
+    console.log(updateObj);
 
     MatchableGroup.findByIdAndUpdate(groupId, {posts: [...group.posts, updateObj]})
         .then((val) => res.json({ success: true }))

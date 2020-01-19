@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { getGroups } from '../../ducks/matchable';
 import ListPage from '../../components/ListPage';
-import { MatchableGroupCard,  } from './component/MatchableSingleGroup';
+import { MatchableGroupCard,  } from './MatchableSingleGroup';
 import {StyledListGroupItem } from './component';
 
 const renderCourseGroups = (listings, index, key) => {
@@ -25,7 +25,7 @@ const renderCourseGroups = (listings, index, key) => {
         description={listing.description}/>
     </StyledListGroupItem>
   );
-}
+};
 
 function MatchableCourseGroup(props) {
   const { subject } = props.match.params;

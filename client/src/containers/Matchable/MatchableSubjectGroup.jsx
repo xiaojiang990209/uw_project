@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import { getGroups } from '../../ducks/matchable';
 import ListPage from '../../components/ListPage';
-import { MatchableSubjectGroupCard,  } from './component/MatchableSingleGroup';
+import { MatchableSubjectGroupCard,  } from './MatchableSingleGroup';
 import { StyledListGroupItem } from './component';
 
 const renderSubjectGroups = (listings, index, key) => {

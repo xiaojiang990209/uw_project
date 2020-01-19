@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import BaseSelect from 'react-select';
+import _ from 'lodash';
 
 const Select = (props) => {
   const [selectedRef, setSelectedRef] = useState(null);
   const [value, setValue] = useState(props.value || '');
   const { required, ...rest } = props;
 
-  const noop = () => {}
-
   const onChange = (value, meta) => {
     props.onChange(value, meta);
     setValue(value);
-  }
+  };
 
   return (
     <div>
@@ -26,7 +25,7 @@ const Select = (props) => {
               position: "absolute"
             }}
             value={value}
-            onChange={noop}
+            onChange={_.noop}
             onFocus={() => selectedRef.focus()}
             required={required}
           />

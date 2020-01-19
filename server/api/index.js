@@ -42,7 +42,7 @@ router.get('/matchable/groups/:subject', middleware.account.ensureLoggedIn, mana
 router.post('/matchable/groups', middleware.account.ensureLoggedIn,  managers.matchable.registerGroupHandler);//register a new group
 router.patch('/matchable/groups/:groupId', middleware.account.ensureLoggedIn, managers.matchable.patchGroupHandler);//join a new group
 router.get('/matchable/group/:groupId',  middleware.account.ensureLoggedIn, managers.matchable.getOneGroupHandler);
-router.post('/matchable/groups/:groupId/posts', managers.matchable.updatePostsHandler);//posting a post
+router.post('/matchable/groups/:groupId/posts', middleware.account.ensureLoggedIn, managers.matchable.updatePostsHandler);//posting a post
 
 router.get('/library/dates', managers.library.getDatesHandler);
 router.get('/library/buildings', managers.library.getBuildingHandler);
