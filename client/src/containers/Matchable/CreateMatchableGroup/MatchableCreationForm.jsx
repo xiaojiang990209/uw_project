@@ -53,10 +53,11 @@ const MatchableCreationForm = (props) => {
   const onFormSubmit = (e) => {
     e.preventDefault();
     const mapValue = (data) => data.value;
-    groupData.subject = mapValue(groupData.subject);
-    groupData.groupSize = mapValue(groupData.groupSize);
+    const value = Object.assign({}, groupData);
+    value.subject = mapValue(groupData.subject);
+    value.groupSize = mapValue(groupData.groupSize);
 
-    createGroup(groupData)
+    createGroup(value)
       .then(data => props.history.push(`/matchable/groups`))
       .catch(err => console.log(err));
   };
