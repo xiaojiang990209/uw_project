@@ -43,7 +43,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = ({
   getCourseSchedule,
   getTerms,
-})
+});
 
 export default connect(
   mapStateToProps,

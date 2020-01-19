@@ -3,10 +3,12 @@ const HTTP_STATUS = require('../../utils/statusCodes');
 
 const ensureLoggedIn = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
-    if (!user) { return res.sendStatus(HTTP_STATUS.UNAUTHORIZED); }
-    next();
+      if (err || !user) return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
+      req.user = user;
+      next();
   })(req, res, next);
-}
+};
+
 module.exports = {
     ensureLoggedIn,
 };

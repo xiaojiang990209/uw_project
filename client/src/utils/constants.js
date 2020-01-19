@@ -27,6 +27,11 @@ export const menu_options = [
         route: '/matchable/create',
         name: 'Create a group',
       },
+      {
+        private: true,
+        route: '/matchable/my-groups',
+        name: 'My Groups',
+      },
     ],
   },
   {

@@ -50,3 +50,5 @@ div.slots9 {display: block; line-height: 150%; text-align: center; overflow: hid
 div.slots10 {display: block; line-height: 150%; text-align: center; overflow: hidden; margin: 0; padding: 0; }
 td.new a, a.new_booking {display: block; font-size: medium; text-align: center}
 td.new img, .new_booking img {margin: 0 auto; }
+img.repeat_symbol {float: right; margin-right: 4px;}
+.dwm_main#month_main img.repeat_symbol {padding: 0px}

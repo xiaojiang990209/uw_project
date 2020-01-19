@@ -13,7 +13,7 @@ import CourseDetail from "../Course/CourseDetail";
 import CourseSubject from "../Course/CourseSubject";
 import MatchableSubjectGroup from "../Matchable/MatchableSubjectGroup";
 import MatchableCourseGroup from "../Matchable/MatchableCourseGroup";
-import MatchableCreate from "../Matchable/MatchableCreate";
+import MatchableCreate from "../Matchable/CreateMatchableGroup";
 import MatchedGroupDisplay from '../Matchable/MatchedGroupDisplay';
 import Navbar from "../../components/Navbar";
 import Landing from "../Landing";
@@ -38,7 +38,8 @@ class App extends Component {
               <Route exact path="/login" component={Login}/>
               <PrivateRoute exact path='/matchable/groups' component={MatchableSubjectGroup} />
               <PrivateRoute exact path='/matchable/groups/subject/:subject' component={MatchableCourseGroup} />
-              <PrivateRoute exact path='/matchable/create' component={ComingSoon} />
+              <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
+              <PrivateRoute exact path='/matchable/my-groups' component={ComingSoon} />
               <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
               <Route exact path="/news" component={News} />
               <Route exact path="/infosession" component={InfoSession} />
