@@ -39,8 +39,7 @@ export const loginUser = (userLoginInfo, history) => (dispatch) => {
 };
 
 export const updateFavouriteCourses = (courses) => (dispatch, getState) => {
-  const { id, favouriteCourses } = getState().session.user;
-  client.session.saveFavouriteCourses(id, favouriteCourses).then((res) => {
+  client.session.saveFavouriteCourses(courses).then((res) => {
     dispatch(setFavouriteCourses(courses));
   });
 };
