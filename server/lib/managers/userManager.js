@@ -60,8 +60,6 @@ const registerHandler = (req, res) => {
 const favouriteCoursesHandler = async (req, res) => {
   const { favouriteCourses } = req.body;
   const user = req.user;
-  console.log('here');
-  console.log(user);
   User.findByIdAndUpdate(user, { favouriteCourses: favouriteCourses })
     .then((val) => res.json({ success: true }))
     .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err }));

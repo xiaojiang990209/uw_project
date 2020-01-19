@@ -29,7 +29,7 @@ export const menu_options = [
       },
       {
         private: true,
-        route: '/matchable/myGroups',
+        route: '/matchable/my-groups',
         name: 'My Groups',
       },
     ],

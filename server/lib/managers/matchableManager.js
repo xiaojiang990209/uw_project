@@ -63,8 +63,6 @@ const patchGroupHandler = async (req, res) => {
     targetGroup.users = users;
     const usersString = users.map((id) => id.toString());
     targetGroup.posts = targetGroup.posts.filter((post) => usersString.includes(post.ownerId.toString()));
-    console.log(targetGroup.users);
-    console.log(targetGroup.posts);
 
     if(targetGroup.groupSize === users.length) targetGroup.isFull = true;
 
@@ -96,11 +94,9 @@ const updatePostsHandler = async (req, res) => {
     const { groupId } = req.params;
     const {postData} = req.body;
     const userId = req.user;
-    console.log(req.user);
 
     const group = (await MatchableGroup.findById(groupId).exec()).toObject();
     const updateObj = {timePosted: new Date().getTime(), ownerId: userId, postData: postData};
-    console.log(updateObj);
 
     MatchableGroup.findByIdAndUpdate(groupId, {posts: [...group.posts, updateObj]})
         .then((val) => res.json({ success: true }))
