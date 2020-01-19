@@ -65,9 +65,9 @@ function Landing(props) {
           <Col className="text-center">
             <StyledLogo>UWAssisT</StyledLogo>
             <StyledFooterText>Produced by Roger Jiang & Winnie Wang by 🦙 </StyledFooterText>
-            <StyledFooterText>
+              {/*<StyledFooterText>
               <StyledLink href="https://github.com/xiaojiang990209/uw-project">Github</StyledLink>
-            </StyledFooterText>
+            </StyledFooterText>*/}
           </Col>
         </Row>
       </Footer>
