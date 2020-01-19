@@ -39,7 +39,7 @@ class App extends Component {
               <PrivateRoute exact path='/matchable/groups' component={MatchableSubjectGroup} />
               <PrivateRoute exact path='/matchable/groups/subject/:subject' component={MatchableCourseGroup} />
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
-              <PrivateRoute exact path='/matchable/MyGroups' component={ComingSoon} />
+              <PrivateRoute exact path='/matchable/my-groups' component={ComingSoon} />
               <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
               <Route exact path="/news" component={News} />
               <Route exact path="/infosession" component={InfoSession} />
