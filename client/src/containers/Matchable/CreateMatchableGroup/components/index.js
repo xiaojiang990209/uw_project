@@ -55,10 +55,10 @@ export const CreateSelect = styled(Select)`
 export const CreateButton = styled(Button)`
   border-radius: 10px;
   height: 45px;
-  background: ${({theme}) => theme.color.text}
+  background: ${({ theme }) => theme.color.text}
   border: none;
   &:hover, &:active, &:focus, &focus-within {
-    background: ${({theme}) => theme.color.text} !important;
+    background: ${({ theme }) => theme.color.text} !important;
     box-shadow: 0px 0px 8px rgba(0,0,0,0.3) !important;
   }
 `;

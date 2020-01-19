@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Card } from '../../../components/Card';
 import { InputContainer, CreateInput, CreateSelect, DatePickerContainer, SubjectContainer, MultipleInputContainer, CreateButton} from "./components";
 import { getTerms } from "../../../ducks/course"
+import { createGroup } from "../../../ducks/matchable";
 import BuildingBookingForm from "./BuildingBookingForm";
 
 const MatchableCreationForm = (props) => {
@@ -23,7 +24,6 @@ const MatchableCreationForm = (props) => {
       case 'setDescription':
         return {...state, description: action.payload};
       case 'setSubject':
-        console.log(action);
         return {...state, subject: action.payload};
       case 'setCourseId':
         return {...state, couseId: action.payload};
@@ -31,8 +31,6 @@ const MatchableCreationForm = (props) => {
         return {...state, time: action.payload};
       case 'setGroupSize':
         return {...state, groupSize: action.payload};
-      case 'setLocation':
-        return {...state, location: action.payload};
       default:
         throw new Error();
     }
@@ -53,11 +51,14 @@ const MatchableCreationForm = (props) => {
   useEffect(initializeSubjects, []);
 
   const onFormSubmit = (e) => {
-    console.log(groupData);
     e.preventDefault();
-    // createGroup(props.user.id, date, courseID, groupSize, duration)
-    //   .then(data => props.history.push(`/matchable/groups/${data.id}`))
-    //   .catch(err => console.log(err));
+    const mapValue = (data) => data.value;
+    groupData.subject = mapValue(groupData.subject);
+    groupData.groupSize = mapValue(groupData.groupSize);
+
+    createGroup(groupData)
+      .then(data => props.history.push(`/matchable/groups`))
+      .catch(err => console.log(err));
   };
 
   const DatePickerCustom = ({ value, onClick }) => (

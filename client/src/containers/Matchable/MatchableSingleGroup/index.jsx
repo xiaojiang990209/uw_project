@@ -7,6 +7,7 @@ import { Card, Title, Subtitle, Content } from '../../../components/Card';
 import { JoinButton, StyledUsername, MemberScroll, BoxContainer, PostTextArea, EnterPostContainer, PostContainer} from './components';
 import { StyledSubtitle, StyledListGroupItem } from '../component';
 import {updateGroup, updatePosts} from "../../../ducks/matchable";
+import {CreateButton} from "../CreateMatchableGroup/components";
 
 const coeff = 1000 * 60 * 5;
 
@@ -24,7 +25,7 @@ export const MatchableGroupCard = (props) => (
     <Card>
       <Title>{props.name}</Title>
       {props.course && <StyledSubtitle>{props.course}</StyledSubtitle>}
-      <StyledSubtitle>{props.date}</StyledSubtitle>
+      {props.date && <StyledSubtitle>{props.date}</StyledSubtitle>}
       {props.location && <StyledSubtitle>{props.location}</StyledSubtitle>}
       {props.description && <Content detail>{props.description}</Content>}
     </Card>
@@ -65,10 +66,10 @@ const MatchableGroupDisplayCard = (props) => {
 
   return (
   <Card>
-    {buttonAppear && <JoinButton onClick={groupUpdate}>{buttonAppear}</JoinButton>}
+    {buttonAppear && <CreateButton style={{'float': 'right'}} onClick={groupUpdate}>{buttonAppear}</CreateButton>}
       <Title>{name}</Title>
       {props.course && <StyledSubtitle>{props.course}</StyledSubtitle>}
-      <StyledSubtitle>{props.date}</StyledSubtitle>
+    {props.date && <StyledSubtitle>{props.date}</StyledSubtitle>}
       {props.location && <StyledSubtitle>{props.location}</StyledSubtitle>}
 
       <StyledSubtitle>{`Member count: ${props.users.length} / ${props.size}`}</StyledSubtitle>

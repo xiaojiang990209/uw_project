@@ -12,7 +12,6 @@ function MatchedGroup(props) {
       .catch(err => console.log(err));
   }, []);
 
-  //TODO: move to adapters later
   const coeff = 1000 * 60 * 5;
 
   return (
@@ -26,12 +25,13 @@ function MatchedGroup(props) {
         isGroupFull={group.users.length === group.groupSize}
         posts={group.posts}
         name={group.groupName}
-        course={`${group.subject} ${group.courseId}`}
+        course={group.courseId ? `${group.subject} ${group.courseId}` : `${group.subject}`}
         size={group.groupSize}
-        date={new Date(Math.round(group.time / coeff) * coeff).toLocaleString('en-CA')}
+        date={group.time ? new Date(Math.round(group.time / coeff) * coeff).toLocaleString('en-CA') : null}
         location={group.location}
         description={group.description}
-        users={group.users} />
+        users={group.users}
+      />
     </Container>
   );
 }

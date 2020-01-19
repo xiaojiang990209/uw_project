@@ -4,7 +4,6 @@ import { CREATE_GROUP_MESSAGE, MATCH_GROUP_MESSAGE, UPDATE_GROUP_MESSAGE } from 
 
 //side effects
 export const getGroups = (subject = null) => {
-  console.log('getGroups');
   const route = subject
     ? `/api/matchable/groups/${subject.toUpperCase()}`
     : '/api/matchable/groups';
@@ -28,8 +27,9 @@ export const updatePosts = (groupID, postData) => {
   );
 };
 
-export const createGroup = (userId, startDate, courseID, groupSize, duration) => {
-  const body = { userId, groupSize, startDate, courseID, duration };
+// const { groupName, description, subject, courseId, groupSize, time, location } = req.body;
+export const createGroup = (registedData) => {
+  const body = registedData;
   return withNotification(CREATE_GROUP_MESSAGE)(
     axios.post('/api/matchable/groups', body).then((res) => res.data)
   );

@@ -20,7 +20,7 @@ const renderCourseGroups = (listings, index, key) => {
         name={listing.groupName}
         course={course}
 
-        date={new Date(Math.round(listing.time / coeff) * coeff).toLocaleString('en-CA')}
+        date={listing.time ? new Date(Math.round(listing.time / coeff) * coeff).toLocaleString('en-CA') : null}
         location={listing.location}
         description={listing.description}/>
     </StyledListGroupItem>

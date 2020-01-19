@@ -30,12 +30,13 @@ const fetchBySubjectHandler = (req, res) => {
 
 
 const registerGroupHandler = (req, res) => {
-    const { groupName, subject, courseId, time, groupSize, location, description } = req.body;
+    const { groupName, subject, courseId, time, groupSize, description } = req.body;
     const userId = req.user;
-    const timestamp = new Date(time).getTime();
+    const body = {groupName, description, courseId, subject, groupSize, users: [userId], isFull: false};
+
 
     const newGroup =
-        new MatchableGroup({groupName, subject, courseId, time: timestamp, groupSize, users: [userId],  location, description, isFull: false});
+        new MatchableGroup(time ? {...body, time: new Date(time).getTime()} : body);
     newGroup.save()
         .then(() => {
             return res.json({id: newGroup._id});

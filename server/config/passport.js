@@ -4,7 +4,6 @@ const User = require('../lib/models/User');
 const keys = require('./keys');
 
 const opts = {};
-// What's a bearer token?
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = keys.secretOrKey;
 

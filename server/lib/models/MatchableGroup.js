@@ -15,7 +15,6 @@ const MatchableGroupSchema = new Schema({
     },
     time: {
         type: Number,
-        required: true,
     },
     groupSize: {
         type: Number,
