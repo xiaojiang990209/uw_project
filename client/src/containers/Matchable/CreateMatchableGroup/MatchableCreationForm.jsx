@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
-import { Button, Form } from "reactstrap";
+import { Form } from "reactstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Card } from '../../../components/Card';
-import { InputContainer, CreateInput, CreateSelect, DatePickerContainer, SubjectContainer, MultipleInputContainer} from "./components";
+import { InputContainer, CreateInput, CreateSelect, DatePickerContainer, SubjectContainer, MultipleInputContainer, CreateButton} from "./components";
 import { getTerms } from "../../../ducks/course"
+import BuildingBookingForm from "./BuildingBookingForm";
 
 const MatchableCreationForm = (props) => {
   const initialState = {
@@ -38,6 +39,7 @@ const MatchableCreationForm = (props) => {
   }
 
   const [groupData, dispatch] = React.useReducer(reducer, initialState);
+  const [showBookingModal, setShowBookingModal] = useState(false);
   const selectMapper = (e) => ({ value: e, label: e });
   const groupSizes = [...Array(20).keys()].slice(2).map(selectMapper);
   const subjects = (props.subjects || []).map(selectMapper);
@@ -120,31 +122,49 @@ const MatchableCreationForm = (props) => {
           </InputContainer>
         </MultipleInputContainer>
 
-        <InputContainer>
-          <label>Date of the Study*</label>
-          <br/>
-            <DatePicker
-              minDate={new Date()}
-              maxDate={new Date().setDate(new Date().getDate() + 7)}
-              placeholderText="Select a Date"
-              selected={groupData.time}
-              onChange={(date) => dispatch({ type: 'setTime', payload: date })}
-              showTimeSelect
-              timeFormat="HH:mm"
-              timeIntervals={15}
-              timeCaption="time"
-              dateFormat="yyyy/MM/dd, h:mm aa"
-              customInput={<DatePickerCustom />}
-            />
-        </InputContainer>
-        <Button type="submit">Create!</Button>
+        <MultipleInputContainer>
+          <InputContainer width="25%" mr="100px">
+            <label>Date of the Study*</label>
+            <br/>
+              <DatePicker
+                minDate={new Date()}
+                maxDate={new Date().setDate(new Date().getDate() + 6)}
+                placeholderText="Select a Date"
+                selected={groupData.time}
+                onChange={(date) => dispatch({ type: 'setTime', payload: date })}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                timeCaption="time"
+                dateFormat="yyyy/MM/dd, h:mm aa"
+                customInput={<DatePickerCustom />}
+              />
+          </InputContainer>
+          <InputContainer>
+            <label>Enter Study Date to Book Room</label>
+            <br/>
+            <CreateButton
+              onClick={() => setShowBookingModal(groupData.time && !showBookingModal)}>
+              Book room on UW website!
+            </CreateButton>
+          </InputContainer>
+        </MultipleInputContainer>
+
+        <CreateButton type="submit">Create!</CreateButton>
+
+        {showBookingModal &&
+          <BuildingBookingForm
+            isOpen={showBookingModal}
+            date={groupData.time}
+            onClose={() => setShowBookingModal(false)}
+          />}
+
       </Form>
     </Card>
   );
 };
 
 const mapStateToProps = (state) => ({
-  user: state.session.user,
   subjects: state.course.subjects
 });
 

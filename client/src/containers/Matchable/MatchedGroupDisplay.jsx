@@ -23,7 +23,7 @@ function MatchedGroup(props) {
       <hr/>
       <MatchableGroupDisplayCard
         groupId={groupId}
-        isGroupFull={group.users.length == group.groupSize}
+        isGroupFull={group.users.length === group.groupSize}
         posts={group.posts}
         name={group.groupName}
         course={`${group.subject} ${group.courseId}`}

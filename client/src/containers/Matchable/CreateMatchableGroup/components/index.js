@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Input, Modal, ModalBody } from 'reactstrap';
+import styled from 'styled-components';
+import { Button, Input, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import GroupCreationForm from '../MatchableCreationForm';
 import DatePickerContainer from './DatePickerCustomInput';
 import Select from '../../../../components/Select';
@@ -28,6 +28,10 @@ export const FormWrapper = styled.div`
   font-size: 16px;
 `;
 
+export const BookingFormHeader = styled(ModalHeader)`
+  display: block;
+`;
+
 export const StyledModal = styled(Modal)`
   max-width: 768px;
 `;
@@ -46,6 +50,17 @@ export const CreateSelect = styled(Select)`
   border-radius: 10px;
   height: 50px;
   outline: none;
+`;
+
+export const CreateButton = styled(Button)`
+  border-radius: 10px;
+  height: 45px;
+  background: ${({theme}) => theme.color.text}
+  border: none;
+  &:hover, &:active, &:focus, &focus-within {
+    background: ${({theme}) => theme.color.text} !important;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.3) !important;
+  }
 `;
 
 export const SubjectContainer = styled.div`
