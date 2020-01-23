@@ -60,7 +60,7 @@ function Landing(props) {
       </Header>
       <Content>
         <ContentRow>
-          <Col>
+          <Col className="text-center">
             <AppImage src="/images/course.png" alt="course rating"/>
           </Col>
           <Col>
@@ -74,13 +74,13 @@ function Landing(props) {
             <Subheading>Find study partners and book study rooms!</Subheading>
             <DescriptionContainer>Join study groups with the people you haven't met with and tackle problems together</DescriptionContainer>
           </Col>
-          <Col>
+          <Col className="text-center">
             <AppImage src="/images/match.png" alt="matchable"/>
           </Col>
         </ContentRow>
         <hr/>
         <ContentRow>
-          <Col>
+          <Col className="text-center">
             <AppImage src="/images/sublet.png" alt="sublet"/>
           </Col>
           <Col>
@@ -91,7 +91,7 @@ function Landing(props) {
       </Content>
       <Footer>
         <Row>
-          <Col className="text-center">
+          <Col>
             <StyledLogo>UWAssisT</StyledLogo>
             <StyledFooterText>Produced by Roger Jiang & Winnie Wang by 🦙 </StyledFooterText>
           </Col>

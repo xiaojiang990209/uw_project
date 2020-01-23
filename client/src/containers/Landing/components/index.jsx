@@ -26,12 +26,14 @@ export const StyledFooterText = styled.p`
   margin: ${({theme}) => 2*theme.unit.small}px;
   color: #575757;
   text-decoration: none;
+  text-align: center;
 `
 
 export const StyledLogo = styled(StyledFooterText)`
   font-family: 'Permanent Marker', cursive;
   font-size: 1.6rem;
   color: #000;
+  text-align: center;
 `;
 
 export const LandingBackground = styled.div`
@@ -76,7 +78,8 @@ export const ContentRow = styled(Row)`
 `;
 
 export const AppImage = styled.img`
-  width: 500px;
+  width: 70vw;
+  max-width: 500px;
   border-radius: 16px;
 `;
 
@@ -89,5 +92,5 @@ export const Content = styled(Container)`
 `;
 
 export const Footer = styled(Container)`
-  margin: ${({theme}) => theme.unit.medium}px 0px;
+  margin: ${({theme}) => theme.unit.medium}px auto;
 `;
