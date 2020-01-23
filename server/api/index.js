@@ -43,6 +43,7 @@ router.post('/matchable/groups', middleware.account.ensureLoggedIn,  managers.ma
 router.patch('/matchable/groups/:groupId', middleware.account.ensureLoggedIn, managers.matchable.patchGroupHandler);//join a new group
 router.get('/matchable/group/:groupId',  middleware.account.ensureLoggedIn, managers.matchable.getOneGroupHandler);
 router.post('/matchable/groups/:groupId/posts', middleware.account.ensureLoggedIn, managers.matchable.updatePostsHandler);//posting a post
+router.get('/matchable/groups/user/:userId', middleware.account.ensureLoggedIn, managers.matchable.getUserGroupHandler);//posting a post
 
 router.get('/library/dates', managers.library.getDatesHandler);
 router.get('/library/buildings', managers.library.getBuildingHandler);

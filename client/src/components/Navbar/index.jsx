@@ -12,10 +12,12 @@ import {
 } from './components';
 import DropdownNavItem from './components/DropdownNavItem';
 import LinkNavItem from './components/LinkNavItem';
+import Avatar from "react-avatar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUniversity } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar(props) {
-  const { options, isAuthenticated, logoutUser } = props;
-
+  const { options, isAuthenticated, logoutUser, userName } = props;
   const [isOpen, setOpen] = useState(false);
   const toggle = () => setOpen(!isOpen);
 
@@ -29,8 +31,6 @@ function Navbar(props) {
     )
   );
 
-  const signOutOption = ({ route: '#', name: 'Sign out' })
-
   return (
     <StyledNavbar light expand="md">
       <StyledNavbarBrand href='/'>UWAssisT</StyledNavbarBrand>
@@ -38,7 +38,6 @@ function Navbar(props) {
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ml-auto" navbar>
           {options.map(convertToNavItem)}
-          {isAuthenticated && <LinkNavItem option={signOutOption} onClick={() => logoutUser(props.history)}/>}
         </Nav>
       </Collapse>
     </StyledNavbar>
@@ -46,14 +45,11 @@ function Navbar(props) {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.session.isAuthenticated
+  isAuthenticated: state.session.isAuthenticated,
 });
 
-const mapDispatchToProps = ({
-  logoutUser
-});
+
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(Navbar);

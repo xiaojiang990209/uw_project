@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'reactstrap';
-import { getGroup } from '../../ducks/matchable';
-import MatchableGroupDisplayCard from './MatchableSingleGroup';
+import { getGroup } from '../../../ducks/matchable';
+import MatchableGroupDisplayCard from '../MatchableSingleGroup';
 
 function MatchedGroup(props) {
   const { groupId } = props.match.params;

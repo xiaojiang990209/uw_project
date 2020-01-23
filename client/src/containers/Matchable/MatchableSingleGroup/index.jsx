@@ -2,7 +2,6 @@ import React from 'react';
 import Avatar from 'react-avatar';
 import ReactList from 'react-list';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Card, Title, Subtitle, Content } from '../../../components/Card';
 import { JoinButton, StyledUsername, MemberScroll, BoxContainer, PostTextArea, EnterPostContainer, PostContainer} from './components';
 import { StyledSubtitle, StyledListGroupItem } from '../component';
@@ -10,29 +9,6 @@ import {updateGroup, updatePosts} from "../../../ducks/matchable";
 import {CreateButton} from "../CreateMatchableGroup/components";
 
 const coeff = 1000 * 60 * 5;
-
-export const MatchableSubjectGroupCard = (props) => (
-  <Link to={props.link} style={{ textDecoration: 'none', color: '#000' }}>
-    <Card>
-      <Title>{props.subject}</Title>
-      <Subtitle>{`${props.count} ${props.count > 1 ? 'current groups' : 'current group'}`}</Subtitle>
-    </Card>
-  </Link>
-);
-
-export const MatchableGroupCard = (props) => (
-  <Link to={props.link} style={{ textDecoration: 'none', color: '#000' }}>
-    <Card>
-      <Title>{props.name}</Title>
-      {props.course && <StyledSubtitle>{props.course}</StyledSubtitle>}
-      {props.date && <StyledSubtitle>{props.date}</StyledSubtitle>}
-      {props.location && <StyledSubtitle>{props.location}</StyledSubtitle>}
-      {props.description && <Content detail>{props.description}</Content>}
-    </Card>
-  </Link>
-);
-
-
 
 const MatchableGroupDisplayCard = (props) => {
   const [postExpand, setExpand] = React.useState(false);

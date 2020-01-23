@@ -34,6 +34,7 @@ export const StyledNavLink = styled(NavLink)`
 export const StyledDropdownToggle = styled(DropdownToggle)`
   color: #000;
   font-size: 16px;
+  margin-right: 3px;
   display: flex;
   align-items: center;
 `;

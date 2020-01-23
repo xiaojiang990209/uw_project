@@ -2,6 +2,32 @@ import axios from 'axios';
 import withNotification from '../utils/sendNotification';
 import { CREATE_GROUP_MESSAGE, MATCH_GROUP_MESSAGE, UPDATE_GROUP_MESSAGE } from './constants';
 
+// const initialState = {
+//   userGroups: [],
+// };
+//
+// export const ADD_GROUP = 'ADD_GROUP';
+//
+// export const STATE_KEY = 'matchable';
+//
+// const matchableReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case ADD_GROUP:
+//       return [...state, action.payload.group];
+//     default:
+//       return state;
+//   }
+// };
+//
+// export const addGroup = (id) => (dispatch) => {
+//   return axios
+//     .get(`/api/rating/${name}`)
+//     .then((res) => dispatch(setProfRating(name, res.data)))
+//     .catch((err) => console.log(err.response));
+// };
+
+// export default matchableReducer;
+
 //side effects
 export const getGroups = (subject = null) => {
   const route = subject
@@ -32,5 +58,11 @@ export const createGroup = (registedData) => {
   const body = registedData;
   return withNotification(CREATE_GROUP_MESSAGE)(
     axios.post('/api/matchable/groups', body).then((res) => res.data)
+  );
+};
+
+export const getMyGroups = (userId) => {
+  return withNotification(CREATE_GROUP_MESSAGE)(
+    axios.get(`/api/matchable/groups/user/${userId}`).then((res) => res.data)
   );
 };

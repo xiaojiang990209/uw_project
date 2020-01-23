@@ -103,6 +103,24 @@ const updatePostsHandler = async (req, res) => {
         .catch((err) => res.status(HTTP_STATUS.BAD_REQUEST).json({ err }));
 };
 
+const getUserGroupHandler = (req, res) => {
+    const { userId } = req.params;
+    let userGroups = []; //array of group that the user is in
+
+    MatchableGroup.find({}).then((groups) => {
+        groups.forEach((group) => {
+            if(group.users.includes(userId)){
+                userGroups = [...userGroups, group];
+            }
+        });
+        return res.json(userGroups);
+    }).catch(err => {
+        console.log(err);
+        res.status(HTTP_STATUS.BAD_REQUEST).send("ERROR: fetching groups error");
+    });
+};
+
+
 module.exports = {
     fetchGroupsHandler,
     fetchBySubjectHandler,
@@ -110,4 +128,5 @@ module.exports = {
     patchGroupHandler,
     getOneGroupHandler,
     updatePostsHandler,
+    getUserGroupHandler
 };
