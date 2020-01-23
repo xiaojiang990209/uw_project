@@ -1,77 +1,103 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import {
-  CourseLandingCard,
-  CarpoolLandingCard,
-  MatchableLandingCard,
-  Header,
-  Content,
-  Footer,
   LandingButton,
   StyledTitle,
   StyledLogo,
   StyledFooterText,
-  StyledLink
+  ContentRow,
+  Subheading,
+  DescriptionContainer,
+  LandingBackground,
+  AppImage,
+  Header,
+  Content,
+  Footer
 } from './components';
 import { logoutUser } from '../../ducks/session';
+import { ReactSVG } from 'react-svg';
 
 function Landing(props) {
   const { history, isAuthenticated, logoutUser } = props;
 
   const registerAndLoginSection = (
     <Row>
-      <Col sm={12} md={{ size: 3, offset: 3 }} className="text-center">
+      <Col className="text-center">
         <LandingButton onClick={() => history.push('/register')}>Register</LandingButton>
       </Col>
-      <Col sm={12} md={{ size: 3 }} className="text-center">
+      <Col className="text-center">
         <LandingButton onClick={() => history.push('/login')}>Sign In</LandingButton>
       </Col>
     </Row>
   );
+
   const logoutSection = (
     <Row>
       <Col className="text-center">
-        <LandingButton onClick={() => logoutUser(history)}>Sign Out</LandingButton>
+        <LandingButton onClick={() => logoutUser(history)} block>Sign Out</LandingButton>
       </Col>
     </Row>
   );
 
   return (
     <>
+      <LandingBackground>
+      </LandingBackground>
       <Header>
         <Row>
-          <Col className="text-center">
+          <Col>
             <StyledTitle>A one-stop shop for everything a UW student needs!</StyledTitle>
+            <div>Explore course schedule & professor rating, find study partners and book study rooms across campus,
+              discover carpol and sublet information, all in one shot!</div>
+            <br/><br/>
+            {isAuthenticated ? logoutSection : registerAndLoginSection}
+          </Col>
+          <Col>
+            <ReactSVG className="text-center" src="/images/geese.svg"/>
           </Col>
         </Row>
-        {isAuthenticated ? logoutSection : registerAndLoginSection}
       </Header>
       <Content>
-        <Row>
-          <Col sm={12} md={4}>
-            <CourseLandingCard />
+        <ContentRow>
+          <Col className="text-center">
+            <AppImage src="/images/course.png" alt="course rating"/>
           </Col>
-          <Col sm={12} md={4}>
-            <MatchableLandingCard />
+          <Col>
+            <Subheading>Explore your courses & professor ratings!</Subheading>
+            <DescriptionContainer>Use course description, schedule and professor ratings to determine your next semester</DescriptionContainer>
           </Col>
-          <Col sm={12} md={4}>
-            <CarpoolLandingCard />
+        </ContentRow>
+        <hr/>
+        <ContentRow>
+          <Col>
+            <Subheading>Find study partners and book study rooms!</Subheading>
+            <DescriptionContainer>Join study groups with the people you haven't met with and tackle problems together</DescriptionContainer>
           </Col>
-        </Row>
+          <Col className="text-center">
+            <AppImage src="/images/match.png" alt="matchable"/>
+          </Col>
+        </ContentRow>
+        <hr/>
+        <ContentRow>
+          <Col className="text-center">
+            <AppImage src="/images/sublet.png" alt="sublet"/>
+          </Col>
+          <Col>
+            <Subheading>Finding sublets has never been so easy!</Subheading>
+            <DescriptionContainer>Discover sublet and carpool opportunities from postings aggregated from multiple Facebook groups</DescriptionContainer>
+          </Col>
+        </ContentRow>
       </Content>
       <Footer>
         <Row>
-          <Col className="text-center">
+          <Col>
             <StyledLogo>UWAssisT</StyledLogo>
             <StyledFooterText>Produced by Roger Jiang & Winnie Wang by 🦙 </StyledFooterText>
-              {/*<StyledFooterText>
-              <StyledLink href="https://github.com/xiaojiang990209/uw-project">Github</StyledLink>
-            </StyledFooterText>*/}
           </Col>
         </Row>
       </Footer>
-  </>
+    </>
   );
 }
 
