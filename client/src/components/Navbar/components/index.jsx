@@ -6,7 +6,7 @@ import {
   NavbarBrand,
   NavLink
 } from 'reactstrap';
-import styled from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 export const StyledNavbar = styled(Navbar)`
   margin: ${({theme}) => theme.unit.medium}px auto;
@@ -39,8 +39,20 @@ export const StyledDropdownToggle = styled(DropdownToggle)`
   align-items: center;
 `;
 
+const FadeDownKeyframes = keyframes`
+  from {
+     transform: translate3d(0, 8px, 0);
+    opacity: 0;
+    }
+   to {
+       transform: translate3d(0, 0, 0);
+    opacity: 1;
+    }
+`;
+
 export const StyledDropdownMenu = styled(DropdownMenu)`
   outline: none !important;
+  animation: ${FadeDownKeyframes} ${({ length = 0.3 }) => length}s ease-in-out;
   top: 75%;
   min-width: 0px;
 `;
