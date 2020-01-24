@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { logoutUser } from '../../ducks/session';
 import {
   Collapse,
   NavbarToggler,
@@ -12,9 +11,6 @@ import {
 } from './components';
 import DropdownNavItem from './components/DropdownNavItem';
 import LinkNavItem from './components/LinkNavItem';
-import Avatar from "react-avatar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUniversity } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar(props) {
   const { options, isAuthenticated, logoutUser, userName } = props;
@@ -26,7 +22,7 @@ function Navbar(props) {
   const convertToNavItem = (option, idx) => (
     canShow(option) && (
       option.nested ?
-        <DropdownNavItem key={idx} option={{...option, nested: option.nested.filter(canShow)}} /> :
+        <DropdownNavItem history={props.history} key={idx} option={{...option, nested: option.nested.filter(canShow)}} /> :
         <LinkNavItem key={idx} option={option} />
     )
   );

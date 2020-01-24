@@ -24,6 +24,7 @@ import FavouriteCourse from "../ListPage/FavouriteCourse";
 import Login from "../Register/Login";
 import Register from "../Register/Register";
 import FBPost from '../ListPage/FBPost';
+import UserProfile from '../User/UserProfile';
 
 class App extends Component {
   render() {
@@ -41,7 +42,7 @@ class App extends Component {
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
               <PrivateRoute exact path='/matchable/my-groups' component={UserMatchableGroups} />
               <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
-              {/*<PrivateRoute exact path='/user' component={UserProfile} />*/}
+              <PrivateRoute exact path='/user' component={UserProfile} />
               <Route exact path="/news" component={News} />
               <Route exact path="/infosession" component={InfoSession} />
               <Route exact path="/posts/:type/:city" component={FBPost}/>

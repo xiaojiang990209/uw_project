@@ -40,13 +40,15 @@ export const StyledDropdownToggle = styled(DropdownToggle)`
 `;
 
 export const StyledDropdownMenu = styled(DropdownMenu)`
+  outline: none !important;
   top: 75%;
   min-width: 0px;
 `;
 
 export const StyledDropdownItem = styled(DropdownItem)`
   padding: 0px ${({theme}) => theme.unit.small}px;
+  outline: none !important;
   &:active {
-    background-color: #e7e7e7;
+    background-color:  ${({disabled}) => !disabled && '#e7e7e7'};
   }
 `;

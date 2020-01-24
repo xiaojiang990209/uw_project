@@ -1,34 +1,15 @@
 import React from "react";
 import { Container } from 'reactstrap';
-import { Card } from "../../../components/Card";
 import { connect } from 'react-redux';
-import { Input } from 'reactstrap';
+import {BasicProfile, MoreInfo} from "./components";
+import moment from "moment";
 
-const UserProfile = ({userName, userEmail}) => {
+const UserProfile = ({userName, userEmail, joinedDate}) => {
   return (
     <Container>
       <br/>
-      <h4>{`${userName}'s Profile`}</h4>
-      <Card>
-        <div>
-        Name:
-        </div>
-        <div>
-        Email:
-      </div>
-        <div>
-          Joined:
-        </div>
-      </Card>
-      <h4>Add More Information About You</h4>
-      <Card>
-        <div>
-          Program:
-        </div>
-        <div>
-          Year:
-        </div>
-      </Card>
+      <BasicProfile name={userName} email={userEmail} joinedDate={moment(joinedDate).format('MMMM Do, YYYY')}/>
+      {/*<MoreInfo/>*/}
     </Container>
   )
 };
@@ -36,6 +17,7 @@ const UserProfile = ({userName, userEmail}) => {
 const mapStateToProps = (state) => ({
   userName: state.session.user.name,
   userEmail: state.session.user.email,
+  joinedDate: state.session.user.joined,
 });
 
 
