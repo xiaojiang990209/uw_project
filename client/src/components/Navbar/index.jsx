@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { logoutUser } from '../../ducks/session';
 import {
   Collapse,
   NavbarToggler,
@@ -14,8 +13,7 @@ import DropdownNavItem from './components/DropdownNavItem';
 import LinkNavItem from './components/LinkNavItem';
 
 function Navbar(props) {
-  const { options, isAuthenticated, logoutUser } = props;
-
+  const { options, isAuthenticated, logoutUser, userName } = props;
   const [isOpen, setOpen] = useState(false);
   const toggle = () => setOpen(!isOpen);
 
@@ -24,12 +22,10 @@ function Navbar(props) {
   const convertToNavItem = (option, idx) => (
     canShow(option) && (
       option.nested ?
-        <DropdownNavItem key={idx} option={{...option, nested: option.nested.filter(canShow)}} /> :
+        <DropdownNavItem history={props.history} key={idx} option={{...option, nested: option.nested.filter(canShow)}} /> :
         <LinkNavItem key={idx} option={option} />
     )
   );
-
-  const signOutOption = ({ route: '#', name: 'Sign out' })
 
   return (
     <StyledNavbar light expand="md">
@@ -38,7 +34,6 @@ function Navbar(props) {
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ml-auto" navbar>
           {options.map(convertToNavItem)}
-          {isAuthenticated && <LinkNavItem option={signOutOption} onClick={() => logoutUser(props.history)}/>}
         </Nav>
       </Collapse>
     </StyledNavbar>
@@ -46,14 +41,11 @@ function Navbar(props) {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.session.isAuthenticated
+  isAuthenticated: state.session.isAuthenticated,
 });
 
-const mapDispatchToProps = ({
-  logoutUser
-});
+
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(Navbar);

@@ -11,10 +11,11 @@ import { MainContainer } from './components';
 import Course from "../Course/Course";
 import CourseDetail from "../Course/CourseDetail";
 import CourseSubject from "../Course/CourseSubject";
-import MatchableSubjectGroup from "../Matchable/MatchableSubjectGroup";
-import MatchableCourseGroup from "../Matchable/MatchableCourseGroup";
+import MatchableSubjectGroup from "../Matchable/MatchableGroups/MatchableSubjectGroup";
+import UserMatchableGroups from "../Matchable/UserGroups";
+import MatchableCourseGroup from "../Matchable/MatchableGroups/MatchableCourseGroup";
 import MatchableCreate from "../Matchable/CreateMatchableGroup";
-import MatchedGroupDisplay from '../Matchable/MatchedGroupDisplay';
+import MatchedGroupDisplay from '../Matchable/MatchableGroups/MatchedGroupDisplay';
 import Navbar from "../../components/Navbar";
 import Landing from "../Landing";
 import News from "../ListPage/News";
@@ -22,8 +23,8 @@ import InfoSession from "../ListPage/InfoSession";
 import FavouriteCourse from "../ListPage/FavouriteCourse";
 import Login from "../Register/Login";
 import Register from "../Register/Register";
-import ComingSoon from '../../components/ComingSoon'
 import FBPost from '../ListPage/FBPost';
+import UserProfile from '../User/UserProfile';
 
 class App extends Component {
   render() {
@@ -39,8 +40,9 @@ class App extends Component {
               <PrivateRoute exact path='/matchable/groups' component={MatchableSubjectGroup} />
               <PrivateRoute exact path='/matchable/groups/subject/:subject' component={MatchableCourseGroup} />
               <PrivateRoute exact path='/matchable/create' component={MatchableCreate} />
-              <PrivateRoute exact path='/matchable/my-groups' component={ComingSoon} />
+              <PrivateRoute exact path='/matchable/my-groups' component={UserMatchableGroups} />
               <PrivateRoute exact path='/matchable/groups/:groupId' component={MatchedGroupDisplay} />
+              <PrivateRoute exact path='/user' component={UserProfile} />
               <Route exact path="/news" component={News} />
               <Route exact path="/infosession" component={InfoSession} />
               <Route exact path="/posts/:type/:city" component={FBPost}/>

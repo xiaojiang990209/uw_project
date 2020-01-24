@@ -30,7 +30,7 @@ export const menu_options = [
       {
         private: true,
         route: '/matchable/my-groups',
-        name: 'My Groups',
+        name: 'Joined Groups',
       },
     ],
   },
@@ -66,6 +66,17 @@ export const menu_options = [
       {
         route: '/infosession',
         name: 'Info Session',
+      },
+    ],
+  },
+  {
+    isUserAvatar: true,
+    private: true,
+    nested: [
+      {
+        private: true,
+        route: '/user',
+        name: 'Account',
       },
     ],
   },

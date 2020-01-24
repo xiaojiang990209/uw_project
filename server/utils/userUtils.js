@@ -75,6 +75,8 @@ const createUser = (name, email, password) => new User({
 const createJwtPayload = user => ({
   id: user.id,
   name: user.name,
+  email: user.email,
+  joined: user.date,
   favouriteCourses: user.favouriteCourses
 });
 

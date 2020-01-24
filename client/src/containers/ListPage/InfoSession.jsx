@@ -22,7 +22,7 @@ const renderInfoSession = (infoSessions, index, key) => {
       />
     </StyledListGroupItem>
   );
-}
+};
 
 function InfoSessionTab(props) {
   const InfoSessionComponent = ListPage(fetchInfoSessions, null, renderInfoSession);
