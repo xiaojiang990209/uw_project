@@ -65,8 +65,6 @@ export const setUserLoading = () => {
 };
 
 export const logoutUser = (history) => (dispatch) => {
-  console.log(history);
-  console.log('logging out');
   localStorage.clear();
   dispatch(setCurrentUser());
   history.push('/');
