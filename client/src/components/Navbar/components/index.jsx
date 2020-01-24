@@ -51,6 +51,8 @@ const FadeDownKeyframes = keyframes`
 `;
 
 export const StyledDropdownMenu = styled(DropdownMenu)`
+  border: none;
+  box-shadow: rgba(17, 49, 96, 0.06) 0px 0px 0px 1px, rgba(17, 49, 96, 0.16) 0px 8px 16px 0px;
   outline: none !important;
   animation: ${FadeDownKeyframes} ${({ length = 0.3 }) => length}s ease-in-out;
   top: 75%;
