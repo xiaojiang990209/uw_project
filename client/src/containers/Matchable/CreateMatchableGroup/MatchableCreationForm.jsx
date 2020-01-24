@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import { Form } from "reactstrap";
 import DatePicker from "react-datepicker";
+import { showErrorNotif } from "../../../utils/sendNotification";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Card } from '../../../components/Card';
@@ -62,13 +63,19 @@ const MatchableCreationForm = (props) => {
       .catch(err => console.log(err));
   };
 
+  const onCreateRoomClicked = () => {
+    if (!groupData.time) {
+      return showErrorNotif("Please select a time before booking a room");
+    }
+    setShowBookingModal(!showBookingModal);
+  }
+
   const DatePickerCustom = ({ value, onClick }) => (
     <DatePickerContainer onClick={onClick}>
       {value}
     </DatePickerContainer>
   );
 
-  // const { groupName, description, subject, courseId, groupSize, time, location } = req.body;
   return (
     <Card>
       <Form onSubmit={onFormSubmit}>
@@ -146,7 +153,7 @@ const MatchableCreationForm = (props) => {
             <label>Enter Study Date to Book Room</label>
             <br/>
             <CreateButton
-              onClick={() => setShowBookingModal(groupData.time && !showBookingModal)}>
+              onClick={onCreateRoomClicked}>
               Book room on UW website!
             </CreateButton>
           </InputContainer>
