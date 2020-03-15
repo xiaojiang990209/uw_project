@@ -1,6 +1,5 @@
 const NodeCache = require( "node-cache" );
 
-
 const TIME_TO_LIVE = 30 * 60;
 const NUM_KEYS_CLEAN = 100;
 const MAX_CACHE_KEYS = 800;
