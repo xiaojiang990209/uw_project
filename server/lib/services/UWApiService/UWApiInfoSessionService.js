@@ -1,5 +1,5 @@
 const AbstractUWApiService = require('./AbstractUWApiService');
-const { TERMS } = require('../../../data/terms.json');
+const { TERMS } = require('../TermService/terms.json');
 
 class UWApiInfoSessionService extends AbstractUWApiService {
   constructor(uwClient) {
