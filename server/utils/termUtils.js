@@ -2,12 +2,12 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
 const { UW_TERM_URL } = require('./constants');
-const { requestWrapper } = require('./globalUtils');
+const RequestFactory = require('../lib/services/RequestFactory');
 
 const TERMS_PATH = '../data/terms.json';
 
 const updateTermJson = () => new Promise((resolve, reject) => {
-  requestWrapper('GET', UW_TERM_URL)
+  RequestFactory.get(UW_TERM_URL)
     .then(cheerio.load)
     .then(collectTermJson)
     .then(saveToFs)

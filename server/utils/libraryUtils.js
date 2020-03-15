@@ -1,9 +1,9 @@
 const cheerio = require('cheerio');
-const { requestWrapper } = require('./globalUtils');
+const RequestFactory = require('../lib/services/RequestFactory');
 const { UW_LIB_BOOKING_URL, UW_LIB_BOOKING_PREFIX } = require('./constants');
 
 const getDatesJson = () => new Promise((resolve, reject) => {
-  requestWrapper('GET', UW_LIB_BOOKING_URL)
+  RequestFactory.get(UW_LIB_BOOKING_URL)
     .then(cheerio.load)
     .then(collectDates)
     .then(resolve)
@@ -11,7 +11,7 @@ const getDatesJson = () => new Promise((resolve, reject) => {
 });
 
 const getBuildingJson = () => new Promise((resolve, reject) => {
-  requestWrapper('GET', UW_LIB_BOOKING_URL)
+  RequestFactory.get(UW_LIB_BOOKING_URL)
     .then(cheerio.load)
     .then(collectBuildings)
     .then(resolve)
@@ -19,7 +19,8 @@ const getBuildingJson = () => new Promise((resolve, reject) => {
 })
 
 const getRoomHtml = (day, area) => new Promise((resolve, reject) => {
-  requestWrapper('GET', `${UW_LIB_BOOKING_URL}?dayChanger=${day}&area=${area}`)
+  const url = `${UW_LIB_BOOKING_URL}?dayChanger=${day}&area=${area}`;
+  RequestFactory.get(url)
     .then(cheerio.load)
     .then(collectBookingTable)
     .then(resolve)
