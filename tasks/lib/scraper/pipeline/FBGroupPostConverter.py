@@ -20,15 +20,9 @@ class FBGroupPostConverter:
         re.compile(r"\nMESSAGE")
     ]
 
-    def set_group_id(self, group_id):
-        self.group_id = group_id
-
-    def get_posts(self, html):
-        return html.find('div#m_group_stories_container > section > article')
-
-    def convert(self, post):
+    def process(self, post, group_id):
         post_id = self._extract_post_id(post)
-        post_url = self._display_url.format(self.group_id, post_id)
+        post_url = self._display_url.format(group_id, post_id)
         detail = self._extract_detail(post)
         title = self._extract_title(detail)
         content = self._extract_content(detail, post)
@@ -43,14 +37,7 @@ class FBGroupPostConverter:
                 'created_at': self._extract_time(post),
             }
 
-        return None
-
-    def get_next_page_url(self, post):
-        next_page_elem = post.find('div#m_more_item > a', first=True)
-        if not next_page_elem:
-            print (post)
-            return None
-        return next_page_elem.attrs['href']
+        return {}
 
     def _extract_detail(self, post):
         try:
