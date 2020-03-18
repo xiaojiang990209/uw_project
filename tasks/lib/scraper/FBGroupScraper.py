@@ -18,7 +18,7 @@ class FBGroupScraper:
         return html.find(POST_SELECTOR)
 
     def _get_next_page_url(self, html):
-        next_page_elem = post.find('div#m_more_item > a', first=True)
+        next_page_elem = post.find(NEXT_PAGE_SELECTOR, first=True)
         if not next_page_elem:
             print (post)
             return None
