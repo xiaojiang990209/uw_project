@@ -37,8 +37,7 @@ class FBGroupScraper:
             for post in posts:
                 result = {}
                 for stage in self.pipeline:
-                    stage_result = stage.process(post, group_id)
-                    result = {**result, **stage_result}
+                    result = stage.process(post, group_id, result)
 
                 if result:
                     results.append(result)

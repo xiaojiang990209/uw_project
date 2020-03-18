@@ -20,7 +20,7 @@ class FBGroupPostConverter:
         re.compile(r"\nMESSAGE")
     ]
 
-    def process(self, post, group_id):
+    def process(self, post, group_id, acc_result):
         post_id = self._extract_post_id(post)
         post_url = self._display_url.format(group_id, post_id)
         detail = self._extract_detail(post)

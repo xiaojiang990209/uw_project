@@ -1,0 +1,50 @@
+[
+  {
+    "pattern": "[^a-zA-Z0-9$:]+",
+    "replace": " "
+  },
+  {
+    "pattern": "(\\s|,)((L|l)oo|uw|UW|DC|dc|((K|k)itchener){0,1}(\\s){0,1}(W|w)aterloo)",
+    "replace": " Waterloo"
+  },
+  {
+    "pattern": "(\\s|,)(trt|TRT)",
+    "replace": " Toronto"
+  },
+  {
+    "pattern": "(\\s|,)(dt|DT|Down(T|t)own|DownTown|Down town)",
+    "replace": ""
+  },
+  {
+    "pattern": "(T|t)mrw|(T|t)mr",
+    "replace": "tomorrow"
+  },
+  {
+    "pattern": "toronto",
+    "replace": "Toronto"
+  },
+  {
+    "pattern": "(\\s|,)(BK|bk)(\\s|,)",
+    "replace": " Waterloo"
+  },
+  {
+    "pattern": "STC",
+    "replace": "Scarborough"
+  },
+  {
+    "pattern": "Yorkdale",
+    "replace": "Toronto"
+  },
+  {
+    "pattern": "(S|s)quare(\\s){0,1}(1|One|one)|(SQ|sq)(\\s){0,1}(1|One|one)",
+    "replace": "Mississauga"
+  },
+  {
+    "pattern": "(\\s|,)sauga",
+    "replace": " Mississauga"
+  },
+  {
+    "pattern": "(Pearson International Airport|Pearson Airport|Pearson|yyz|YYZ|pearson)",
+    "replace": "Mississauga"
+  }
+]
