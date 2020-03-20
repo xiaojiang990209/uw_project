@@ -8,7 +8,6 @@ from util.FBPostType import FBPostType
 import json
 import time
 import random
-import os
 
 DEFAULT_MIN_SLEEP = 30
 DEFAULT_MAX_SLEEP = 90

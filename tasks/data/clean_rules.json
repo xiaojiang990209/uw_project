@@ -1,19 +1,23 @@
 [
   {
+    "pattern": "(-*>+)|(--+)",
+    "replace": " to "
+  },
+  {
     "pattern": "[^a-zA-Z0-9$:]+",
     "replace": " "
   },
   {
     "pattern": "(\\s|,)((L|l)oo|uw|UW|DC|dc|((K|k)itchener){0,1}(\\s){0,1}(W|w)aterloo)",
-    "replace": " Waterloo"
+    "replace": " Waterloo "
   },
   {
-    "pattern": "(\\s|,)(trt|TRT)",
-    "replace": " Toronto"
+    "pattern": "(\\s|,)(trt|TRT|(u|U)nion)",
+    "replace": " Toronto "
   },
   {
-    "pattern": "(\\s|,)(dt|DT|Down(T|t)own|DownTown|Down town)",
-    "replace": ""
+    "pattern": "(\\s|,)(dt|DT|(d|D)own(T|t)own|DownTown|Down town)",
+    "replace": " Downtown"
   },
   {
     "pattern": "(T|t)mrw|(T|t)mr",
@@ -24,27 +28,11 @@
     "replace": "Toronto"
   },
   {
-    "pattern": "(\\s|,)(BK|bk)(\\s|,)",
-    "replace": " Waterloo"
+    "pattern": "(\\s|,)(BK|bk)",
+    "replace": " Plaza"
   },
   {
-    "pattern": "STC",
-    "replace": "Scarborough"
-  },
-  {
-    "pattern": "Yorkdale",
-    "replace": "Toronto"
-  },
-  {
-    "pattern": "(S|s)quare(\\s){0,1}(1|One|one)|(SQ|sq)(\\s){0,1}(1|One|one)",
-    "replace": "Mississauga"
-  },
-  {
-    "pattern": "(\\s|,)sauga",
+    "pattern": "(\\s|,)(s|S)auga",
     "replace": " Mississauga"
-  },
-  {
-    "pattern": "(Pearson International Airport|Pearson Airport|Pearson|yyz|YYZ|pearson)",
-    "replace": "Mississauga"
   }
 ]
