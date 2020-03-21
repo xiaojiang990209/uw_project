@@ -43,13 +43,6 @@ TEST_DATA = [
 
 ]
 
-# # training data
-# TRAIN_DATA = [
-#     ("Who is Shaka Khan?", {"entities": [(7, 17, "PERSON")]}),
-#     ("I like London and Berlin.", {"entities": [(7, 13, "LOC"), (18, 24, "LOC")]}),
-# ]
-
-
 @plac.annotations(
     model=("Model name. Defaults to blank 'en' model.", "option", "m", str),
     output_dir=("Optional output directory", "option", "o", Path),

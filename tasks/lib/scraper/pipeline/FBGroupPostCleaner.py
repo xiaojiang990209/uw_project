@@ -16,7 +16,11 @@ class FBGroupPostCleaner:
 
   def _clean_content(self, raw_content):
     cleaned_content = raw_content
-    funcs = [self._remove_duplicate, self._expand_abbreviation]
+    funcs = [
+      self._remove_duplicate,
+      self._expand_abbreviation,
+      self._delete_spaces
+    ]
     for func in funcs:
       cleaned_content = func(cleaned_content)
     return cleaned_content
@@ -41,3 +45,9 @@ class FBGroupPostCleaner:
     for rule in rules:
       content = re.sub(rule['pattern'], rule['replace'], content)
     return content
+
+  def _delete_spaces(self, content):
+    """
+    Delete the extra spaces between tokens.
+    """
+    return ' '.join(content.split())

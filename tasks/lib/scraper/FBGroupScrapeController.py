@@ -4,7 +4,7 @@
     group_id: 'abcd',
     type: Carpool/Housing
     location: Waterloo/Toronto
-}
+
 
 2. Controller delegates this to FBGroupScraper(group_id, num_posts=500) by:
     FBGroupScraper().get_result(group_id, 500)
