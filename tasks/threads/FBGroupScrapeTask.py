@@ -1,26 +1,24 @@
 from threading import Thread
 from lib.repository.FBGroupRepository import FBGroupRepository
-from lib.scraper.FBGroupPostConverter import FBGroupPostConverter
+from lib.scraper.pipeline.FBGroupPostConverter import FBGroupPostConverter
 from lib.scraper.FBGroupScraper import FBGroupScraper
+from lib.factory.FileFactory import FileFactory
 from util.FBPostType import FBPostType
 
 import json
 import time
 import random
-import os
 
 DEFAULT_MIN_SLEEP = 30
 DEFAULT_MAX_SLEEP = 90
 
 class AsyncFBGroupScrapeTask(Thread):
     def run(self):
-        path = os.path.join(os.path.dirname(__file__), '../data/scraping_input.json')
-        with open(path) as f:
-            groups_to_scrape = json.load(f)
+        groups_to_scrape = FileFactory.get_json('scraping_input.json')
 
         repo = FBGroupRepository()
         converter = FBGroupPostConverter()
-        scraper = FBGroupScraper(converter)
+        scraper = FBGroupScraper([converter])
 
         num_scraped = 0
         for group in groups_to_scrape:

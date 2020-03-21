@@ -1,0 +1,50 @@
+[
+  {
+    "pattern": "(-*>+)|(--+)",
+    "replace": " to "
+  },
+  {
+    "pattern": "[^a-zA-Z0-9$:]+",
+    "replace": " "
+  },
+  {
+    "pattern": "(\\s|,)((L|l)(OO|oo)|uw|UW|DC|dc|((K|k)itchener){0,1}(\\s){0,1}(W|w)aterloo)",
+    "replace": " Waterloo "
+  },
+  {
+    "pattern": "(\\s|,)(trt|TRT|(u|U)nion)",
+    "replace": " Toronto "
+  },
+  {
+    "pattern": "(\\s|,)(dt|DT|(d|D)own(T|t)own|DownTown|Down town)",
+    "replace": " Downtown"
+  },
+  {
+    "pattern": "(T|t)mrw|(T|t)mr",
+    "replace": "tomorrow"
+  },
+  {
+    "pattern": "toronto",
+    "replace": "Toronto"
+  },
+  {
+    "pattern": "(\\s|,)(BK|bk)",
+    "replace": " BK"
+  },
+  {
+    "pattern": "(\\s|,)(s|S)auga",
+    "replace": " Mississauga"
+  },
+  {
+    "pattern": "(R|r)hill",
+    "replace": "Richmond Hill"
+  },
+  {
+    "pattern": "(Y|y)dale|YDALE",
+    "replace": "Yorkdale"
+  },
+  {
+    "pattern": "W(L|l)oo",
+    "replace": "Waterloo"
+  }
+]
