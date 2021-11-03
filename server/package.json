@@ -32,7 +32,7 @@
     "socket.io": "^2.3.0",
     "swagger-ui-express": "^4.1.2",
     "uwaterloo-api": "^1.0.2",
-    "validator": "^11.0.0",
+    "validator": "^13.7.0",
     "verror": "^1.10.0"
   },
   "devDependencies": {
